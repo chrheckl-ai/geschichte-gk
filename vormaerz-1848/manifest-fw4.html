@@ -87,6 +87,7 @@
   .material, .glossar { margin: 0 0 18px 46px; font-size: .88rem; line-height: 1.5; color: var(--grau); }
   .material summary, .glossar summary { cursor: pointer; color: var(--petrol); font-weight: 600; padding: 4px 0; }
   .material p { margin: 8px 0 0; }
+  .aufgabe p { color: var(--ink); font-size: .95rem; }
   .glossar table { border-collapse: collapse; width: 100%; margin-top: 6px; color: var(--ink); }
   .glossar td { padding: 5px 10px 5px 0; vertical-align: top; border-top: 1px solid var(--linie); }
   .glossar td.w { font-weight: 600; }
@@ -240,12 +241,15 @@
     <p class="unter">Probeklausur Geschichte Q1: Hilfen zu Aufgabe 3 <a class="zurueck" href="../">Alle Materialien</a></p>
   </div>
   <a class="kialo" id="kialo-link" href="https://www.kialo-edu.com/p/184b0f92-da7f-4435-a802-0353bbf7e21b/726347" target="_blank" rel="noopener">Zur Kialo-Diskussion</a>
-  <p class="auftrag"><b>Aufgabe 3:</b> Nimm Stellung zu der in der Quelle zum Ausdruck kommenden Haltung des Königs zur Revolution und seinem Herrschaftsverständnis.<br>
-  <b>These in Kialo:</b> „Die Haltung des Königs zur Revolution und sein Herrschaftsverständnis sind vertretbar.“</p>
 </header>
 
 <main>
   <section class="pane quelle" id="quelle" aria-label="Quelle">
+    <details class="material aufgabe" open>
+      <summary>Aufgabe 3 und These in Kialo</summary>
+      <p><b>Aufgabe 3:</b> Nimm Stellung zu der in der Quelle zum Ausdruck kommenden Haltung des Königs zur Revolution und seinem Herrschaftsverständnis.</p>
+      <p><b>These in Kialo:</b> „Die Haltung des Königs zur Revolution und sein Herrschaftsverständnis sind vertretbar.“</p>
+    </details>
     <details class="material" open>
       <summary>Materialgrundlage und Hinweise zum Material</summary>
       <p>Eigenhändiger Entwurf eines königl. Manifestes (=Verkündung, Aufruf); wahrscheinlich vom 7. November 1848 (Rechtschreibung, Interpunktion und Hervorhebungen folgen dem Original)</p>
@@ -420,7 +424,7 @@ const STELLEN = [
     { aspekt: "Schlüssigkeit", seite: "pro", frage: "Welche Pflichten leitet er aus seinem Amt ab? Passt sein Aufruf am Ende dazu?", satz: "Ich halte seine Argumentation insofern für schlüssig, als … (Z. …)." },
     { aspekt: "Andere Positionen", seite: "contra", frage: "Lies Z. 17 f. mit den Augen eines Demokraten (AB 2): Als was sieht der König das Volk? Was würde ein Demokrat entgegnen?", satz: "Den möglichen Einwand eines Demokraten, dass … (Z. …), halte ich für überzeugend, weil …" } ] },
   { bereich: [22, "[Denn]", 24, "beschreiten."], kurz: "„Der allgemeine Umsturz …“", eintraege: [
-    { aspekt: "Leerstellen", seite: "pro", frage: "Was nennt er als Auslöser der Revolution? Passt das zu dem, was du über den Februar 1848 in Paris weißt?", satz: "Für zutreffend halte ich, dass er … als Anlass nennt (Z. …), denn …" },
+    { aspekt: "Leerstellen", seite: "pro", frage: "Inwiefern ist der Auslöser bzw. der Anlass der Revolution richtig dargestellt?", satz: "Für zutreffend halte ich, dass er … als Anlass nennt (Z. …), denn …" },
     { aspekt: "Leerstellen", seite: "contra", frage: "Woher kam die Revolution nach seiner Darstellung? Was fehlt an dieser Erklärung?", satz: "Für verzerrend halte ich, dass er … weglässt (Z. …), weil …" },
     { aspekt: "Handlungsspielraum", seite: "contra", frage: "Welchen Weg hat er im März eingeschlagen? Hätte er ihn weitergehen können (Z. 28 ff.)?", satz: "Für vermeidbar halte ich seinen Kurswechsel, denn er hätte … (Z. …), weil …" } ] },
   { bereich: [24, "Das Resultat", 28, "(…)."], kurz: "„Das Resultat war das Dekret …“", eintraege: [
@@ -670,7 +674,7 @@ function karte(e) {
 function zeichneStellenmodus() {
   if (aktStelle < 0) {
     stellenBox.innerHTML = `<ol class="schritte">
-      <li><b>Lies die Quelle.</b> Die Schlüsselstellen sind blau unterstrichen.</li>
+      <li><b>Lies die Quelle.</b> Die Schlüsselstellen sind gepunktet unterstrichen.</li>
       <li><b>Tippe eine Stelle an,</b> die dir auffällt.</li>
       <li><b>Halte deinen Eindruck fest</b> und begründe ihn mit einem Prüfaspekt.</li></ol>`;
     return;
