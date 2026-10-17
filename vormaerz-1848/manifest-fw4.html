@@ -179,6 +179,27 @@
   .urteilen { background: #fff; border: 1px solid var(--linie); border-radius: 8px; padding: 8px 12px; margin: 4px 0 0; font-size: .88rem; line-height: 1.45; }
   .urteilen summary { cursor: pointer; font-weight: 600; color: var(--petrol); padding: 4px 0; }
   .urteilen p { margin: 6px 0 0; }
+  .modus { display: grid; grid-template-columns: 1fr 1fr; margin: 14px 0 12px; border: 1.5px solid var(--petrol); border-radius: 8px; overflow: hidden; }
+  .modus button { border: 0; background: #fff; color: var(--petrol); font-weight: 600; font-size: .9rem; padding: 10px 8px; min-height: 44px; cursor: pointer; }
+  .modus button[aria-selected="true"] { background: var(--petrol); color: #fff; }
+  .schritte { margin: 0; padding-left: 20px; font-size: .95rem; line-height: 1.5; }
+  .schritte li { margin-bottom: 6px; }
+  .stelle-kopf { font-family: var(--serif); font-size: 1.02rem; margin: 2px 0 6px; }
+  .stelle-z { font-family: var(--sans); font-size: .8rem; font-weight: 700; color: var(--petrol); margin-right: 8px; }
+  h3.schritt { font-size: .82rem; font-weight: 600; color: var(--grau); margin: 14px 0 6px; }
+  .eindruck { display: flex; flex-wrap: wrap; gap: 8px; }
+  .eindruck .knopf { margin: 0; }
+  .knopf.aktiv-pro { background: var(--pro); border-color: var(--pro); color: #fff; }
+  .knopf.aktiv-contra { background: var(--contra); border-color: var(--contra); color: #fff; }
+  .leer { font-size: .9rem; color: var(--grau); margin: 4px 0 8px; }
+  .gegenprobe { margin-top: 12px; }
+  .gegenprobe summary { cursor: pointer; font-weight: 600; color: var(--petrol); padding: 6px 0; }
+  .satz p { font-family: var(--serif); font-style: italic; margin-top: 6px; }
+  .modus-stelle .zeile.stelle { cursor: pointer; }
+  .modus-stelle .zeile.stelle-a:not(.pro):not(.contra):not(.gewaehlt) { box-shadow: inset 3px 0 0 #5F8BA3; }
+  .modus-stelle .zeile.stelle-b:not(.pro):not(.contra):not(.gewaehlt) { box-shadow: inset 3px 0 0 #9DB7C5; }
+  .zeile.gewaehlt { background: var(--petrol-hell); box-shadow: inset 3px 0 0 var(--petrol); }
+  .zeile.gewaehlt .nr { visibility: visible; color: var(--petrol); font-weight: 700; }
   .knopf {
     display: inline-block;
     border: 1.5px solid var(--petrol);
@@ -211,7 +232,7 @@
   }
 </style>
 </head>
-<body>
+<body class="modus-stelle">
 <header class="kopf">
   <div>
     <h1>Manifest Friedrich Wilhelms IV. an sein Volk (November 1848)</h1>
@@ -265,9 +286,8 @@
     </div>
   </section>
 
-  <aside class="pane hilfen" aria-label="Prüfaspekte und Hilfen">
-    <h2>Prüfaspekte</h2>
-    <p class="hinweis">Du musst nicht alle Prüfaspekte abarbeiten. Wähle die aus, die beim Manifest etwas hergeben. Öffne die Hilfen Stufe für Stufe und erst dann, wenn du allein nicht weiterkommst.</p>
+  <aside class="pane hilfen" aria-label="Hilfen zu Aufgabe 3">
+    <h2>Hilfen</h2>
     <p class="hinweis">In Kialo beginnt jedes Argument mit seinem Prüfaspekt in eckigen Klammern, z. B. <code>[Handlungsspielraum]</code>, und endet mit deinem Urteil.</p>
     <details class="urteilen">
       <summary>So formulierst du ein Urteil</summary>
@@ -277,7 +297,15 @@
       <p><b>Satzanfänge:</b> „Ich halte das für …, weil …“, „Überzeugend ist …, nicht überzeugend ist …“</p>
       <p>Ein Argument ohne Urteilssatz ist nur eine Erläuterung.</p>
     </details>
-    <div class="liste" id="liste"></div>
+    <div class="modus" role="tablist" aria-label="Weg wählen">
+      <button type="button" role="tab" id="tab-stelle" aria-selected="true">Von einer Textstelle aus</button>
+      <button type="button" role="tab" id="tab-aspekt" aria-selected="false">Von den Prüfaspekten aus</button>
+    </div>
+    <div id="stellenmodus"></div>
+    <div id="aspektmodus" hidden>
+      <p class="hinweis">Du musst nicht alle Prüfaspekte abarbeiten. Wähle die aus, die beim Manifest etwas hergeben. Öffne die Hilfen Stufe für Stufe und erst dann, wenn du allein nicht weiterkommst.</p>
+      <div class="liste" id="liste"></div>
+    </div>
   </aside>
 </main>
 
@@ -553,6 +581,150 @@ function ersatz(text) {
     return ok;
   } catch (e) { return false; }
 }
+/* Weg „Von einer Textstelle aus“: Schlüsselstelle antippen, Eindruck wählen, mit Prüfaspekt begründen */
+const STELLEN = [
+  { zeilen: [2,3,4,5,6], kurz: "„Ein unerhörter Verrat …“", eintraege: [
+    { aspekt: "Intention und Interessen", seite: "contra", frage: "Wem gibt er die Schuld am 18. März? Wie verlässlich ist diese Darstellung?", satz: "Für wenig verlässlich halte ich seine Darstellung, weil er … (Z. …), denn …" } ] },
+  { zeilen: [9,10,11,12], kurz: "„Das Verderben droht …“", eintraege: [
+    { aspekt: "Wissenshorizont", seite: "pro", frage: "Was befürchtet er? Was stand mit Blick auf vergangene Revolutionen, zum Beispiel in Frankreich, tatsächlich zu befürchten?", satz: "Mit Blick auf frühere Revolutionen halte ich seine Befürchtung für verständlich (Z. …), denn …" },
+    { aspekt: "Sprache", seite: "contra", frage: "Mit welchen Bildern beschreibt er die Revolution? Was folgt daraus für seinen Umgang mit ihr?", satz: "Für verzerrend halte ich seine Bildsprache, weil … (Z. …)." } ] },
+  { zeilen: [16,17,18,19,20], kurz: "„… einem Könige ‚von Gottes Gnaden‘ …“", eintraege: [
+    { aspekt: "Schlüssigkeit", seite: "pro", frage: "Welche Pflichten leitet er aus seinem Amt ab? Passt sein Aufruf am Ende dazu?", satz: "Ich halte seine Argumentation insofern für schlüssig, als … (Z. …)." },
+    { aspekt: "Andere Positionen", seite: "contra", frage: "Lies Z. 17 f. mit den Augen eines Demokraten (AB 2): Als was sieht der König das Volk? Was würde ein Demokrat entgegnen?", satz: "Den möglichen Einwand eines Demokraten, dass … (Z. …), halte ich für überzeugend, weil …" } ] },
+  { zeilen: [22,23], kurz: "„Der allgemeine Umsturz …“", eintraege: [
+    { aspekt: "Leerstellen", seite: "contra", frage: "Woher kam die Revolution nach seiner Darstellung? Was fehlt an dieser Erklärung?", satz: "Für verzerrend halte ich, dass er … weglässt (Z. …), weil …" },
+    { aspekt: "Handlungsspielraum", seite: "contra", frage: "Welchen Weg hat er im März eingeschlagen (Z. 22 bis 24)? Hätte er ihn weitergehen können (Z. 28 ff.)?", satz: "Für vermeidbar halte ich seinen Kurswechsel, denn er hätte … (Z. …), weil …" } ] },
+  { zeilen: [24,25,26,27], kurz: "„Das Resultat war das Dekret …“", eintraege: [
+    { aspekt: "Schlüssigkeit", seite: "contra", frage: "Lies auch Fußnote 2: Worauf ist er „stolz“? Passt das dazu, wie er in Z. 29 ff. über die Verfassung spricht?", satz: "Für widersprüchlich halte ich, dass … (Z. …), denn …" } ] },
+  { zeilen: [28,29,30,31], kurz: "„Unsere Verfassung muß gebaut werden …“", eintraege: [
+    { aspekt: "Adressat und Wirkung", seite: "pro", frage: "Was bietet er hier an? Wen kann er damit gewinnen?", satz: "Für zweckmäßig halte ich, dass er … anbietet (Z. …), weil er damit vermutlich … gewinnen kann." },
+    { aspekt: "Andere Positionen", seite: "pro", frage: "Lies die Stelle mit den Augen eines Liberalen (AB 2): Was davon könnte er unterschreiben?", satz: "Ein Liberaler hätte ihm möglicherweise zugestimmt, dass … (Z. …). Das halte ich für berechtigt, weil …" },
+    { aspekt: "Handlungsspielraum", seite: "contra", frage: "Welchen Weg verlässt er hier? Hätte er ihn weitergehen können?", satz: "Für vermeidbar halte ich seinen Kurswechsel, denn er hätte … (Z. …), weil …" } ] },
+  { zeilen: [32,33,34], kurz: "„… das Ungeheuer der Revolution bekämpfen …“", eintraege: [
+    { aspekt: "Leerstellen", seite: "pro", frage: "Wovor hat er Angst? Warum wäre es für ihn gefährlich, die Ursachen der Revolution zu nennen?", satz: "Aus seiner Lage halte ich es für folgerichtig, dass er … weglässt (Z. …), denn …" },
+    { aspekt: "Sprache", seite: "pro", frage: "Wozu ruft er auf? Warum braucht er dafür starke Bilder?", satz: "Aus seiner Lage halte ich seine Bildsprache für zweckmäßig, weil sie … (Z. …)." },
+    { aspekt: "Adressat und Wirkung", seite: "pro", frage: "Wovor warnt er? Wen kann er damit gewinnen?", satz: "Für zweckmäßig halte ich, dass er vor … warnt (Z. …), weil er damit vermutlich … gewinnen kann." },
+    { aspekt: "Sprache", seite: "contra", frage: "Als was bezeichnet er die Revolution? Was folgt aus diesem Bild für seinen Umgang mit ihr?", satz: "Für verzerrend halte ich seine Bildsprache, weil … (Z. …)." } ] },
+  { zeilen: [35,36,37], kurz: "„Vertraut auf mich, Euren König …“", eintraege: [
+    { aspekt: "Andere Positionen", seite: "contra", frage: "Lies die Stelle mit den Augen eines Liberalen (AB 2): Woraus leitet der König seine Herrschaft ab? Was folgt daraus für die Bindung an eine Verfassung?", satz: "Den möglichen Einwand eines Liberalen, dass … (Z. …), halte ich für überzeugend, weil …" } ] },
+  { zeilen: [38,39], kurz: "„Ein freies Volk unter einem freien Könige!“", eintraege: [
+    { aspekt: "Blick von heute", seite: "contra", frage: "Ist es so gekommen, wie die Losung verspricht?", satz: "Aus heutiger Sicht halte ich seine Losung für widerlegt, denn … (Z. …)." } ] }
+];
+
+let modus = "stelle", aktStelle = -1, eindruck = null;
+const stellenBox = document.getElementById("stellenmodus");
+const zText = (st) => {
+  const a = st.zeilen[0], b = st.zeilen[st.zeilen.length - 1];
+  return b === a + 1 ? `Z. ${a} f.` : `Z. ${a} bis ${b}`;
+};
+
+/* Schlüsselstellen im Text kennzeichnen */
+STELLEN.forEach((st, i) => {
+  st.zeilen.forEach((n, k) => {
+    const z = zeilenBox.querySelector(`.zeile[data-n="${n}"]`);
+    z.classList.add("stelle", i % 2 ? "stelle-b" : "stelle-a");
+    z.dataset.stelle = i;
+    if (k === 0) {
+      z.tabIndex = 0;
+      z.setAttribute("role", "button");
+      z.setAttribute("aria-label", `Schlüsselstelle ${zText(st).replace(/ /g, " ")} auswählen`);
+    }
+  });
+});
+zeilenBox.addEventListener("click", (ev) => {
+  if (modus !== "stelle") return;
+  if (ev.target.closest("a")) return;
+  const z = ev.target.closest(".zeile.stelle");
+  if (z) waehleStelle(Number(z.dataset.stelle));
+});
+zeilenBox.addEventListener("keydown", (ev) => {
+  if (modus !== "stelle" || (ev.key !== "Enter" && ev.key !== " ")) return;
+  const z = ev.target.closest(".zeile.stelle");
+  if (z) { ev.preventDefault(); waehleStelle(Number(z.dataset.stelle)); }
+});
+
+function faerbeStelle() {
+  zeilenBox.querySelectorAll(".zeile").forEach(z => z.classList.remove("gewaehlt", "pro", "contra"));
+  if (aktStelle < 0) return;
+  STELLEN[aktStelle].zeilen.forEach(n => {
+    zeilenBox.querySelector(`.zeile[data-n="${n}"]`).classList.add(eindruck ? eindruck : "gewaehlt");
+  });
+}
+
+function waehleStelle(i) {
+  aktStelle = i; eindruck = null;
+  faerbeStelle();
+  zeichneStellenmodus();
+  stellenBox.scrollIntoView({ behavior: reduziert ? "auto" : "smooth", block: "nearest" });
+}
+
+function karte(e) {
+  return `<div class="impuls ${e.seite}"><b>${e.aspekt}</b><p>${nb(e.frage)}</p>
+    <button class="knopf klein satz-zeigen" type="button">Satzbaustein zeigen</button>
+    <div class="satz" hidden><p>${nb(e.satz)}</p><button class="knopf klein etikett" type="button" data-aspekt="${e.aspekt}">Etikett „[${e.aspekt}]“ kopieren</button></div></div>`;
+}
+
+function zeichneStellenmodus() {
+  if (aktStelle < 0) {
+    stellenBox.innerHTML = `<ol class="schritte">
+      <li><b>Lies die Quelle.</b> Die Schlüsselstellen sind links mit einem blauen Balken gekennzeichnet.</li>
+      <li><b>Tippe eine Stelle an,</b> die dir auffällt.</li>
+      <li><b>Halte deinen Eindruck fest</b> und begründe ihn mit einem Prüfaspekt.</li></ol>`;
+    return;
+  }
+  const st = STELLEN[aktStelle];
+  let html = `<div class="stelle-kopf"><span class="stelle-z">${zText(st)}</span>${st.kurz}</div>
+    <h3 class="schritt">Wie wirkt die Stelle auf dich?</h3>
+    <div class="eindruck">
+      <button class="knopf${eindruck === "pro" ? " aktiv-pro" : ""}" type="button" data-e="pro">Hier stimme ich eher zu</button>
+      <button class="knopf${eindruck === "contra" ? " aktiv-contra" : ""}" type="button" data-e="contra">Hier sehe ich ein Problem</button>
+    </div>`;
+  if (eindruck) {
+    const passend = st.eintraege.filter(e => e.seite === eindruck);
+    const gegen = st.eintraege.filter(e => e.seite !== eindruck);
+    html += `<h3 class="schritt">Begründe deinen Eindruck mit einem Prüfaspekt</h3>`;
+    html += passend.length ? passend.map(karte).join("")
+      : `<p class="leer">Für diesen Eindruck gibt die Stelle wenig her. Schau dir die Gegenprobe an: Vielleicht trägt die andere Sicht besser.</p>`;
+    html += `<details class="gegenprobe"${passend.length ? "" : " open"}><summary>Gegenprobe: Was könnte man dagegen sagen?</summary>` +
+      (gegen.length ? gegen.map(karte).join("") : `<p class="leer">Zu dieser Stelle findest du kaum Argumente für die Gegenseite.</p>`) +
+      `</details>`;
+  }
+  html += `<p><button class="knopf klein" type="button" data-neu>Andere Stelle wählen</button></p>`;
+  stellenBox.innerHTML = html;
+}
+
+stellenBox.addEventListener("click", (ev) => {
+  const b = ev.target.closest("button");
+  if (!b) return;
+  if (b.dataset.e) { eindruck = b.dataset.e; faerbeStelle(); zeichneStellenmodus(); return; }
+  if (b.classList.contains("satz-zeigen")) { const s = b.nextElementSibling; s.hidden = false; b.remove(); return; }
+  if (b.classList.contains("etikett")) { kopiere(`[${b.dataset.aspekt}] `, b); return; }
+  if (b.hasAttribute("data-neu")) {
+    aktStelle = -1; eindruck = null; faerbeStelle(); zeichneStellenmodus();
+    const z = zeilenBox.querySelector(".zeile.stelle");
+    if (z) z.scrollIntoView({ behavior: reduziert ? "auto" : "smooth", block: "center" });
+  }
+});
+
+/* Umschalten zwischen den beiden Wegen */
+const tabStelle = document.getElementById("tab-stelle"), tabAspekt = document.getElementById("tab-aspekt");
+function setzeModus(m) {
+  modus = m;
+  document.body.classList.toggle("modus-stelle", m === "stelle");
+  tabStelle.setAttribute("aria-selected", String(m === "stelle"));
+  tabAspekt.setAttribute("aria-selected", String(m === "aspekt"));
+  stellenBox.hidden = m !== "stelle";
+  document.getElementById("aspektmodus").hidden = m !== "aspekt";
+  if (m === "stelle") { faerbeStelle(); }
+  else {
+    zeilenBox.querySelectorAll(".zeile").forEach(z => z.classList.remove("gewaehlt"));
+    if (offen >= 0 && stand[offen] >= 2) markiere(ASPEKTE[offen]); else markiere(null);
+  }
+}
+tabStelle.addEventListener("click", () => setzeModus("stelle"));
+tabAspekt.addEventListener("click", () => setzeModus("aspekt"));
+zeichneStellenmodus();
+setzeModus("stelle");
 </script>
 </body>
 </html>
