@@ -186,6 +186,18 @@
   .urteilen { background: #fff; border: 1px solid var(--linie); border-radius: 8px; padding: 8px 12px; margin: 4px 0 0; font-size: .88rem; line-height: 1.45; }
   .urteilen summary { cursor: pointer; font-weight: 600; color: var(--petrol); padding: 4px 0; }
   .urteilen p { margin: 6px 0 0; }
+  .dreischritt { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
+  .dreischritt li { border-left-width: 4px; border-left-style: solid; border-radius: 4px; padding: 6px 8px; }
+  .dreischritt li b { display: block; font-size: .82rem; }
+  .dreischritt li span, .zusammen span { font-family: var(--serif); font-style: italic; }
+  .d1, .t1 { background: var(--petrol-hell); border-color: var(--petrol); }
+  .d2, .t2 { background: var(--warm); border-color: #B07D2A; }
+  .d3, .t3 { background: #F1ECF6; border-color: #6B4C8A; }
+  .d1 b { color: var(--petrol); } .d2 b { color: var(--amber-dunkel); } .d3 b { color: #4E3466; }
+  .zusammen span { padding: 1px 3px; border-radius: 3px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  .aufbau { margin: 6px 0 0; padding-left: 20px; }
+  .aufbau li { margin-bottom: 6px; }
+  .aufbau q { font-family: var(--serif); font-style: italic; quotes: "„" "“"; }
   .modus { display: grid; grid-template-columns: 1fr 1fr; margin: 14px 0 12px; border: 1.5px solid var(--petrol); border-radius: 8px; overflow: hidden; }
   .modus button { border: 0; background: #fff; color: var(--petrol); font-weight: 600; font-size: .9rem; padding: 10px 8px; min-height: 44px; cursor: pointer; }
   .modus button[aria-selected="true"] { background: var(--petrol); color: #fff; }
@@ -293,16 +305,30 @@
 
   <aside class="pane hilfen" aria-label="Hilfen zu Aufgabe 3">
     <h2>Hilfen</h2>
-    <p class="hinweis">In Kialo beginnt jedes Argument mit seinem Prüfaspekt in eckigen Klammern, z. B. <code>[Handlungsspielraum]</code>, und endet mit deinem Urteil.</p>
+    <p class="hinweis">In Kialo beginnt jedes Argument mit seinem Prüfaspekt in eckigen Klammern, z. B. <code>[Handlungsspielraum]</code>, und folgt dann dem Dreischritt.</p>
     <details class="urteilen">
-      <summary>So formulierst du ein Urteil</summary>
-      <p><b>Drei Schritte:</b> Was macht er? (Befund mit Z.) Warum? (Erklärung aus dem Kontext) Was halte ich davon, und gemessen woran? (Urteilswort und Begründung)</p>
-      <p><b>Maßstäbe:</b> die Bedingungen von 1848, die innere Stimmigkeit, die sachliche Richtigkeit. Dein „weil“ nennt den Maßstab und wiederholt nicht nur den Befund.</p>
+      <summary>So formulierst du ein Urteil (Dreischritt)</summary>
+      <ol class="dreischritt">
+        <li class="d1"><b>1 Aussage aufgreifen mit Zeilenangabe</b><span>„Der König behauptet, am 18. März hätten nur sehr wenige Untertanen mitgemacht, und gibt einem ‚bezahlte[n] Haufe[n] von Missetätern aller Nationen‘ die Schuld (Z. 2 ff.).“</span></li>
+        <li class="d2"><b>2 Eigene Positionierung</b><span>„Das halte ich für verzerrend, …“</span></li>
+        <li class="d3"><b>3 Begründung</b><span>„…, weil auf den Barrikaden vor allem Berliner Handwerker, Arbeiter und Studenten kämpften.“</span></li>
+      </ol>
+      <p class="zusammen"><b>Zusammen:</b> <span class="t1">Der König behauptet, am 18. März hätten nur sehr wenige Untertanen mitgemacht, und gibt einem „bezahlte[n] Haufe[n] von Missetätern aller Nationen“ die Schuld (Z. 2 ff.).</span> <span class="t2">Das halte ich für verzerrend,</span> <span class="t3">weil auf den Barrikaden vor allem Berliner Handwerker, Arbeiter und Studenten kämpften.</span></p>
       <p><b>Urteilswörter pro:</b> nachvollziehbar, folgerichtig, zweckmäßig, angemessen, zutreffend</p>
       <p><b>Urteilswörter contra:</b> widersprüchlich, einseitig, verzerrend, unverhältnismäßig, vermeidbar</p>
-      <p><b>Wichtig:</b> Pro heißt oft „aus seiner Lage verständlich“, nicht „richtig“.</p>
-      <p><b>Satzanfänge:</b> „Ich halte das für …, weil …“, „Überzeugend ist …, nicht überzeugend ist …“, „Insofern ist … nachvollziehbar, als …“, „Zwar …, doch …“</p>
-      <p>Ein Argument ohne Urteilssatz ist nur eine Erläuterung.</p>
+      <p><b>Wichtig:</b> Dein „weil“ bringt etwas Neues: Wissen aus dem Unterricht oder eine andere Textstelle. Pro heißt oft „aus seiner Lage verständlich“, nicht „richtig“.</p>
+    </details>
+    <details class="urteilen">
+      <summary>So baust du Aufgabe 3 auf</summary>
+      <p><b>Empfohlen: Blockprinzip</b></p>
+      <ol class="aufbau">
+        <li><b>Einleitung:</b> Greife die Aufgabe auf und nenne, woran du misst, z. B. <q>Im Folgenden prüfe ich, ob die Haltung des Königs zur Revolution und sein Herrschaftsverständnis in sich schlüssig und unter den Bedingungen von 1848 nachvollziehbar sind.</q></li>
+        <li><b>Block 1: Was spricht für ihn?</b> Zwei bis drei Argumente, jedes im Dreischritt, das wichtigste zuerst.</li>
+        <li><b>Block 2: Was spricht gegen ihn?</b> Ebenso. Überleitung z. B.: <q>Kritisch zu sehen ist jedoch, …</q></li>
+        <li><b>Fazit:</b> Gewichte: Welches Argument wiegt am schwersten? Beantworte damit die Aufgabe, z. B. <q>Insgesamt halte ich die Haltung des Königs für eher …, weil vor allem … schwerer wiegt als …</q></li>
+      </ol>
+      <p>Stimmst du ihm insgesamt eher zu, tauschst du die Blöcke. So steht die Seite, die dich mehr überzeugt, direkt vor dem Fazit.</p>
+      <p><b>Alternative: Ping-Pong-Prinzip.</b> Du wägst zu jedem Punkt gleich Pro und Contra ab. Satzanfänge: <q>Zwar …, doch …</q>, <q>Insofern ist … nachvollziehbar, als …</q></p>
     </details>
     <div class="modus" role="tablist" aria-label="Weg wählen">
       <button type="button" role="tab" id="tab-stelle" aria-selected="true">Von einer Textstelle aus</button>
