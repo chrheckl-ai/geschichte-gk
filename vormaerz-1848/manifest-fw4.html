@@ -1,0 +1,480 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Manifest Friedrich Wilhelms IV.: Hilfen zu Aufgabe 3</title>
+<style>
+  :root {
+    color-scheme: light;
+    --petrol: #17415C;
+    --petrol-hell: #E6EEF2;
+    --ink: #1D2A33;
+    --grau: #5F6B70;
+    --linie: #D5DBDE;
+    --papier: #FFFFFF;
+    --panel: #F2F4F5;
+    --warm: #FBF3E7;
+    --amber: #D9A55B;
+    --amber-dunkel: #8A5A12;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, sans-serif;
+    --qsize: 15px;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    font-family: var(--sans);
+    color: var(--ink);
+    background: var(--papier);
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+  }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+
+  /* Kopf */
+  .kopf {
+    background: var(--petrol);
+    color: #fff;
+    padding: 12px 20px 14px;
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 20px;
+    align-items: start;
+  }
+  .kopf h1 { margin: 0; font-family: var(--serif); font-weight: 600; font-size: 1.3rem; line-height: 1.25; }
+  .kopf .unter { margin: 2px 0 0; font-size: .85rem; opacity: .8; }
+  .kopf .zurueck { color: #fff; margin-left: 12px; text-underline-offset: 2px; }
+  .kopf .auftrag { grid-column: 1 / -1; margin: 6px 0 0; font-size: .9rem; line-height: 1.45; max-width: 72em; }
+  .kopf .auftrag b { font-weight: 600; }
+  .kialo {
+    display: inline-block;
+    background: #fff;
+    color: var(--petrol);
+    text-decoration: none;
+    font-weight: 600;
+    font-size: .95rem;
+    padding: 9px 16px;
+    border-radius: 6px;
+    white-space: nowrap;
+    margin-top: 2px;
+  }
+  .kialo:hover { background: var(--warm); }
+
+  /* Arbeitsfläche */
+  main {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(330px, 1fr);
+    min-height: 0;
+  }
+  .pane { overflow-y: auto; -webkit-overflow-scrolling: touch; min-height: 0; }
+
+  /* Quelle */
+  .quelle { padding: 18px 26px 40px 14px; }
+  .material { margin: 0 0 18px 46px; font-size: .88rem; line-height: 1.5; color: var(--grau); }
+  .material summary { cursor: pointer; color: var(--petrol); font-weight: 600; padding: 4px 0; }
+  .material p { margin: 8px 0 0; }
+  .titel { font-family: var(--serif); text-align: center; margin: 0 0 14px 46px; }
+  .titel .entwurf { font-style: italic; font-size: 1rem; margin: 0; }
+  .titel .haupt { font-size: 1.15rem; font-weight: 600; margin: 2px 0 0; }
+  .zeilen { position: relative; }
+  .zeile {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    column-gap: 12px;
+    border-radius: 3px;
+    transition: background-color .25s ease;
+  }
+  .zeile .nr {
+    font-size: 12px;
+    color: var(--grau);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    line-height: calc(var(--qsize) * 1.65);
+    visibility: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .zeile .nr.fuenf { visibility: visible; }
+  .zeile .txt {
+    font-family: var(--serif);
+    font-size: var(--qsize);
+    line-height: 1.65;
+    white-space: nowrap;
+    text-align: justify;
+    text-align-last: justify;
+    padding-right: 6px;
+  }
+  .zeile.letzte .txt { text-align-last: left; }
+  .zeile.hl { background: var(--warm); box-shadow: inset 3px 0 0 var(--amber); }
+  .zeile.hl .nr { visibility: visible; color: var(--amber-dunkel); font-weight: 700; }
+  .sperr { letter-spacing: .28em; margin-right: -.28em; }
+  sup { line-height: 0; }
+  sup a { color: var(--petrol); text-decoration: none; font-family: var(--sans); font-weight: 700; font-size: .72em; padding: 0 2px; }
+  .messung { position: absolute; visibility: hidden; left: 0; top: 0; width: 0; height: 0; overflow: hidden; white-space: nowrap; font-family: var(--serif); font-size: 100px; }
+  .messung span { display: block; width: max-content; }
+  .fussnoten { margin: 22px 0 0 46px; padding-top: 10px; border-top: 1px solid var(--linie); font-size: .85rem; line-height: 1.5; color: var(--grau); }
+  .fussnoten p { margin: 0 0 6px; padding: 2px 4px; border-radius: 3px; }
+  .fussnoten p:target { background: var(--warm); color: var(--ink); }
+
+  /* Prüfaspekte */
+  .hilfen { background: var(--panel); border-left: 1px solid var(--linie); padding: 18px 18px 40px; }
+  .hilfen h2 { margin: 0 0 6px; font-family: var(--serif); font-size: 1.2rem; color: var(--petrol); }
+  .hinweis { margin: 0 0 8px; font-size: .9rem; line-height: 1.5; }
+  .hinweis code { font-family: var(--sans); background: #fff; border: 1px solid var(--linie); border-radius: 4px; padding: 0 4px; }
+  .liste { margin-top: 14px; display: grid; gap: 8px; }
+  .aspekt { background: #fff; border: 1px solid var(--linie); border-radius: 8px; }
+  .aspekt.offen { border-color: var(--petrol); }
+  .aspekt-kopf {
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 2px 10px;
+    text-align: left;
+    background: none;
+    border: 0;
+    padding: 12px 14px;
+    cursor: pointer;
+    min-height: 52px;
+  }
+  .aspekt-kopf .name { font-weight: 600; font-size: 1rem; color: var(--petrol); }
+  .aspekt-kopf .bezug { grid-column: 1; font-size: .8rem; color: var(--grau); }
+  .aspekt-kopf .pfeil { grid-row: 1 / span 2; grid-column: 2; width: 10px; height: 10px; border-right: 2px solid var(--petrol); border-bottom: 2px solid var(--petrol); transform: rotate(45deg); transition: transform .2s ease; margin-right: 4px; }
+  .aspekt.offen .pfeil { transform: rotate(-135deg); }
+  .aspekt-body { padding: 0 14px 14px; }
+  .stufe { border-top: 1px solid var(--linie); padding: 10px 0 2px; }
+  .stufe h3 { margin: 0 0 4px; font-size: .78rem; font-weight: 600; color: var(--grau); }
+  .stufe p { margin: 0 0 6px; font-size: .95rem; line-height: 1.5; }
+  .stufe.s3 p { font-family: var(--serif); font-style: italic; }
+  .stufe .zeilenangabe { font-size: .85rem; color: var(--amber-dunkel); font-weight: 600; }
+  .knopf {
+    display: inline-block;
+    border: 1.5px solid var(--petrol);
+    background: #fff;
+    color: var(--petrol);
+    border-radius: 6px;
+    padding: 9px 14px;
+    font-size: .92rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 8px 8px 0 0;
+    min-height: 44px;
+  }
+  .knopf.weiter { background: var(--petrol); color: #fff; }
+  .knopf.klein { border-width: 1px; font-weight: 500; font-size: .85rem; padding: 6px 10px; min-height: 36px; }
+  .etikett-zeile { border-top: 1px solid var(--linie); margin-top: 12px; padding-top: 4px; }
+
+  /* Hochformat und schmale Bildschirme: Quelle oben, Hilfen unten */
+  @media (max-width: 1000px), (orientation: portrait) {
+    main { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1.15fr) minmax(0, 1fr); }
+    .hilfen { border-left: 0; border-top: 2px solid var(--petrol); }
+    .kopf h1 { font-size: 1.15rem; }
+  }
+  @media (max-width: 560px) {
+    .kopf { grid-template-columns: minmax(0, 1fr); }
+    .quelle { padding-left: 6px; padding-right: 10px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body>
+<header class="kopf">
+  <div>
+    <h1>Manifest Friedrich Wilhelms IV. an sein Volk (November 1848)</h1>
+    <p class="unter">Probeklausur Geschichte Q1: Hilfen zu Aufgabe 3 <a class="zurueck" href="../">Alle Materialien</a></p>
+  </div>
+  <a class="kialo" id="kialo-link" href="https://www.kialo-edu.com/p/184b0f92-da7f-4435-a802-0353bbf7e21b/726347" target="_blank" rel="noopener">Zur Kialo-Diskussion</a>
+  <p class="auftrag"><b>Aufgabe 3:</b> Nimm Stellung zu der in der Quelle zum Ausdruck kommenden Haltung des Königs zur Revolution und seinem Herrschaftsverständnis.<br>
+  <b>These in Kialo:</b> „Die Haltung des Königs zur Revolution und sein Herrschaftsverständnis sind vertretbar.“</p>
+</header>
+
+<main>
+  <section class="pane quelle" id="quelle" aria-label="Quelle">
+    <details class="material">
+      <summary>Materialgrundlage und Hinweise zum Material</summary>
+      <p>Eigenhändiger Entwurf eines königl. Manifestes (=Verkündung, Aufruf); wahrscheinlich vom 7. November 1848 (Rechtschreibung, Interpunktion und Hervorhebungen folgen dem Original)</p>
+      <p><b>Hinweise zum Material:</b> Der Entwurf wurde dem preußischen Ministerpräsidenten Graf von Brandenburg zur Prüfung zugesandt. Die Veröffentlichung des Aufrufs unterblieb. Die erst am 11. November 1848 erscheinende Proklamation (=Erlass, Bekanntmachung) zur Verlegung (und späteren Schließung) der preußischen Nationalversammlung wurde vom Ministerium verfasst. Der konservativ-monarchisch und gegenrevolutionär eingestellte Graf von Brandenburg war am 2. November 1848 zum preußischen Ministerpräsidenten ernannt worden.</p>
+    </details>
+    <div class="titel">
+      <p class="entwurf">Entwurf.</p>
+      <p class="haupt">Manifest – An mein Volk.</p>
+    </div>
+    <div class="zeilen" id="zeilen"></div>
+    <div class="fussnoten">
+      <p id="fn1"><b>1</b> Öffentliche Reden nach der Thronbesteigung anlässlich der Huldigung des Königs in Königsberg und in Berlin.</p>
+      <p id="fn2"><b>2</b> Das Dekret wurde am 17. März verfasst und am 18. März 1848 vom König verlesen. Inhalte: Aufhebung der Zensur, Zusage einer Verfassung für Preußen sowie Ankündigung einer allgemeinen deutschen Volksvertretung im Rahmen einer Reform des Deutschen Bundes.</p>
+      <p id="fn3"><b>3</b> Die Hohenzollern waren eine bedeutende deutsche Dynastie. Sie beherrschten als Fürsten (und später Könige) Preußen.</p>
+    </div>
+  </section>
+
+  <aside class="pane hilfen" aria-label="Prüfaspekte und Hilfen">
+    <h2>Prüfaspekte</h2>
+    <p class="hinweis">Du musst nicht alle Prüfaspekte abarbeiten. Wähle die aus, die beim Manifest etwas hergeben. Öffne die Hilfen Stufe für Stufe und erst dann, wenn du allein nicht weiterkommst.</p>
+    <p class="hinweis">In Kialo beginnt jedes Argument mit seinem Prüfaspekt in eckigen Klammern, z. B. <code>[Handlungsspielraum]</code>.</p>
+    <div class="liste" id="liste"></div>
+  </aside>
+</main>
+
+<script>
+/* Quelle: 39 Zeilen, Umbruch wie in der Probeklausur. {FN1} usw. = Fußnotenzeichen, {SPERR:...} = gesperrt gedruckt */
+const ZEILEN = [
+  "Nach langer Zeit hört mein Volk wieder einmal seines Königs Stimme. Zwischen dem letzten",
+  "Mal und heut liegt eine bange Zeit der Trübsal und des Unheils. Ein unerhörter Verrat, an",
+  "welchem sehr wenige Untertanen teilhatten, dessen Arm aber ein bezahlter Haufe von Mis-",
+  "setätern aller Nationen war, zwang am 18. März meine Truppen zu einem siegreichen",
+  "Kampf innerhalb meiner Hauptstadt. Angesichts dieses Siegs wallte mein Gefühl für die Lei-",
+  "den meiner Vaterstadt über, und ich bot ihr Frieden an (…). Über ein halbes Jahr habe ich",
+  "es den Umständen für angemessen erachtet, das Staatsruder Ministern zu überlassen, wel-",
+  "che mehr oder weniger der sogenannten Volksgunst genossen. Währenddessen haben die",
+  "Dinge sich in Preußen und Teutschland sich verschlimmert (…). Das {SPERR:Verderben} droht",
+  "in gräßlichster Gestalt einzudringen. Wohin das Treiben der Flut der Revolution führt, ist",
+  "jetzt einem jeden meiner Untertanen klar (…) – zum Untergang, dem schmachvollen, ehrlo-",
+  "sen Untergang. Darum steh‘ ich auf aus meiner scheinbaren Ruhe, und die faktische Ver-",
+  "finsterung des kgl. Amtes hat ein Ende. Eingedenk (…) der heiligen Gelöbnisse, die ich und",
+  "mein Volk damals (…) gewechselt haben{FN1}, trete ich vor dasselbe hin, breche mein langes,",
+  "banges Schweigen und mache vor ihm ein feierliches Bekenntnis der Pflichten, die mir als",
+  "einem Könige „von Gottes Gnaden“ obliegen. Als solcher gehöre ich meinem Volk; ich bin",
+  "sein Eigentum, wie das Haupt des Leibes Eigentum ist. Mein Volk, ein jeder meiner Unter-",
+  "tanen hat das unveräußerliche Recht, von mir, von seiner angestammten Obrigkeit, zu ver-",
+  "langen, daß ich der Schutz und Schirm seiner wohlerworbenen Rechte, seines Besitzes und",
+  "Eigentums (…) sei. Es hat das Recht, von mir zu verlangen, daß ich meine Gelöbnisse, meine",
+  "Verheißungen halte, es hat ein Recht an meine Treue. Meinen alten Verheißungen (…) hab‘",
+  "ich neue [hinzu]gesellt (…). [Denn] [d]er allgemeine Umsturz, der vom Nachbarlande",
+  "Teutschland mächtig ergriff, bewog mich (…) [einen] schnelleren, wenn auch minder siche-",
+  "ren Weg zu beschreiten. Das Resultat war das Dekret vom 18. (17.?){FN2} [sic!] März. Seine Er-",
+  "füllung war und ist meine Freude, mein Stolz, der Zweck meine Liebe zu meinem teuren",
+  "Preußen und zum gemeinsamen herrlichen Teutschland. Gleich darauf bin ich unter dem",
+  "Zwang der Märzgreuel genötigt worden, diese durch andere Versprechungen zu vermehren",
+  "(…). Unsere Verfassung muß gebaut werden, die Vertreter des Volks sind auf mein Geheiß",
+  "versammelt, um sie mit mir zu vereinbaren. Doch wehe uns, wenn wir den edeln Bau unse-",
+  "rer Freiheiten auf einem Boden gründen wollen, der von dem Wühlen der Revolution er-",
+  "bebt. Das ist unmöglich. Darum ergeht heute mein Ruf an mein Volk. (…) Laßt uns in hel-",
+  "denmütiger Einigkeit und Kraft und des göttlichen Segens gewiß das Ungeheuer der Revo-",
+  "lution bekämpfen; leidet hinfort nicht länger die freche Gotteslästerung, das Antasten Eures",
+  "Königs, das Besudeln alles Heiligen, Großen und Edeln, die gemeine Gier nach dem recht-",
+  "mäßigen Eigentum anderer; (…) Vertraut auf mich, Euren König „von Gottes Gnaden“, der",
+  "der 17. ist von einer Reihe von Fürsten und Königen{FN3}, [die], von der Liebe ihrer Völker und",
+  "nicht wenige unter ihnen von der Bewunderung der Welt getragen, in diesem Lande seit",
+  "fünftehalb Jahrhunderten geherrscht (…). Unsre Losung sei: „Ein freies Volk unter einem",
+  "freien Könige!“ (…)."
+];
+
+/* Prüfaspekte nach dem Methodenblatt. Stufe 2 nennt die Zeilen, die im Text markiert werden. */
+const ASPEKTE = [
+  { name: "Schlüssigkeit", bezug: "beide Teile der These",
+    s1: "Trägt die Begründung des Königs seine Forderung? Wo springt seine Argumentation, wo behauptet er, statt zu begründen?",
+    zeilen: [17,18,24,25,26,27,28,29,38,39], zeilenText: "Z. 17 f., Z. 24 ff., Z. 38 f.",
+    s2: "Vergleiche, wie er das Dekret in Z. 24 ff. bewertet, mit Z. 26 f. Lies dann Z. 28 f. und prüfe, wer hier wem etwas vorgibt. Halte zum Schluss die Losung (Z. 38 f.) neben Z. 17 f.",
+    s3: "Seine Argumentation ist insofern (nicht) schlüssig, als er einerseits … (Z. …), andererseits … (Z. …)." },
+  { name: "Intention und Interessen", bezug: "Haltung zur Revolution",
+    s1: "Welche Motive und Interessen stehen hinter seiner Darstellung des März 1848 und des letzten halben Jahres? Wem nützt sie? Was folgt daraus für ihre Verlässlichkeit?",
+    zeilen: [2,3,4,5,6,7,8,9], zeilenText: "Z. 2 ff., Z. 6 ff.",
+    s2: "Wem gibt er in Z. 2 ff. und Z. 6 ff. die Schuld, und wie stellt er sich selbst dar? Lies außerdem die Hinweise zum Material über der Quelle: Was geschah am 2. und am 11. November?",
+    s3: "Seine Darstellung dient erkennbar dem Ziel, …; als Bericht über … ist sie deshalb nur begrenzt verlässlich." },
+  { name: "Handlungsspielraum", bezug: "beide Teile der These",
+    s1: "Welche Alternativen standen ihm im November 1848 offen? Welche Zwänge schränkten ihn ein?",
+    zeilen: [28,29,30,31], zeilenText: "Z. 28 ff.",
+    s2: "Z. 28 f. beschreibt einen Weg, den er in Z. 29 ff. für unmöglich erklärt. Was wollten die Liberalen, was die Demokraten (AB 2)?",
+    s3: "Aus der Sicht eines Monarchen im Herbst 1848 erscheint … nachvollziehbar, weil … Allerdings hätte er …" },
+  { name: "Adressat und Wirkung", bezug: "Herrschaftsverständnis",
+    s1: "An wen richtet sich der Aufruf, und wen will er besonders gewinnen? Was lässt sich über die Wirkung sagen?",
+    zeilen: [1,17,18,19,20,33,34,35], zeilenText: "Z. 1, Z. 17 ff., Z. 33 ff.",
+    s2: "Wie nennt er seine Adressaten (Z. 1, Z. 17 f.)? Welche Gruppe spricht er mit „Besitz“ und „Eigentum“ an (Z. 19 f., Z. 34 f.)? Lies auch die Hinweise zum Material: Wurde der Text überhaupt veröffentlicht?",
+    s3: "Mit dem Appell an … richtet er sich vor allem an …; über die Wirkung lässt sich allerdings nur sagen, dass …" },
+  { name: "Andere Positionen", bezug: "beide Teile der These",
+    s1: "Welche zeitgenössischen Gegenpositionen kennst du? Wie hätten sie auf diesen Text reagiert?",
+    zeilen: [16,28,29,35], zeilenText: "Z. 16, Z. 28 f., Z. 35",
+    s2: "Wie hätten ein Liberaler und ein Demokrat (AB 2) auf „von Gottes Gnaden“ (Z. 16, Z. 35) und auf Z. 28 f. reagiert?",
+    s3: "Ein Liberaler hätte …, während ein Demokrat …, weil …" },
+  { name: "Leerstellen", bezug: "Haltung zur Revolution",
+    s1: "Welche Themen und Probleme kommen nicht vor? Ist das Zufall oder Absicht?",
+    zeilen: [2,3,4,5,6,22,23,26], zeilenText: "Z. 2 ff., Z. 22 f., Z. 26",
+    s2: "Wie erklärt er, warum es überhaupt zur Revolution kam (Z. 2 ff., Z. 22 f.)? Was erfährst du über die Kämpfe am 18. und 19. März? Wie viel Raum bekommt die deutsche Einheit (Z. 26)?",
+    s3: "Bemerkenswert ist, was der Text nicht behandelt: … Das ist vermutlich Absicht, weil …" },
+  { name: "Wissenshorizont", bezug: "Haltung zur Revolution",
+    s1: "Über wie viel Wissen verfügte er im November 1848? Was konnte er nicht wissen, und wie wirkt sich das auf dein Urteil aus?",
+    zeilen: [6,7,8,9,10,11,12,31,32,33], zeilenText: "Z. 6 ff., Z. 31 ff.",
+    s2: "Was hatte er seit dem Frühjahr erlebt (Z. 6 ff.)? Konnte er wissen, wie der Konflikt ausgehen würde? Wen meint er mit dem „Ungeheuer der Revolution“ (Z. 31 ff.), und unterscheidet er dabei zwischen Gruppen?",
+    s3: "Hier zeigt sich die Grenze seines Wissenshorizonts: … Das mildert (oder verschärft) mein Urteil, weil …" },
+  { name: "Blick von heute", bezug: "beide Teile der These",
+    s1: "Hat sich seine Einschätzung der Lage im November 1848 bestätigt, oder wurde sie widerlegt?",
+    zeilen: [12,13,38,39], zeilenText: "Z. 12 f., Z. 38 f.",
+    s2: "Vergleiche Z. 12 f. und Z. 38 f. mit dem, was du über das Ende der Revolution weißt. Vorsicht: Dass er sich durchsetzte, heißt noch nicht, dass seine Haltung vertretbar war.",
+    s3: "Aus heutiger Sicht bestätigt sich seine Einschätzung insofern, als … Seine Losung erweist sich dagegen als …" },
+  { name: "Sprache", bezug: "Haltung zur Revolution",
+    s1: "Sprachliche Besonderheiten zählen nur, wenn sie für dein Urteil entscheidend sind. Was verrät die Bildsprache über seine Haltung zur Revolution?",
+    zeilen: [9,10,11,12,31,32,33], zeilenText: "Z. 9 ff., Z. 31 ff.",
+    s2: "Mit welchen Bildern beschreibt er die Revolution (Z. 9 ff., Z. 31 ff.)? Was folgt aus diesen Bildern für seinen Umgang mit ihr?",
+    s3: "Indem er die Revolution als … bezeichnet (Z. …), macht er deutlich, dass …" }
+];
+
+const STUFEN = ["Leitfrage", "Zeilen und Denkanstoß", "Satzbaustein"];
+const reduziert = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+function zeileHtml(t) {
+  return t
+    .replace(/\{FN(\d)\}/g, (m, n) => `<sup><a href="#fn${n}" aria-label="Fußnote ${n}">${n}</a></sup>`)
+    .replace(/\{SPERR:([^}]+)\}/g, (m, w) => `<span class="sperr">${w}</span>`);
+}
+
+/* Quelle aufbauen */
+const zeilenBox = document.getElementById("zeilen");
+ZEILEN.forEach((t, i) => {
+  const n = i + 1;
+  const div = document.createElement("div");
+  div.className = "zeile" + (n === ZEILEN.length ? " letzte" : "");
+  div.dataset.n = n;
+  div.innerHTML = `<span class="nr${n % 5 === 0 ? " fuenf" : ""}">${n}</span><span class="txt">${zeileHtml(t)}</span>`;
+  zeilenBox.appendChild(div);
+});
+
+/* Schriftgröße so wählen, dass jede Zeile genau in die Breite passt (Zeilenzählung bleibt wie auf Papier) */
+const messung = document.createElement("div");
+messung.className = "messung";
+messung.setAttribute("aria-hidden", "true");
+messung.innerHTML = ZEILEN.map(t => `<span>${zeileHtml(t)}</span>`).join("");
+zeilenBox.appendChild(messung);
+
+function einpassen() {
+  const probe = zeilenBox.querySelector(".zeile .txt");
+  if (!probe) return;
+  const verfuegbar = probe.clientWidth - 8;
+  let breiteste = 0;
+  messung.querySelectorAll("span").forEach(s => { breiteste = Math.max(breiteste, s.getBoundingClientRect().width); });
+  if (!breiteste || verfuegbar <= 0) return;
+  const groesse = Math.max(9, Math.min(19, verfuegbar * 100 / breiteste));
+  document.documentElement.style.setProperty("--qsize", groesse.toFixed(2) + "px");
+}
+einpassen();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(einpassen);
+let rt;
+window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(einpassen, 80); });
+
+/* Markierung */
+function markiere(liste) {
+  zeilenBox.querySelectorAll(".zeile").forEach(z => {
+    z.classList.toggle("hl", liste.includes(Number(z.dataset.n)));
+  });
+}
+function springe(liste) {
+  if (!liste.length) return;
+  const ziel = zeilenBox.querySelector(`.zeile[data-n="${Math.min(...liste)}"]`);
+  if (ziel) ziel.scrollIntoView({ behavior: reduziert ? "auto" : "smooth", block: "center" });
+}
+
+/* Prüfaspekte aufbauen */
+const stand = ASPEKTE.map(() => 0);
+let offen = -1;
+const listeBox = document.getElementById("liste");
+
+/* Zeilenangaben nicht umbrechen: „Z. 38 f.“ bleibt zusammen */
+const nb = (t) => t.replace(/Z\. (\d+)( ff?\.)?/g, (m, n, f) => "Z. " + n + (f ? " " + f.trim() : ""));
+
+function stufeHtml(a, s) {
+  if (s === 1) return `<div class="stufe s1"><h3>Stufe 1: ${STUFEN[0]}</h3><p>${nb(a.s1)}</p></div>`;
+  if (s === 2) return `<div class="stufe s2"><h3>Stufe 2: ${STUFEN[1]}</h3><p class="zeilenangabe">Im Text markiert: ${nb(a.zeilenText)}</p><p>${nb(a.s2)}</p><button class="knopf klein springen" type="button">Zu den Zeilen springen</button></div>`;
+  return `<div class="stufe s3"><h3>Stufe 3: ${STUFEN[2]}</h3><p>${nb(a.s3)}</p></div>`;
+}
+
+function zeichneKoerper(i) {
+  const a = ASPEKTE[i];
+  const body = document.getElementById("a" + i);
+  let html = "";
+  for (let s = 1; s <= stand[i]; s++) html += stufeHtml(a, s);
+  if (stand[i] < 3) {
+    const naechste = stand[i] + 1;
+    html += `<button class="knopf weiter" type="button" data-stufe="${naechste}">Stufe ${naechste} zeigen: ${STUFEN[naechste - 1]}</button>`;
+  }
+  html += `<div class="etikett-zeile"><button class="knopf klein etikett" type="button">Etikett „[${a.name}]“ kopieren</button></div>`;
+  body.innerHTML = html;
+
+  const weiter = body.querySelector(".weiter");
+  if (weiter) weiter.addEventListener("click", () => {
+    stand[i] = Number(weiter.dataset.stufe);
+    zeichneKoerper(i);
+    if (stand[i] === 2) { markiere(a.zeilen); springe(a.zeilen); }
+    const neu = body.querySelector(".stufe:last-of-type");
+    if (neu) neu.scrollIntoView({ behavior: reduziert ? "auto" : "smooth", block: "nearest" });
+    const naechsterKnopf = body.querySelector(".weiter") || body.querySelector(".etikett");
+    if (naechsterKnopf) naechsterKnopf.focus({ preventScroll: true });
+  });
+  const spr = body.querySelector(".springen");
+  if (spr) spr.addEventListener("click", () => springe(a.zeilen));
+  const et = body.querySelector(".etikett");
+  et.addEventListener("click", () => kopiere(`[${a.name}] `, et));
+}
+
+function oeffne(i) {
+  const vorher = offen;
+  offen = (vorher === i) ? -1 : i;
+  ASPEKTE.forEach((a, j) => {
+    const sec = listeBox.children[j];
+    const auf = j === offen;
+    sec.classList.toggle("offen", auf);
+    sec.querySelector(".aspekt-kopf").setAttribute("aria-expanded", String(auf));
+    document.getElementById("a" + j).hidden = !auf;
+  });
+  if (offen >= 0) {
+    zeichneKoerper(offen);
+    if (stand[offen] >= 2) { markiere(ASPEKTE[offen].zeilen); springe(ASPEKTE[offen].zeilen); }
+    else markiere([]);
+  } else {
+    markiere([]);
+  }
+}
+
+ASPEKTE.forEach((a, i) => {
+  const sec = document.createElement("section");
+  sec.className = "aspekt";
+  sec.innerHTML = `
+    <button class="aspekt-kopf" type="button" aria-expanded="false" aria-controls="a${i}">
+      <span class="name">${a.name}</span>
+      <span class="bezug">${a.bezug}</span>
+      <span class="pfeil" aria-hidden="true"></span>
+    </button>
+    <div class="aspekt-body" id="a${i}" hidden></div>`;
+  sec.querySelector(".aspekt-kopf").addEventListener("click", () => oeffne(i));
+  listeBox.appendChild(sec);
+});
+
+/* Etikett für Kialo in die Zwischenablage */
+function kopiere(text, knopf) {
+  const alt = knopf.textContent;
+  const fertig = (ok) => {
+    knopf.textContent = ok ? "Kopiert: jetzt in Kialo einfügen" : `Bitte abtippen: ${text.trim()}`;
+    setTimeout(() => { knopf.textContent = alt; }, 2200);
+  };
+  try {
+    if (navigator.clipboard && window.isSecureContext) {
+      navigator.clipboard.writeText(text).then(() => fertig(true), () => fertig(ersatz(text)));
+    } else {
+      fertig(ersatz(text));
+    }
+  } catch (e) { fertig(false); }
+}
+function ersatz(text) {
+  try {
+    const ta = document.createElement("textarea");
+    ta.value = text;
+    ta.setAttribute("readonly", "");
+    ta.style.position = "fixed"; ta.style.opacity = "0";
+    document.body.appendChild(ta);
+    ta.select();
+    const ok = document.execCommand("copy");
+    document.body.removeChild(ta);
+    return ok;
+  } catch (e) { return false; }
+}
+</script>
+</body>
+</html>
