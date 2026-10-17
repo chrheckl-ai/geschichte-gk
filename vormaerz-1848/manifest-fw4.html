@@ -133,7 +133,7 @@
   .zeile.m-pro .nr { color: var(--pro-dunkel); }
   .zeile.m-contra .nr { color: var(--contra-dunkel); }
   .zeile.m-gewaehlt .nr { color: var(--petrol); }
-  .modus-stelle .seg.stelle { cursor: pointer; text-decoration-line: underline; text-decoration-style: dotted; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  .modus-stelle .seg.stelle { cursor: pointer; text-decoration-line: underline; text-decoration-style: solid; text-decoration-thickness: 2px; text-underline-offset: 4px; }
   .modus-stelle .seg.stelle-a { text-decoration-color: #3F7491; }
   .modus-stelle .seg.stelle-b { text-decoration-color: #B07D2A; }
   .sperr { letter-spacing: .28em; margin-right: -.28em; }
@@ -674,7 +674,7 @@ function karte(e) {
 function zeichneStellenmodus() {
   if (aktStelle < 0) {
     stellenBox.innerHTML = `<ol class="schritte">
-      <li><b>Lies die Quelle.</b> Die Schlüsselstellen sind gepunktet unterstrichen.</li>
+      <li><b>Lies die Quelle.</b> Die Schlüsselstellen sind farbig unterstrichen.</li>
       <li><b>Tippe eine Stelle an,</b> die dir auffällt.</li>
       <li><b>Halte deinen Eindruck fest</b> und begründe ihn mit einem Prüfaspekt.</li></ol>`;
     return;
