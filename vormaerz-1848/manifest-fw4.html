@@ -17,6 +17,12 @@
     --warm: #FBF3E7;
     --amber: #D9A55B;
     --amber-dunkel: #8A5A12;
+    --pro: #4C9A5B;
+    --pro-hell: #E9F4EB;
+    --pro-dunkel: #2F6B3A;
+    --contra: #C2504A;
+    --contra-hell: #FBECEB;
+    --contra-dunkel: #8E2E29;
     --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
     --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, sans-serif;
     --qsize: 15px;
@@ -113,8 +119,13 @@
     padding-right: 6px;
   }
   .zeile.letzte .txt { text-align-last: left; }
-  .zeile.hl { background: var(--warm); box-shadow: inset 3px 0 0 var(--amber); }
-  .zeile.hl .nr { visibility: visible; color: var(--amber-dunkel); font-weight: 700; }
+  .zeile.pro { background: var(--pro-hell); box-shadow: inset 3px 0 0 var(--pro); }
+  .zeile.contra { background: var(--contra-hell); box-shadow: inset 3px 0 0 var(--contra); }
+  .zeile.pro .nr, .zeile.contra .nr { visibility: visible; font-weight: 700; }
+  .zeile.pro .nr { color: var(--pro-dunkel); }
+  .zeile.contra .nr { color: var(--contra-dunkel); }
+  .zeile.pro .nr::before { content: "+ "; }
+  .zeile.contra .nr::before { content: "\2212  "; }
   .sperr { letter-spacing: .28em; margin-right: -.28em; }
   sup { line-height: 0; }
   sup a { color: var(--petrol); text-decoration: none; font-family: var(--sans); font-weight: 700; font-size: .72em; padding: 0 2px; }
@@ -154,7 +165,17 @@
   .stufe h3 { margin: 0 0 4px; font-size: .78rem; font-weight: 600; color: var(--grau); }
   .stufe p { margin: 0 0 6px; font-size: .95rem; line-height: 1.5; }
   .stufe.s3 p { font-family: var(--serif); font-style: italic; }
-  .stufe .zeilenangabe { font-size: .85rem; color: var(--amber-dunkel); font-weight: 600; }
+  .impuls { margin: 6px 0 8px; padding: 8px 10px 6px; border-radius: 6px; }
+  .impuls b { display: block; font-size: .85rem; margin-bottom: 2px; }
+  .impuls p { margin: 0; }
+  .impuls .knopf { margin-top: 6px; }
+  .impuls.pro { background: var(--pro-hell); border-left: 3px solid var(--pro); }
+  .impuls.pro b { color: var(--pro-dunkel); }
+  .impuls.contra { background: var(--contra-hell); border-left: 3px solid var(--contra); }
+  .impuls.contra b { color: var(--contra-dunkel); }
+  .urteilen { background: #fff; border: 1px solid var(--linie); border-radius: 8px; padding: 8px 12px; margin: 4px 0 0; font-size: .88rem; line-height: 1.45; }
+  .urteilen summary { cursor: pointer; font-weight: 600; color: var(--petrol); padding: 4px 0; }
+  .urteilen p { margin: 6px 0 0; }
   .knopf {
     display: inline-block;
     border: 1.5px solid var(--petrol);
@@ -220,7 +241,15 @@
   <aside class="pane hilfen" aria-label="Prüfaspekte und Hilfen">
     <h2>Prüfaspekte</h2>
     <p class="hinweis">Du musst nicht alle Prüfaspekte abarbeiten. Wähle die aus, die beim Manifest etwas hergeben. Öffne die Hilfen Stufe für Stufe und erst dann, wenn du allein nicht weiterkommst.</p>
-    <p class="hinweis">In Kialo beginnt jedes Argument mit seinem Prüfaspekt in eckigen Klammern, z. B. <code>[Handlungsspielraum]</code>.</p>
+    <p class="hinweis">In Kialo beginnt jedes Argument mit seinem Prüfaspekt in eckigen Klammern, z. B. <code>[Handlungsspielraum]</code>, und endet mit deinem Urteil.</p>
+    <details class="urteilen">
+      <summary>So formulierst du ein Urteil</summary>
+      <p><b>Drei Schritte:</b> Was macht er? (Befund mit Z.) Warum? (Erklärung aus dem Kontext) Was halte ich davon? (Urteilswort und Begründung)</p>
+      <p><b>Urteilswörter pro:</b> nachvollziehbar, folgerichtig, zweckmäßig, angemessen, zutreffend</p>
+      <p><b>Urteilswörter contra:</b> widersprüchlich, einseitig, verzerrend, unverhältnismäßig, vermeidbar</p>
+      <p><b>Satzanfänge:</b> „Ich halte das für …, weil …“, „Überzeugend ist …, nicht überzeugend ist …“</p>
+      <p>Ein Argument ohne Urteilssatz ist nur eine Erläuterung.</p>
+    </details>
     <div class="liste" id="liste"></div>
   </aside>
 </main>
@@ -269,56 +298,56 @@ const ZEILEN = [
   "freien Könige!“ (…)."
 ];
 
-/* Prüfaspekte nach dem Methodenblatt. Stufe 2 nennt die Zeilen, die im Text markiert werden. */
+/* Prüfaspekte nach dem Methodenblatt. Stufe 2: je eine Pro- und eine Contra-Stelle, im Text grün bzw. rot markiert. */
 const ASPEKTE = [
   { name: "Schlüssigkeit", bezug: "beide Teile der These",
-    s1: "Trägt die Begründung des Königs seine Forderung? Wo springt seine Argumentation, wo behauptet er, statt zu begründen?",
-    zeilen: [24,25,26,27,28], zeilenText: "Z. 24 ff.",
-    s2: "Lies Z. 24 ff.: Hat er das Dekret nach eigener Aussage freiwillig erlassen oder unter Zwang?",
-    s3: "Seine Argumentation ist insofern (nicht) schlüssig, als er einerseits … (Z. …), andererseits … (Z. …)." },
+    s1: "Inwiefern ist die Argumentation des Königs in sich schlüssig? Wo hat er einen Punkt, wo widerspricht er sich?",
+    pro: { zeilen: [16,17,18,19,20], text: "Lies Z. 16 ff.: Welche Pflichten leitet er aus seinem Amt ab? Passt sein Aufruf am Ende dazu?" },
+    contra: { zeilen: [24,25,26,27,28], text: "Lies Z. 24 ff.: Wie stellt er dar, wie es zum Dekret kam? Passt das zu dem, was du über den März 1848 weißt?" },
+    s3: "Ich halte seine Argumentation insofern für schlüssig, als … (Z. …). Für widersprüchlich halte ich dagegen, dass … (Z. …), denn …" },
   { name: "Intention und Interessen", bezug: "Haltung zur Revolution",
-    s1: "Welche Motive und Interessen stehen hinter seiner Darstellung des März 1848 und des letzten halben Jahres? Wem nützt sie? Was folgt daraus für ihre Verlässlichkeit?",
-    zeilen: [6,7,8,9], zeilenText: "Z. 6 ff.",
-    s2: "Lies Z. 6 ff.: Wem gibt er die Schuld daran, dass sich die Lage verschlimmert hat? Was gewinnt er dadurch?",
-    s3: "Seine Darstellung dient erkennbar dem Ziel, …; als Bericht über … ist sie deshalb nur begrenzt verlässlich." },
+    s1: "Inwiefern prägen eigene Interessen seine Darstellung? Wo ist sein Anliegen verständlich, wo färbt es die Darstellung?",
+    pro: { zeilen: [12,13], text: "Lies Z. 12 f.: Was kündigt er hier an? Warum ist es verständlich, dass er das öffentlich begründen will (Hinweise zum Material)?" },
+    contra: { zeilen: [2,3,4,5,6], text: "Lies Z. 2 ff.: Wem gibt er die Schuld am 18. März? Wie verlässlich ist diese Darstellung?" },
+    s3: "Ich halte es für nachvollziehbar, dass er … (Z. …), weil … Für wenig verlässlich halte ich seine Darstellung dagegen, weil … (Z. …)." },
   { name: "Handlungsspielraum", bezug: "beide Teile der These",
-    s1: "Welche Alternativen standen ihm im November 1848 offen? Welche Zwänge schränkten ihn ein?",
-    zeilen: [28,29,30,31], zeilenText: "Z. 28 ff.",
-    s2: "Lies Z. 28 ff.: Welchen Weg verlässt er hier? Hätte er ihn im November 1848 weitergehen können?",
-    s3: "Aus der Sicht eines Monarchen im Herbst 1848 erscheint … nachvollziehbar, weil … Allerdings hätte er …" },
+    s1: "Inwiefern blieb ihm im November 1848 keine andere Wahl? Wo sprechen die Umstände für sein Vorgehen, wo hätte er anders handeln können?",
+    pro: { zeilen: [6,7,8,9], text: "Lies Z. 6 ff.: Was ist nach seiner Darstellung unter den liberalen Ministern passiert? Passt das zu dem, was du über den Herbst 1848 weißt (AB 2)?" },
+    contra: { zeilen: [28,29,30,31], text: "Lies Z. 28 ff.: Welchen Weg verlässt er hier? Hätte er ihn weitergehen können?" },
+    s3: "Angesichts … halte ich sein Vorgehen für nachvollziehbar (Z. …). Vermeidbar war es aus meiner Sicht dennoch, denn … (Z. …)." },
   { name: "Adressat und Wirkung", bezug: "Herrschaftsverständnis",
-    s1: "An wen richtet sich der Aufruf, und wen will er besonders gewinnen? Was lässt sich über die Wirkung sagen?",
-    zeilen: [33,34,35], zeilenText: "Z. 33 ff.",
-    s2: "Lies Z. 33 ff.: Wovor warnt er? Welche Gruppe soll sich davon besonders angesprochen fühlen?",
-    s3: "Mit dem Appell an … richtet er sich vor allem an …; über die Wirkung lässt sich allerdings nur sagen, dass …" },
+    s1: "Inwiefern kann der Aufruf die Menschen gewinnen, an die er sich richtet? Wen erreicht er, wen eher nicht?",
+    pro: { zeilen: [33,34,35], text: "Lies Z. 33 ff.: Wovor warnt er? Wer dürfte sich davon angesprochen fühlen?" },
+    contra: { zeilen: [17,18], text: "Lies Z. 17 f.: Wie nennt er die Menschen, an die er sich wendet? Wie kommt das bei Bürgern an, die eine Verfassung wollen?" },
+    s3: "Für zweckmäßig halte ich seine Warnung vor …, weil sie … anspricht (Z. …). Für wenig geeignet halte ich dagegen, dass er … (Z. …), denn …" },
   { name: "Andere Positionen", bezug: "beide Teile der These",
-    s1: "Welche zeitgenössischen Gegenpositionen kennst du? Wie hätten sie auf diesen Text reagiert?",
-    zeilen: [35,36,37,38,39], zeilenText: "Z. 35 ff.",
-    s2: "Lies Z. 35 ff. mit den Augen eines Demokraten (AB 2): Was würde er dem König entgegnen?",
-    s3: "Ein Liberaler hätte …, während ein Demokrat …, weil …" },
+    s1: "Wie hätten Zeitgenossen mit anderen Positionen auf das Manifest reagiert? Wer hätte ihm eher zugestimmt, wer widersprochen?",
+    pro: { zeilen: [29,30,31], text: "Lies Z. 29 ff. mit den Augen eines Liberalen (AB 2): Was davon könnte er unterschreiben?" },
+    contra: { zeilen: [35,36,37,38,39], text: "Lies Z. 35 ff. mit den Augen eines Demokraten (AB 2): Was würde er dem König entgegnen? Was würde auch ein Liberaler kritisch sehen?" },
+    s3: "Ein Liberaler hätte ihm möglicherweise zugestimmt, dass … (Z. …). Das halte ich für berechtigt, weil … Den möglichen Einwand eines Demokraten, dass … (Z. …), halte ich für (nicht) überzeugend, weil …" },
   { name: "Leerstellen", bezug: "Haltung zur Revolution",
-    s1: "Welche Themen und Probleme kommen nicht vor? Ist das Zufall oder Absicht?",
-    zeilen: [2,3,4,5,6], zeilenText: "Z. 2 ff.",
-    s2: "Lies Z. 2 ff.: Wie erklärt er, dass es zum 18. März kam? Was lässt er dabei weg?",
-    s3: "Bemerkenswert ist, was der Text nicht behandelt: … Das ist vermutlich Absicht, weil …" },
+    s1: "Was lässt der König weg? Wo ist das aus seiner Lage verständlich, wo verzerrt es das Bild?",
+    pro: { zeilen: [33,34], text: "Lies Z. 33 f.: Wovor hat er Angst? Warum wäre es für ihn gefährlich, die Ursachen der Revolution zu nennen?" },
+    contra: { zeilen: [22,23], text: "Lies Z. 22 f.: Woher kam die Revolution nach seiner Darstellung? Was fehlt an dieser Erklärung?" },
+    s3: "Aus seiner Lage halte ich es für folgerichtig, dass er … weglässt (Z. …), denn … Für verzerrend halte ich allerdings, dass … (Z. …), weil …" },
   { name: "Wissenshorizont", bezug: "Haltung zur Revolution",
-    s1: "Über wie viel Wissen verfügte er im November 1848? Was konnte er nicht wissen, und wie wirkt sich das auf dein Urteil aus?",
-    zeilen: [9,10,11,12], zeilenText: "Z. 9 ff.",
-    s2: "Lies Z. 9 ff.: Wie sicher ist er sich, wohin die Revolution führt? Konnte er das im November 1848 schon wissen?",
-    s3: "Hier zeigt sich die Grenze seines Wissenshorizonts: … Das mildert (oder verschärft) mein Urteil, weil …" },
+    s1: "Was konnte der König im November 1848 wissen? Wo ist sein Blick aus damaliger Sicht verständlich, wo übersieht er etwas, das er hätte sehen können?",
+    pro: { zeilen: [4,5,6], text: "Lies Z. 4 ff.: Was hat er im März selbst erlebt? Wie prägt das seinen Blick auf die Revolution?" },
+    contra: { zeilen: [31,32,33], text: "Lies Z. 31 ff.: Wen meint er mit dem „Ungeheuer der Revolution“? Hätte er wissen können, dass die Revolutionäre gespalten waren (AB 2)?" },
+    s3: "Nach seinen Erfahrungen im März halte ich für verständlich, dass … (Z. …). Als Fehleinschätzung werte ich jedoch, dass … (Z. …), denn …" },
   { name: "Blick von heute", bezug: "beide Teile der These",
-    s1: "Hat sich seine Einschätzung der Lage im November 1848 bestätigt, oder wurde sie widerlegt?",
-    zeilen: [38,39], zeilenText: "Z. 38 f.",
-    s2: "Lies die Losung in Z. 38 f.: Ist es am Ende so gekommen? Vorsicht: Dass er sich durchsetzte, macht seine Haltung noch nicht vertretbar.",
-    s3: "Aus heutiger Sicht bestätigt sich seine Einschätzung insofern, als … Seine Losung erweist sich dagegen als …" },
+    s1: "Inwiefern hat sich seine Einschätzung bestätigt? Was ist so gekommen, wie er es wollte, was nicht? Vorsicht: Dass er sich durchsetzte, macht seine Haltung noch nicht vertretbar.",
+    pro: { zeilen: [12,13], text: "Lies Z. 12 f.: Was kündigt er an? Ist ihm das gelungen?" },
+    contra: { zeilen: [38,39], text: "Lies die Losung in Z. 38 f.: Ist es so gekommen?" },
+    s3: "Aus heutiger Sicht halte ich seine Einschätzung insofern für zutreffend, als … (Z. …). Für widerlegt halte ich dagegen … (Z. …), denn …" },
   { name: "Sprache", bezug: "Haltung zur Revolution",
-    s1: "Sprachliche Besonderheiten zählen nur, wenn sie für dein Urteil entscheidend sind. Was verrät die Bildsprache über seine Haltung zur Revolution?",
-    zeilen: [31,32,33], zeilenText: "Z. 31 ff.",
-    s2: "Lies Z. 31 ff.: Als was bezeichnet er die Revolution? Was folgt aus diesem Bild für seinen Umgang mit ihr?",
-    s3: "Indem er die Revolution als … bezeichnet (Z. …), macht er deutlich, dass …" }
+    s1: "Inwiefern verrät seine Sprache seine Haltung zur Revolution? Wo ist sie aus seiner Sicht zweckmäßig, wo verzerrt sie?",
+    pro: { zeilen: [31,32,33], text: "Lies Z. 31 ff.: Wozu ruft er auf? Warum braucht er dafür starke Bilder?" },
+    contra: { zeilen: [9,10,11,12], text: "Lies Z. 9 ff.: Mit welchen Bildern beschreibt er die Revolution? Was folgt daraus für seinen Umgang mit ihr?" },
+    s3: "Aus seiner Lage halte ich seine Bildsprache für zweckmäßig, weil sie … (Z. …). Für verzerrend halte ich sie dennoch, denn … (Z. …)." }
 ];
 
-const STUFEN = ["Leitfrage", "Zeilen und Denkanstoß", "Satzbaustein"];
+const STUFEN = ["Leitfrage", "Denkanstöße pro und contra", "Satzbaustein"];
 const reduziert = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 function zeileHtml(t) {
@@ -360,10 +389,12 @@ if (document.fonts && document.fonts.ready) document.fonts.ready.then(einpassen)
 let rt;
 window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(einpassen, 80); });
 
-/* Markierung */
-function markiere(liste) {
+/* Markierung: Pro-Stelle grün, Contra-Stelle rot */
+function markiere(pro, contra) {
   zeilenBox.querySelectorAll(".zeile").forEach(z => {
-    z.classList.toggle("hl", liste.includes(Number(z.dataset.n)));
+    const n = Number(z.dataset.n);
+    z.classList.toggle("pro", pro.includes(n));
+    z.classList.toggle("contra", contra.includes(n));
   });
 }
 function springe(liste) {
@@ -371,6 +402,7 @@ function springe(liste) {
   const ziel = zeilenBox.querySelector(`.zeile[data-n="${Math.min(...liste)}"]`);
   if (ziel) ziel.scrollIntoView({ behavior: reduziert ? "auto" : "smooth", block: "center" });
 }
+const alleZeilen = (a) => a.pro.zeilen.concat(a.contra.zeilen);
 
 /* Prüfaspekte aufbauen */
 const stand = ASPEKTE.map(() => 0);
@@ -382,7 +414,9 @@ const nb = (t) => t.replace(/Z\. (\d+)( ff?\.)?/g, (m, n, f) => "Z. " + n + (f 
 
 function stufeHtml(a, s) {
   if (s === 1) return `<div class="stufe s1"><h3>Stufe 1: ${STUFEN[0]}</h3><p>${nb(a.s1)}</p></div>`;
-  if (s === 2) return `<div class="stufe s2"><h3>Stufe 2: ${STUFEN[1]}</h3><p class="zeilenangabe">Im Text markiert: ${nb(a.zeilenText)}</p><p>${nb(a.s2)}</p><button class="knopf klein springen" type="button">Zu den Zeilen springen</button></div>`;
+  if (s === 2) return `<div class="stufe s2"><h3>Stufe 2: ${STUFEN[1]}</h3>
+    <div class="impuls pro"><b>Pro: Wo hat er einen Punkt?</b><p>${nb(a.pro.text)}</p><button class="knopf klein zeigen" type="button" data-seite="pro">Stelle zeigen</button></div>
+    <div class="impuls contra"><b>Contra: Wo hakt es?</b><p>${nb(a.contra.text)}</p><button class="knopf klein zeigen" type="button" data-seite="contra">Stelle zeigen</button></div></div>`;
   return `<div class="stufe s3"><h3>Stufe 3: ${STUFEN[2]}</h3><p>${nb(a.s3)}</p></div>`;
 }
 
@@ -402,14 +436,13 @@ function zeichneKoerper(i) {
   if (weiter) weiter.addEventListener("click", () => {
     stand[i] = Number(weiter.dataset.stufe);
     zeichneKoerper(i);
-    if (stand[i] === 2) { markiere(a.zeilen); springe(a.zeilen); }
+    if (stand[i] === 2) { markiere(a.pro.zeilen, a.contra.zeilen); springe(alleZeilen(a)); }
     const neu = body.querySelector(".stufe:last-of-type");
     if (neu) neu.scrollIntoView({ behavior: reduziert ? "auto" : "smooth", block: "nearest" });
     const naechsterKnopf = body.querySelector(".weiter") || body.querySelector(".etikett");
     if (naechsterKnopf) naechsterKnopf.focus({ preventScroll: true });
   });
-  const spr = body.querySelector(".springen");
-  if (spr) spr.addEventListener("click", () => springe(a.zeilen));
+  body.querySelectorAll(".zeigen").forEach(b => b.addEventListener("click", () => springe(a[b.dataset.seite].zeilen)));
   const et = body.querySelector(".etikett");
   et.addEventListener("click", () => kopiere(`[${a.name}] `, et));
 }
@@ -426,10 +459,11 @@ function oeffne(i) {
   });
   if (offen >= 0) {
     zeichneKoerper(offen);
-    if (stand[offen] >= 2) { markiere(ASPEKTE[offen].zeilen); springe(ASPEKTE[offen].zeilen); }
-    else markiere([]);
+    const a = ASPEKTE[offen];
+    if (stand[offen] >= 2) { markiere(a.pro.zeilen, a.contra.zeilen); springe(alleZeilen(a)); }
+    else markiere([], []);
   } else {
-    markiere([]);
+    markiere([], []);
   }
 }
 
