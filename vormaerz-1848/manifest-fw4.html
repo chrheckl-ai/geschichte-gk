@@ -314,17 +314,17 @@ const ASPEKTE = [
     impulse: [
       { seite: "contra", zeilen: [22,23,24,28,29,30,31], text: "Lies Z. 22 bis 24 und Z. 28 ff.: Welchen Weg hat er im März eingeschlagen? Hätte er ihn weitergehen können?" } ],
     s3: "Für vermeidbar halte ich seinen Kurswechsel, denn er hätte … (Z. …), weil …" },
-  { name: "Adressat und Wirkung", bezug: "Herrschaftsverständnis",
-    s1: "Inwiefern kann der Aufruf die Menschen gewinnen, an die er sich richtet? Wen erreicht er, wen eher nicht?",
+  { name: "Adressat und Wirkung", bezug: "beide Teile der These",
+    s1: "Wen will der König mit seinem Aufruf gewinnen, und womit? Was lässt sich über die Wirkung sagen?",
     impulse: [
       { seite: "pro", zeilen: [28,29,33,34,35], text: "Lies Z. 28 f. und Z. 33 ff.: Was bietet er an, und wovor warnt er? Wen kann er damit gewinnen?" },
-      { seite: "contra", zeilen: [17,18], text: "Lies Z. 17 f.: Als was sieht er die Menschen, an die er sich wendet? Wie kommt das bei jemandem an, der das Volk als Souverän sieht?" } ],
-    s3: "Für zweckmäßig halte ich, dass er … anbietet und vor … warnt (Z. …), weil … Für wenig geeignet halte ich dagegen, dass er die Menschen als … sieht (Z. …), denn …" },
+      { seite: "contra", zeilen: [], material: true, text: "Lies die Hinweise zum Material: Wer bekam den Text überhaupt zu sehen? Was folgt daraus für seine Wirkung?" } ],
+    s3: "Für zweckmäßig halte ich, dass er … anbietet und vor … warnt (Z. …), weil … Seine Wirkung halte ich dennoch für gering, denn …" },
   { name: "Andere Positionen", bezug: "beide Teile der These",
     s1: "Wie hätten Zeitgenossen mit anderen Positionen auf das Manifest reagiert? Wer hätte ihm eher zugestimmt, wer widersprochen?",
     impulse: [
       { seite: "pro", zeilen: [29,30,31], text: "Lies Z. 29 ff. mit den Augen eines Liberalen (AB 2): Was davon könnte er unterschreiben?" },
-      { seite: "contra", zeilen: [35,36,37,38,39], text: "Lies Z. 35 ff. mit den Augen eines Demokraten (AB 2): Was würde er dem König entgegnen? Was würde auch ein Liberaler kritisch sehen?" } ],
+      { seite: "contra", zeilen: [17,18], text: "Lies Z. 17 f. mit den Augen eines Demokraten (AB 2): Als was sieht der König das Volk? Was würde ein Demokrat entgegnen, und was würde auch ein Liberaler kritisch sehen?" } ],
     s3: "Ein Liberaler hätte ihm möglicherweise zugestimmt, dass … (Z. …). Das halte ich für berechtigt, weil … Den möglichen Einwand eines Demokraten, dass … (Z. …), halte ich für (nicht) überzeugend, weil …" },
   { name: "Leerstellen", bezug: "Haltung zur Revolution",
     s1: "Was lässt der König weg? Wo verzerrt das das Bild, und wo ist es aus seiner Lage verständlich?",
@@ -423,7 +423,7 @@ const KOPF = { pro: "Pro: Wo hat er einen Punkt?", contra: "Contra: Wo hakt es?"
 function stufeHtml(a, s) {
   if (s === 1) return `<div class="stufe s1"><h3>Stufe 1: ${stufenName(a, 1)}</h3><p>${nb(a.s1)}</p></div>`;
   if (s === 2) return `<div class="stufe s2"><h3>Stufe 2: ${stufenName(a, 2)}</h3>` +
-    a.impulse.map((x, k) => `<div class="impuls ${x.seite}"><b>${KOPF[x.seite]}</b><p>${nb(x.text)}</p><button class="knopf klein zeigen" type="button" data-k="${k}">Stelle zeigen</button></div>`).join("") +
+    a.impulse.map((x, k) => `<div class="impuls ${x.seite}"><b>${KOPF[x.seite]}</b><p>${nb(x.text)}</p><button class="knopf klein zeigen" type="button" data-k="${k}">${x.material ? "Hinweise zeigen" : "Stelle zeigen"}</button></div>`).join("") +
     `</div>`;
   return `<div class="stufe s3"><h3>Stufe 3: ${stufenName(a, 3)}</h3><p>${nb(a.s3)}</p></div>`;
 }
@@ -450,7 +450,14 @@ function zeichneKoerper(i) {
     const naechsterKnopf = body.querySelector(".weiter") || body.querySelector(".etikett");
     if (naechsterKnopf) naechsterKnopf.focus({ preventScroll: true });
   });
-  body.querySelectorAll(".zeigen").forEach(b => b.addEventListener("click", () => springe(a.impulse[Number(b.dataset.k)].zeilen)));
+  body.querySelectorAll(".zeigen").forEach(b => b.addEventListener("click", () => {
+    const x = a.impulse[Number(b.dataset.k)];
+    if (x.material) {
+      const d = document.querySelector(".material");
+      d.open = true;
+      d.scrollIntoView({ behavior: reduziert ? "auto" : "smooth", block: "start" });
+    } else springe(x.zeilen);
+  }));
   const et = body.querySelector(".etikett");
   et.addEventListener("click", () => kopiere(`[${a.name}] `, et));
 }
