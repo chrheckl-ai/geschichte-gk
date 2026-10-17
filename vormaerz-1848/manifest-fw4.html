@@ -124,11 +124,17 @@
     padding-right: 6px;
   }
   .zeile.letzte .txt { text-align-last: left; }
-  .zeile.pro { background: var(--pro-hell); box-shadow: inset 3px 0 0 var(--pro); }
-  .zeile.contra { background: var(--contra-hell); box-shadow: inset 3px 0 0 var(--contra); }
-  .zeile.pro .nr, .zeile.contra .nr { visibility: visible; font-weight: 700; }
-  .zeile.pro .nr { color: var(--pro-dunkel); }
-  .zeile.contra .nr { color: var(--contra-dunkel); }
+  .seg.pro { background: #D3ECD8; }
+  .seg.contra { background: #F6D6D3; }
+  .seg.gewaehlt { background: #D6E5EE; }
+  .seg.pro, .seg.contra, .seg.gewaehlt { border-radius: 2px; -webkit-box-decoration-break: clone; box-decoration-break: clone; text-decoration: none !important; }
+  .zeile.m-pro .nr, .zeile.m-contra .nr, .zeile.m-gewaehlt .nr { visibility: visible; font-weight: 700; }
+  .zeile.m-pro .nr { color: var(--pro-dunkel); }
+  .zeile.m-contra .nr { color: var(--contra-dunkel); }
+  .zeile.m-gewaehlt .nr { color: var(--petrol); }
+  .modus-stelle .seg.stelle { cursor: pointer; text-decoration-line: underline; text-decoration-style: dotted; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  .modus-stelle .seg.stelle-a { text-decoration-color: #3F7491; }
+  .modus-stelle .seg.stelle-b { text-decoration-color: #B07D2A; }
   .sperr { letter-spacing: .28em; margin-right: -.28em; }
   sup { line-height: 0; }
   sup a { color: var(--petrol); text-decoration: none; font-family: var(--sans); font-weight: 700; font-size: .72em; padding: 0 2px; }
@@ -195,11 +201,6 @@
   .gegenprobe { margin-top: 12px; }
   .gegenprobe summary { cursor: pointer; font-weight: 600; color: var(--petrol); padding: 6px 0; }
   .satz p { font-family: var(--serif); font-style: italic; margin-top: 6px; }
-  .modus-stelle .zeile.stelle { cursor: pointer; }
-  .modus-stelle .zeile.stelle-a:not(.pro):not(.contra):not(.gewaehlt) { box-shadow: inset 3px 0 0 #5F8BA3; }
-  .modus-stelle .zeile.stelle-b:not(.pro):not(.contra):not(.gewaehlt) { box-shadow: inset 3px 0 0 #9DB7C5; }
-  .zeile.gewaehlt { background: var(--petrol-hell); box-shadow: inset 3px 0 0 var(--petrol); }
-  .zeile.gewaehlt .nr { visibility: visible; color: var(--petrol); font-weight: 700; }
   .knopf {
     display: inline-block;
     border: 1.5px solid var(--petrol);
@@ -353,80 +354,164 @@ const ZEILEN = [
   "freien Könige!“ (…)."
 ];
 
-/* Prüfaspekte nach dem Methodenblatt. Stufe 2: Impulse in der angezeigten Reihenfolge; Pro-Stellen grün, Contra-Stellen rot markiert. */
+/* Bereiche: [Startzeile, "erste Worte" (null = Zeilenanfang), Endzeile, "letzte Worte" (null = Zeilenende)].
+   Markiert wird genau dieser Textteil, nicht die ganze Zeile. */
 const ASPEKTE = [
   { name: "Schlüssigkeit", bezug: "beide Teile der These",
     s1: "Inwiefern ist die Argumentation des Königs in sich schlüssig? Wo hat er einen Punkt, wo widerspricht er sich?",
     impulse: [
-      { seite: "pro", zeilen: [16,17,18,19,20], text: "Lies Z. 16 ff.: Welche Pflichten leitet er aus seinem Amt ab? Passt sein Aufruf am Ende dazu?" },
-      { seite: "contra", zeilen: [24,25,26,29,30,31], text: "Lies Z. 24 bis 26 und Fußnote 2: Worauf ist er „stolz“? Passt das dazu, wie er in Z. 29 ff. über die Verfassung spricht?" } ],
+      { seite: "pro", bereiche: [[16, null, 20, "sei."]], text: "Lies Z. 16 ff.: Welche Pflichten leitet er aus seinem Amt ab? Passt sein Aufruf am Ende dazu?" },
+      { seite: "contra", bereiche: [[24, "Das Resultat", 26, "Teutschland."], [29, "Doch wehe uns", 31, "Das ist unmöglich."]], text: "Lies Z. 24 bis 26 und Fußnote 2: Worauf ist er „stolz“? Passt das dazu, wie er in Z. 29 ff. über die Verfassung spricht?" } ],
     s3: "Ich halte seine Argumentation insofern für schlüssig, als … (Z. …). Für widersprüchlich halte ich dagegen, dass … (Z. …), denn …" },
   { name: "Intention und Interessen", bezug: "Haltung zur Revolution",
     s1: "Inwiefern prägen eigene Interessen seine Darstellung? Was folgt daraus für ihre Verlässlichkeit?",
     impulse: [
-      { seite: "contra", zeilen: [2,3,4,5,6], text: "Lies Z. 2 ff.: Wem gibt er die Schuld am 18. März? Wie verlässlich ist diese Darstellung?" } ],
+      { seite: "contra", bereiche: [[2, "Ein unerhörter", 6, "Frieden an (…)."]], text: "Lies Z. 2 ff.: Wem gibt er die Schuld am 18. März? Wie verlässlich ist diese Darstellung?" } ],
     s3: "Für wenig verlässlich halte ich seine Darstellung, weil er … (Z. …), denn …" },
   { name: "Handlungsspielraum", bezug: "beide Teile der These",
     s1: "Welche Handlungsmöglichkeiten hatte der König 1848, im März wie im November? Wo hätte er anders handeln können?",
     impulse: [
-      { seite: "contra", zeilen: [22,23,24,28,29,30,31], text: "Lies Z. 22 bis 24 und Z. 28 ff.: Welchen Weg hat er im März eingeschlagen? Hätte er ihn weitergehen können?" } ],
+      { seite: "contra", bereiche: [[22, "[Denn]", 24, "beschreiten."], [28, "Unsere Verfassung", 31, "Das ist unmöglich."]], text: "Lies Z. 22 bis 24 und Z. 28 ff.: Welchen Weg hat er im März eingeschlagen? Hätte er ihn weitergehen können?" } ],
     s3: "Für vermeidbar halte ich seinen Kurswechsel, denn er hätte … (Z. …), weil …" },
   { name: "Adressat und Wirkung", bezug: "beide Teile der These",
     s1: "Wen will der König mit seinem Aufruf gewinnen, und womit? Was lässt sich über die vermutliche Wirkung sagen?",
     impulse: [
-      { seite: "pro", zeilen: [28,29,33,34,35], text: "Lies Z. 28 f. und Z. 33 ff.: Was bietet er an, und wovor warnt er? Wen kann er damit gewinnen?" } ],
+      { seite: "pro", bereiche: [[28, "Unsere Verfassung", 29, "vereinbaren."], [33, "leidet hinfort", 35, "Eigentum anderer;"]], text: "Lies Z. 28 f. und Z. 33 ff.: Was bietet er an, und wovor warnt er? Wen kann er damit gewinnen?" } ],
     s3: "Für zweckmäßig halte ich, dass er … anbietet und vor … warnt (Z. …), weil er damit vermutlich … gewinnen kann." },
   { name: "Andere Positionen", bezug: "beide Teile der These",
     s1: "Wie hätten Zeitgenossen mit anderen Positionen auf das Manifest reagiert? Wer hätte ihm eher zugestimmt, wer widersprochen?",
     impulse: [
-      { seite: "pro", zeilen: [29,30,31], text: "Lies Z. 29 ff. mit den Augen eines Liberalen (AB 2): Was davon könnte er unterschreiben?" },
-      { seite: "contra", zeilen: [17,18], text: "Lies Z. 17 f. mit den Augen eines Demokraten (AB 2): Als was sieht der König das Volk? Was würde ein Demokrat entgegnen?" },
-      { seite: "contra", zeilen: [35,36,37,38,39], text: "Lies Z. 35 ff. mit den Augen eines Liberalen (AB 2): Woraus leitet der König seine Herrschaft ab? Was folgt daraus für die Bindung an eine Verfassung?" } ],
+      { seite: "pro", bereiche: [[29, "Doch wehe uns", 31, "Das ist unmöglich."]], text: "Lies Z. 29 ff. mit den Augen eines Liberalen (AB 2): Was davon könnte er unterschreiben?" },
+      { seite: "contra", bereiche: [[17, "Mein Volk, ein jeder", 18, "Obrigkeit,"]], text: "Lies Z. 17 f. mit den Augen eines Demokraten (AB 2): Als was sieht der König das Volk? Was würde ein Demokrat entgegnen?" },
+      { seite: "contra", bereiche: [[35, "Vertraut auf mich", 38, "geherrscht (…)."]], text: "Lies Z. 35 ff. mit den Augen eines Liberalen (AB 2): Woraus leitet der König seine Herrschaft ab? Was folgt daraus für die Bindung an eine Verfassung?" } ],
     s3: "Ein Liberaler hätte ihm möglicherweise zugestimmt, dass … (Z. …). Das halte ich für berechtigt, weil … Den möglichen Einwand eines Demokraten oder Liberalen, dass … (Z. …), halte ich für (nicht) überzeugend, weil …" },
   { name: "Leerstellen", bezug: "Haltung zur Revolution",
     s1: "Was lässt der König weg? Wo verzerrt das das Bild, und wo ist es aus seiner Lage verständlich?",
     impulse: [
-      { seite: "contra", zeilen: [22,23], text: "Lies Z. 22 f.: Woher kam die Revolution nach seiner Darstellung? Was fehlt an dieser Erklärung?" },
-      { seite: "pro", zeilen: [33,34], text: "Lies Z. 33 f.: Wovor hat er Angst? Warum wäre es für ihn gefährlich, die Ursachen der Revolution zu nennen?" } ],
+      { seite: "contra", bereiche: [[22, "[Denn]", 23, "ergriff,"]], text: "Lies Z. 22 f.: Woher kam die Revolution nach seiner Darstellung? Was fehlt an dieser Erklärung?" },
+      { seite: "pro", bereiche: [[33, "leidet hinfort", 34, "Königs,"]], text: "Lies Z. 33 f.: Wovor hat er Angst? Warum wäre es für ihn gefährlich, die Ursachen der Revolution zu nennen?" } ],
     s3: "Für verzerrend halte ich, dass er … weglässt (Z. …), weil … Aus seiner Lage ist das allerdings folgerichtig, denn … (Z. …)." },
   { name: "Wissenshorizont", bezug: "Haltung zur Revolution",
     s1: "Was konnte der König im November 1848 (nicht) wissen? Wie wirkt sich das auf dein Urteil aus?",
     impulse: [
-      { seite: "pro", zeilen: [9,10,11,12], text: "Lies Z. 9 ff.: Was befürchtet er? Was stand mit Blick auf vergangene Revolutionen, zum Beispiel in Frankreich, tatsächlich zu befürchten?" } ],
+      { seite: "pro", bereiche: [[9, "Das Verderben", 12, "Untergang."]], text: "Lies Z. 9 ff.: Was befürchtet er? Was stand mit Blick auf vergangene Revolutionen, zum Beispiel in Frankreich, tatsächlich zu befürchten?" } ],
     s3: "Mit Blick auf frühere Revolutionen halte ich seine Befürchtung für verständlich (Z. …), denn … Wie die Revolution ausgehen würde, konnte er im November 1848 nicht wissen." },
   { name: "Blick von heute", bezug: "beide Teile der These",
     s1: "Inwiefern hat sich erfüllt, was er im Manifest verspricht?",
     impulse: [
-      { seite: "contra", zeilen: [38,39], text: "Lies die Losung in Z. 38 f.: Ist es so gekommen?" } ],
+      { seite: "contra", bereiche: [[38, "Unsre Losung", 39, null]], text: "Lies die Losung in Z. 38 f.: Ist es so gekommen?" } ],
     s3: "Aus heutiger Sicht halte ich seine Losung für widerlegt, denn … (Z. …)." },
   { name: "Sprache", bezug: "Haltung zur Revolution",
     s1: "Inwiefern verrät seine Sprache seine Haltung zur Revolution? Wo verzerrt sie, und wo ist sie aus seiner Sicht zweckmäßig?",
     impulse: [
-      { seite: "contra", zeilen: [9,10,11,12], text: "Lies Z. 9 ff.: Mit welchen Bildern beschreibt er die Revolution? Was folgt daraus für seinen Umgang mit ihr?" },
-      { seite: "pro", zeilen: [31,32,33], text: "Lies Z. 31 ff.: Wozu ruft er auf? Warum braucht er dafür starke Bilder?" } ],
+      { seite: "contra", bereiche: [[9, "Das Verderben", 12, "Untergang."]], text: "Lies Z. 9 ff.: Mit welchen Bildern beschreibt er die Revolution? Was folgt daraus für seinen Umgang mit ihr?" },
+      { seite: "pro", bereiche: [[31, "Laßt uns", 33, "bekämpfen;"]], text: "Lies Z. 31 ff.: Wozu ruft er auf? Warum braucht er dafür starke Bilder?" } ],
     s3: "Für verzerrend halte ich seine Bildsprache, weil … (Z. …). Aus seiner Lage ist sie allerdings zweckmäßig, denn sie … (Z. …)." }
+];
+
+/* Schlüsselstellen für den Weg „Von einer Textstelle aus“ */
+const STELLEN = [
+  { bereich: [2, "Ein unerhörter", 6, "Frieden an (…)."], kurz: "„Ein unerhörter Verrat …“", eintraege: [
+    { aspekt: "Intention und Interessen", seite: "contra", frage: "Wem gibt er die Schuld am 18. März? Wie verlässlich ist diese Darstellung?", satz: "Für wenig verlässlich halte ich seine Darstellung, weil er … (Z. …), denn …" } ] },
+  { bereich: [9, "Das Verderben", 12, "Untergang."], kurz: "„Das Verderben droht …“", eintraege: [
+    { aspekt: "Wissenshorizont", seite: "pro", frage: "Was befürchtet er? Was stand mit Blick auf vergangene Revolutionen, zum Beispiel in Frankreich, tatsächlich zu befürchten?", satz: "Mit Blick auf frühere Revolutionen halte ich seine Befürchtung für verständlich (Z. …), denn …" },
+    { aspekt: "Sprache", seite: "contra", frage: "Mit welchen Bildern beschreibt er die Revolution? Was folgt daraus für seinen Umgang mit ihr?", satz: "Für verzerrend halte ich seine Bildsprache, weil … (Z. …)." } ] },
+  { bereich: [16, null, 20, "sei."], kurz: "„… einem Könige ‚von Gottes Gnaden‘ …“", eintraege: [
+    { aspekt: "Schlüssigkeit", seite: "pro", frage: "Welche Pflichten leitet er aus seinem Amt ab? Passt sein Aufruf am Ende dazu?", satz: "Ich halte seine Argumentation insofern für schlüssig, als … (Z. …)." },
+    { aspekt: "Andere Positionen", seite: "contra", frage: "Lies Z. 17 f. mit den Augen eines Demokraten (AB 2): Als was sieht der König das Volk? Was würde ein Demokrat entgegnen?", satz: "Den möglichen Einwand eines Demokraten, dass … (Z. …), halte ich für überzeugend, weil …" } ] },
+  { bereich: [22, "[Denn]", 24, "beschreiten."], kurz: "„Der allgemeine Umsturz …“", eintraege: [
+    { aspekt: "Leerstellen", seite: "pro", frage: "Was nennt er als Auslöser der Revolution? Passt das zu dem, was du über den Februar 1848 in Paris weißt?", satz: "Für zutreffend halte ich, dass er … als Anlass nennt (Z. …), denn …" },
+    { aspekt: "Leerstellen", seite: "contra", frage: "Woher kam die Revolution nach seiner Darstellung? Was fehlt an dieser Erklärung?", satz: "Für verzerrend halte ich, dass er … weglässt (Z. …), weil …" },
+    { aspekt: "Handlungsspielraum", seite: "contra", frage: "Welchen Weg hat er im März eingeschlagen? Hätte er ihn weitergehen können (Z. 28 ff.)?", satz: "Für vermeidbar halte ich seinen Kurswechsel, denn er hätte … (Z. …), weil …" } ] },
+  { bereich: [24, "Das Resultat", 28, "(…)."], kurz: "„Das Resultat war das Dekret …“", eintraege: [
+    { aspekt: "Schlüssigkeit", seite: "contra", frage: "Lies auch Fußnote 2: Worauf ist er „stolz“? Passt das dazu, wie er in Z. 29 ff. über die Verfassung spricht?", satz: "Für widersprüchlich halte ich, dass … (Z. …), denn …" } ] },
+  { bereich: [28, "Unsere Verfassung", 31, "Das ist unmöglich."], kurz: "„Unsere Verfassung muß gebaut werden …“", eintraege: [
+    { aspekt: "Adressat und Wirkung", seite: "pro", frage: "Was bietet er hier an? Wen kann er damit gewinnen?", satz: "Für zweckmäßig halte ich, dass er … anbietet (Z. …), weil er damit vermutlich … gewinnen kann." },
+    { aspekt: "Andere Positionen", seite: "pro", frage: "Lies die Stelle mit den Augen eines Liberalen (AB 2): Was davon könnte er unterschreiben?", satz: "Ein Liberaler hätte ihm möglicherweise zugestimmt, dass … (Z. …). Das halte ich für berechtigt, weil …" },
+    { aspekt: "Handlungsspielraum", seite: "contra", frage: "Welchen Weg verlässt er hier? Hätte er ihn weitergehen können?", satz: "Für vermeidbar halte ich seinen Kurswechsel, denn er hätte … (Z. …), weil …" } ] },
+  { bereich: [31, "Laßt uns", 35, "Eigentum anderer;"], kurz: "„… das Ungeheuer der Revolution bekämpfen …“", eintraege: [
+    { aspekt: "Leerstellen", seite: "pro", frage: "Wovor hat er Angst? Warum wäre es für ihn gefährlich, die Ursachen der Revolution zu nennen?", satz: "Aus seiner Lage halte ich es für folgerichtig, dass er … weglässt (Z. …), denn …" },
+    { aspekt: "Sprache", seite: "pro", frage: "Wozu ruft er auf? Warum braucht er dafür starke Bilder?", satz: "Aus seiner Lage halte ich seine Bildsprache für zweckmäßig, weil sie … (Z. …)." },
+    { aspekt: "Adressat und Wirkung", seite: "pro", frage: "Wovor warnt er? Wen kann er damit gewinnen?", satz: "Für zweckmäßig halte ich, dass er vor … warnt (Z. …), weil er damit vermutlich … gewinnen kann." },
+    { aspekt: "Sprache", seite: "contra", frage: "Als was bezeichnet er die Revolution? Was folgt aus diesem Bild für seinen Umgang mit ihr?", satz: "Für verzerrend halte ich seine Bildsprache, weil … (Z. …)." } ] },
+  { bereich: [35, "Vertraut auf mich", 38, "geherrscht (…)."], kurz: "„Vertraut auf mich, Euren König …“", eintraege: [
+    { aspekt: "Andere Positionen", seite: "contra", frage: "Lies die Stelle mit den Augen eines Liberalen (AB 2): Woraus leitet der König seine Herrschaft ab? Was folgt daraus für die Bindung an eine Verfassung?", satz: "Den möglichen Einwand eines Liberalen, dass … (Z. …), halte ich für überzeugend, weil …" } ] },
+  { bereich: [38, "Unsre Losung", 39, null], kurz: "„Ein freies Volk unter einem freien Könige!“", eintraege: [
+    { aspekt: "Blick von heute", seite: "contra", frage: "Ist es so gekommen, wie die Losung verspricht?", satz: "Aus heutiger Sicht halte ich seine Losung für widerlegt, denn … (Z. …)." } ] }
 ];
 
 const STUFEN = ["Leitfrage", "Denkanstöße", "Satzbaustein"];
 const stufenName = (a, s) => (s === 2 && a.impulse.length === 1) ? "Denkanstoß" : STUFEN[s - 1];
 const reduziert = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
+/* Zeilen in Bausteine zerlegen: Text, Fußnotenzeichen, gesperrte Wörter */
+const TOKEN = /\{FN(\d)\}|\{SPERR:([^}]+)\}/g;
 function zeileHtml(t) {
   return t
     .replace(/\{FN(\d)\}/g, (m, n) => `<sup><a href="#fn${n}" aria-label="Fußnote ${n}">${n}</a></sup>`)
     .replace(/\{SPERR:([^}]+)\}/g, (m, w) => `<span class="sperr">${w}</span>`);
+}
+function atome(t) {
+  const out = []; let last = 0, m;
+  TOKEN.lastIndex = 0;
+  while ((m = TOKEN.exec(t))) {
+    if (m.index > last) out.push({ t: "text", s: t.slice(last, m.index) });
+    out.push(m[1] ? { t: "fn", n: m[1] } : { t: "sperr", s: m[2] });
+    last = TOKEN.lastIndex;
+  }
+  if (last < t.length) out.push({ t: "text", s: t.slice(last) });
+  return out;
+}
+const ATOME = ZEILEN.map(atome);
+const SICHTBAR = ATOME.map(at => at.map(x => x.t === "fn" ? "" : x.s).join(""));
+function pos(z, phrase, ende) {
+  const v = SICHTBAR[z - 1];
+  if (phrase == null) return ende ? v.length : 0;
+  const i = v.indexOf(phrase);
+  if (i < 0) throw new Error(`Textstelle nicht gefunden: Z. ${z} „${phrase}“`);
+  return ende ? i + phrase.length : i;
+}
+const bereich = (b) => ({ z1: b[0], a: pos(b[0], b[1], false), z2: b[2], b: pos(b[2], b[3], true) });
+ASPEKTE.forEach(a => a.impulse.forEach(x => { x.ber = x.bereiche.map(bereich); }));
+STELLEN.forEach(s => { s.ber = bereich(s.bereich); });
+
+/* Schnittstellen pro Zeile: Anfang und Ende jedes Bereichs */
+const GRENZEN = ZEILEN.map((_, i) => new Set([0, SICHTBAR[i].length]));
+[...ASPEKTE.flatMap(a => a.impulse.flatMap(x => x.ber)), ...STELLEN.map(s => s.ber)]
+  .forEach(r => { GRENZEN[r.z1 - 1].add(r.a); GRENZEN[r.z2 - 1].add(r.b); });
+const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+function segmentHtml(i, a, b, letztes) {
+  let off = 0, html = "";
+  for (const x of ATOME[i]) {
+    if (x.t === "fn") {
+      if ((off >= a && off < b) || (letztes && off === b)) html += `<sup><a href="#fn${x.n}" aria-label="Fußnote ${x.n}">${x.n}</a></sup>`;
+      continue;
+    }
+    const s0 = off, s1 = off + x.s.length; off = s1;
+    const lo = Math.max(a, s0), hi = Math.min(b, s1);
+    if (lo >= hi) continue;
+    html += x.t === "sperr" ? `<span class="sperr">${esc(x.s)}</span>` : esc(x.s.slice(lo - s0, hi - s0));
+  }
+  return html;
 }
 
 /* Quelle aufbauen */
 const zeilenBox = document.getElementById("zeilen");
 ZEILEN.forEach((t, i) => {
   const n = i + 1;
+  const g = [...GRENZEN[i]].sort((x, y) => x - y);
+  let inner = "";
+  for (let k = 0; k < g.length - 1; k++) {
+    inner += `<span class="seg" data-z="${n}" data-a="${g[k]}" data-b="${g[k + 1]}">${segmentHtml(i, g[k], g[k + 1], k === g.length - 2)}</span>`;
+  }
   const div = document.createElement("div");
   div.className = "zeile" + (n === ZEILEN.length ? " letzte" : "");
   div.dataset.n = n;
-  div.innerHTML = `<span class="nr${n % 5 === 0 ? " fuenf" : ""}">${n}</span><span class="txt">${zeileHtml(t)}</span>`;
+  div.innerHTML = `<span class="nr${n % 5 === 0 ? " fuenf" : ""}">${n}</span><span class="txt">${inner}</span>`;
   zeilenBox.appendChild(div);
 });
+const SEGS = [...zeilenBox.querySelectorAll(".seg")].map(el => ({ el, z: +el.dataset.z, a: +el.dataset.a, b: +el.dataset.b }));
+const drin = (s, r) => (s.z > r.z1 || (s.z === r.z1 && s.a >= r.a)) && (s.z < r.z2 || (s.z === r.z2 && s.b <= r.b));
 
 /* Schriftgröße so wählen, dass jede Zeile genau in die Breite passt (Zeilenzählung bleibt wie auf Papier) */
 const messung = document.createElement("div");
@@ -434,7 +519,6 @@ messung.className = "messung";
 messung.setAttribute("aria-hidden", "true");
 messung.innerHTML = ZEILEN.map(t => `<span>${zeileHtml(t)}</span>`).join("");
 zeilenBox.appendChild(messung);
-
 function einpassen() {
   const probe = zeilenBox.querySelector(".zeile .txt");
   if (!probe) return;
@@ -450,37 +534,32 @@ if (document.fonts && document.fonts.ready) document.fonts.ready.then(einpassen)
 let rt;
 window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(einpassen, 80); });
 
-/* Markierung: Pro-Stellen grün, Contra-Stellen rot */
-function markiere(a) {
-  const stellen = (seite) => a ? a.impulse.filter(x => x.seite === seite).flatMap(x => x.zeilen) : [];
-  const pro = stellen("pro"), contra = stellen("contra");
-  zeilenBox.querySelectorAll(".zeile").forEach(z => {
-    const n = Number(z.dataset.n);
-    z.classList.toggle("pro", pro.includes(n));
-    z.classList.toggle("contra", contra.includes(n));
-  });
+/* Markieren: nur die Textteile, wie mit einem Textmarker */
+function hebeHervor(liste) {
+  SEGS.forEach(s => s.el.classList.remove("pro", "contra", "gewaehlt"));
+  zeilenBox.querySelectorAll(".zeile").forEach(z => z.classList.remove("m-pro", "m-contra", "m-gewaehlt"));
+  liste.forEach(({ ber, cls }) => ber.forEach(r => SEGS.forEach(s => {
+    if (drin(s, r)) { s.el.classList.add(cls); s.el.parentNode.parentNode.classList.add("m-" + cls); }
+  })));
 }
-function springe(liste) {
-  if (!liste.length) return;
-  const ziel = zeilenBox.querySelector(`.zeile[data-n="${Math.min(...liste)}"]`);
+function springeZu(z) {
+  const ziel = zeilenBox.querySelector(`.zeile[data-n="${z}"]`);
   if (ziel) ziel.scrollIntoView({ behavior: reduziert ? "auto" : "smooth", block: "center" });
 }
-const alleZeilen = (a) => a.impulse.flatMap(x => x.zeilen);
+const markiere = (a) => hebeHervor(a ? a.impulse.map(x => ({ ber: x.ber, cls: x.seite })) : []);
+const ersteZeile = (a) => Math.min(...a.impulse.flatMap(x => x.ber.map(r => r.z1)));
 
-/* Prüfaspekte aufbauen */
+/* Weg „Von den Prüfaspekten aus“ */
 const stand = ASPEKTE.map(() => 0);
 let offen = -1;
 const listeBox = document.getElementById("liste");
-
-/* Zeilenangaben nicht umbrechen: „Z. 38 f.“ bleibt zusammen */
 const nb = (t) => t.replace(/Z\. (\d+)( ff?\.)?/g, (m, n, f) => "Z. " + n + (f ? " " + f.trim() : ""));
-
 const KOPF = { pro: "Pro: Wo hat er einen Punkt?", contra: "Contra: Wo hakt es?" };
 
 function stufeHtml(a, s) {
   if (s === 1) return `<div class="stufe s1"><h3>Stufe 1: ${stufenName(a, 1)}</h3><p>${nb(a.s1)}</p></div>`;
   if (s === 2) return `<div class="stufe s2"><h3>Stufe 2: ${stufenName(a, 2)}</h3>` +
-    a.impulse.map((x, k) => `<div class="impuls ${x.seite}"><b>${KOPF[x.seite]}</b><p>${nb(x.text)}</p><button class="knopf klein zeigen" type="button" data-k="${k}">${x.material ? "Hinweise zeigen" : "Stelle zeigen"}</button></div>`).join("") +
+    a.impulse.map((x, k) => `<div class="impuls ${x.seite}"><b>${KOPF[x.seite]}</b><p>${nb(x.text)}</p><button class="knopf klein zeigen" type="button" data-k="${k}">Stelle zeigen</button></div>`).join("") +
     `</div>`;
   return `<div class="stufe s3"><h3>Stufe 3: ${stufenName(a, 3)}</h3><p>${nb(a.s3)}</p></div>`;
 }
@@ -501,27 +580,19 @@ function zeichneKoerper(i) {
   if (weiter) weiter.addEventListener("click", () => {
     stand[i] = Number(weiter.dataset.stufe);
     zeichneKoerper(i);
-    if (stand[i] === 2) { markiere(a); springe(alleZeilen(a)); }
+    if (stand[i] === 2) { markiere(a); springeZu(ersteZeile(a)); }
     const neu = body.querySelector(".stufe:last-of-type");
     if (neu) neu.scrollIntoView({ behavior: reduziert ? "auto" : "smooth", block: "nearest" });
     const naechsterKnopf = body.querySelector(".weiter") || body.querySelector(".etikett");
     if (naechsterKnopf) naechsterKnopf.focus({ preventScroll: true });
   });
-  body.querySelectorAll(".zeigen").forEach(b => b.addEventListener("click", () => {
-    const x = a.impulse[Number(b.dataset.k)];
-    if (x.material) {
-      const d = document.querySelector(".material");
-      d.open = true;
-      d.scrollIntoView({ behavior: reduziert ? "auto" : "smooth", block: "start" });
-    } else springe(x.zeilen);
-  }));
+  body.querySelectorAll(".zeigen").forEach(b => b.addEventListener("click", () => springeZu(a.impulse[Number(b.dataset.k)].ber[0].z1)));
   const et = body.querySelector(".etikett");
   et.addEventListener("click", () => kopiere(`[${a.name}] `, et));
 }
 
 function oeffne(i) {
-  const vorher = offen;
-  offen = (vorher === i) ? -1 : i;
+  offen = (offen === i) ? -1 : i;
   ASPEKTE.forEach((a, j) => {
     const sec = listeBox.children[j];
     const auf = j === offen;
@@ -532,11 +603,8 @@ function oeffne(i) {
   if (offen >= 0) {
     zeichneKoerper(offen);
     const a = ASPEKTE[offen];
-    if (stand[offen] >= 2) { markiere(a); springe(alleZeilen(a)); }
-    else markiere(null);
-  } else {
-    markiere(null);
-  }
+    if (stand[offen] >= 2) { markiere(a); springeZu(ersteZeile(a)); } else markiere(null);
+  } else markiere(null);
 }
 
 ASPEKTE.forEach((a, i) => {
@@ -552,6 +620,109 @@ ASPEKTE.forEach((a, i) => {
   sec.querySelector(".aspekt-kopf").addEventListener("click", () => oeffne(i));
   listeBox.appendChild(sec);
 });
+
+/* Weg „Von einer Textstelle aus“ */
+let modus = "stelle", aktStelle = -1, eindruck = null;
+const stellenBox = document.getElementById("stellenmodus");
+const zText = (st) => {
+  const a = st.ber.z1, b = st.ber.z2;
+  return a === b ? `Z. ${a}` : (b === a + 1 ? `Z. ${a} f.` : `Z. ${a} bis ${b}`);
+};
+STELLEN.forEach((st, i) => {
+  let erstes = true;
+  SEGS.forEach(s => {
+    if (!drin(s, st.ber)) return;
+    s.el.classList.add("stelle", i % 2 ? "stelle-b" : "stelle-a");
+    s.el.dataset.stelle = i;
+    if (erstes) {
+      s.el.tabIndex = 0;
+      s.el.setAttribute("role", "button");
+      s.el.setAttribute("aria-label", `Schlüsselstelle ${zText(st).replace(/ /g, " ")} auswählen`);
+      erstes = false;
+    }
+  });
+});
+zeilenBox.addEventListener("click", (ev) => {
+  if (modus !== "stelle" || ev.target.closest("a")) return;
+  const s = ev.target.closest(".seg.stelle");
+  if (s) waehleStelle(Number(s.dataset.stelle));
+});
+zeilenBox.addEventListener("keydown", (ev) => {
+  if (modus !== "stelle" || (ev.key !== "Enter" && ev.key !== " ")) return;
+  const s = ev.target.closest(".seg.stelle");
+  if (s) { ev.preventDefault(); waehleStelle(Number(s.dataset.stelle)); }
+});
+
+function faerbeStelle() {
+  hebeHervor(aktStelle < 0 ? [] : [{ ber: [STELLEN[aktStelle].ber], cls: eindruck || "gewaehlt" }]);
+}
+function waehleStelle(i) {
+  aktStelle = i; eindruck = null;
+  faerbeStelle();
+  zeichneStellenmodus();
+  stellenBox.scrollIntoView({ behavior: reduziert ? "auto" : "smooth", block: "nearest" });
+}
+function karte(e) {
+  return `<div class="impuls ${e.seite}"><b>${e.aspekt}</b><p>${nb(e.frage)}</p>
+    <button class="knopf klein satz-zeigen" type="button">Satzbaustein zeigen</button>
+    <div class="satz" hidden><p>${nb(e.satz)}</p><button class="knopf klein etikett" type="button" data-aspekt="${e.aspekt}">Etikett „[${e.aspekt}]“ kopieren</button></div></div>`;
+}
+function zeichneStellenmodus() {
+  if (aktStelle < 0) {
+    stellenBox.innerHTML = `<ol class="schritte">
+      <li><b>Lies die Quelle.</b> Die Schlüsselstellen sind blau unterstrichen.</li>
+      <li><b>Tippe eine Stelle an,</b> die dir auffällt.</li>
+      <li><b>Halte deinen Eindruck fest</b> und begründe ihn mit einem Prüfaspekt.</li></ol>`;
+    return;
+  }
+  const st = STELLEN[aktStelle];
+  let html = `<div class="stelle-kopf"><span class="stelle-z">${zText(st)}</span>${st.kurz}</div>
+    <h3 class="schritt">Wie wirkt die Aussage auf dich?</h3>
+    <div class="eindruck">
+      <button class="knopf${eindruck === "pro" ? " aktiv-pro" : ""}" type="button" data-e="pro">Hier stimme ich eher zu</button>
+      <button class="knopf${eindruck === "contra" ? " aktiv-contra" : ""}" type="button" data-e="contra">Hier sehe ich ein Problem</button>
+    </div>`;
+  if (eindruck) {
+    const passend = st.eintraege.filter(e => e.seite === eindruck);
+    const gegen = st.eintraege.filter(e => e.seite !== eindruck);
+    html += `<h3 class="schritt">Begründe deinen Eindruck mit einem Prüfaspekt</h3>`;
+    html += passend.length ? passend.map(karte).join("")
+      : `<p class="leer">Für diesen Eindruck gibt die Stelle wenig her. Schau dir die Gegenprobe an: Vielleicht trägt die andere Sicht besser.</p>`;
+    html += `<details class="gegenprobe"${passend.length ? "" : " open"}><summary>Gegenprobe: Was könnte man dagegen sagen?</summary>` +
+      (gegen.length ? gegen.map(karte).join("") : `<p class="leer">Zu dieser Stelle findest du kaum Argumente für die Gegenseite.</p>`) +
+      `</details>`;
+  }
+  html += `<p><button class="knopf klein" type="button" data-neu>Andere Stelle wählen</button></p>`;
+  stellenBox.innerHTML = html;
+}
+stellenBox.addEventListener("click", (ev) => {
+  const b = ev.target.closest("button");
+  if (!b) return;
+  if (b.dataset.e) { eindruck = b.dataset.e; faerbeStelle(); zeichneStellenmodus(); return; }
+  if (b.classList.contains("satz-zeigen")) { b.nextElementSibling.hidden = false; b.remove(); return; }
+  if (b.classList.contains("etikett")) { kopiere(`[${b.dataset.aspekt}] `, b); return; }
+  if (b.hasAttribute("data-neu")) {
+    aktStelle = -1; eindruck = null; faerbeStelle(); zeichneStellenmodus();
+    springeZu(STELLEN[0].ber.z1);
+  }
+});
+
+/* Umschalten zwischen den beiden Wegen */
+const tabStelle = document.getElementById("tab-stelle"), tabAspekt = document.getElementById("tab-aspekt");
+function setzeModus(m) {
+  modus = m;
+  document.body.classList.toggle("modus-stelle", m === "stelle");
+  tabStelle.setAttribute("aria-selected", String(m === "stelle"));
+  tabAspekt.setAttribute("aria-selected", String(m === "aspekt"));
+  stellenBox.hidden = m !== "stelle";
+  document.getElementById("aspektmodus").hidden = m !== "aspekt";
+  if (m === "stelle") faerbeStelle();
+  else if (offen >= 0 && stand[offen] >= 2) markiere(ASPEKTE[offen]); else markiere(null);
+}
+tabStelle.addEventListener("click", () => setzeModus("stelle"));
+tabAspekt.addEventListener("click", () => setzeModus("aspekt"));
+zeichneStellenmodus();
+setzeModus("stelle");
 
 /* Etikett für Kialo in die Zwischenablage */
 function kopiere(text, knopf) {
@@ -581,150 +752,6 @@ function ersatz(text) {
     return ok;
   } catch (e) { return false; }
 }
-/* Weg „Von einer Textstelle aus“: Schlüsselstelle antippen, Eindruck wählen, mit Prüfaspekt begründen */
-const STELLEN = [
-  { zeilen: [2,3,4,5,6], kurz: "„Ein unerhörter Verrat …“", eintraege: [
-    { aspekt: "Intention und Interessen", seite: "contra", frage: "Wem gibt er die Schuld am 18. März? Wie verlässlich ist diese Darstellung?", satz: "Für wenig verlässlich halte ich seine Darstellung, weil er … (Z. …), denn …" } ] },
-  { zeilen: [9,10,11,12], kurz: "„Das Verderben droht …“", eintraege: [
-    { aspekt: "Wissenshorizont", seite: "pro", frage: "Was befürchtet er? Was stand mit Blick auf vergangene Revolutionen, zum Beispiel in Frankreich, tatsächlich zu befürchten?", satz: "Mit Blick auf frühere Revolutionen halte ich seine Befürchtung für verständlich (Z. …), denn …" },
-    { aspekt: "Sprache", seite: "contra", frage: "Mit welchen Bildern beschreibt er die Revolution? Was folgt daraus für seinen Umgang mit ihr?", satz: "Für verzerrend halte ich seine Bildsprache, weil … (Z. …)." } ] },
-  { zeilen: [16,17,18,19,20], kurz: "„… einem Könige ‚von Gottes Gnaden‘ …“", eintraege: [
-    { aspekt: "Schlüssigkeit", seite: "pro", frage: "Welche Pflichten leitet er aus seinem Amt ab? Passt sein Aufruf am Ende dazu?", satz: "Ich halte seine Argumentation insofern für schlüssig, als … (Z. …)." },
-    { aspekt: "Andere Positionen", seite: "contra", frage: "Lies Z. 17 f. mit den Augen eines Demokraten (AB 2): Als was sieht der König das Volk? Was würde ein Demokrat entgegnen?", satz: "Den möglichen Einwand eines Demokraten, dass … (Z. …), halte ich für überzeugend, weil …" } ] },
-  { zeilen: [22,23], kurz: "„Der allgemeine Umsturz …“", eintraege: [
-    { aspekt: "Leerstellen", seite: "contra", frage: "Woher kam die Revolution nach seiner Darstellung? Was fehlt an dieser Erklärung?", satz: "Für verzerrend halte ich, dass er … weglässt (Z. …), weil …" },
-    { aspekt: "Handlungsspielraum", seite: "contra", frage: "Welchen Weg hat er im März eingeschlagen (Z. 22 bis 24)? Hätte er ihn weitergehen können (Z. 28 ff.)?", satz: "Für vermeidbar halte ich seinen Kurswechsel, denn er hätte … (Z. …), weil …" } ] },
-  { zeilen: [24,25,26,27], kurz: "„Das Resultat war das Dekret …“", eintraege: [
-    { aspekt: "Schlüssigkeit", seite: "contra", frage: "Lies auch Fußnote 2: Worauf ist er „stolz“? Passt das dazu, wie er in Z. 29 ff. über die Verfassung spricht?", satz: "Für widersprüchlich halte ich, dass … (Z. …), denn …" } ] },
-  { zeilen: [28,29,30,31], kurz: "„Unsere Verfassung muß gebaut werden …“", eintraege: [
-    { aspekt: "Adressat und Wirkung", seite: "pro", frage: "Was bietet er hier an? Wen kann er damit gewinnen?", satz: "Für zweckmäßig halte ich, dass er … anbietet (Z. …), weil er damit vermutlich … gewinnen kann." },
-    { aspekt: "Andere Positionen", seite: "pro", frage: "Lies die Stelle mit den Augen eines Liberalen (AB 2): Was davon könnte er unterschreiben?", satz: "Ein Liberaler hätte ihm möglicherweise zugestimmt, dass … (Z. …). Das halte ich für berechtigt, weil …" },
-    { aspekt: "Handlungsspielraum", seite: "contra", frage: "Welchen Weg verlässt er hier? Hätte er ihn weitergehen können?", satz: "Für vermeidbar halte ich seinen Kurswechsel, denn er hätte … (Z. …), weil …" } ] },
-  { zeilen: [32,33,34], kurz: "„… das Ungeheuer der Revolution bekämpfen …“", eintraege: [
-    { aspekt: "Leerstellen", seite: "pro", frage: "Wovor hat er Angst? Warum wäre es für ihn gefährlich, die Ursachen der Revolution zu nennen?", satz: "Aus seiner Lage halte ich es für folgerichtig, dass er … weglässt (Z. …), denn …" },
-    { aspekt: "Sprache", seite: "pro", frage: "Wozu ruft er auf? Warum braucht er dafür starke Bilder?", satz: "Aus seiner Lage halte ich seine Bildsprache für zweckmäßig, weil sie … (Z. …)." },
-    { aspekt: "Adressat und Wirkung", seite: "pro", frage: "Wovor warnt er? Wen kann er damit gewinnen?", satz: "Für zweckmäßig halte ich, dass er vor … warnt (Z. …), weil er damit vermutlich … gewinnen kann." },
-    { aspekt: "Sprache", seite: "contra", frage: "Als was bezeichnet er die Revolution? Was folgt aus diesem Bild für seinen Umgang mit ihr?", satz: "Für verzerrend halte ich seine Bildsprache, weil … (Z. …)." } ] },
-  { zeilen: [35,36,37], kurz: "„Vertraut auf mich, Euren König …“", eintraege: [
-    { aspekt: "Andere Positionen", seite: "contra", frage: "Lies die Stelle mit den Augen eines Liberalen (AB 2): Woraus leitet der König seine Herrschaft ab? Was folgt daraus für die Bindung an eine Verfassung?", satz: "Den möglichen Einwand eines Liberalen, dass … (Z. …), halte ich für überzeugend, weil …" } ] },
-  { zeilen: [38,39], kurz: "„Ein freies Volk unter einem freien Könige!“", eintraege: [
-    { aspekt: "Blick von heute", seite: "contra", frage: "Ist es so gekommen, wie die Losung verspricht?", satz: "Aus heutiger Sicht halte ich seine Losung für widerlegt, denn … (Z. …)." } ] }
-];
-
-let modus = "stelle", aktStelle = -1, eindruck = null;
-const stellenBox = document.getElementById("stellenmodus");
-const zText = (st) => {
-  const a = st.zeilen[0], b = st.zeilen[st.zeilen.length - 1];
-  return b === a + 1 ? `Z. ${a} f.` : `Z. ${a} bis ${b}`;
-};
-
-/* Schlüsselstellen im Text kennzeichnen */
-STELLEN.forEach((st, i) => {
-  st.zeilen.forEach((n, k) => {
-    const z = zeilenBox.querySelector(`.zeile[data-n="${n}"]`);
-    z.classList.add("stelle", i % 2 ? "stelle-b" : "stelle-a");
-    z.dataset.stelle = i;
-    if (k === 0) {
-      z.tabIndex = 0;
-      z.setAttribute("role", "button");
-      z.setAttribute("aria-label", `Schlüsselstelle ${zText(st).replace(/ /g, " ")} auswählen`);
-    }
-  });
-});
-zeilenBox.addEventListener("click", (ev) => {
-  if (modus !== "stelle") return;
-  if (ev.target.closest("a")) return;
-  const z = ev.target.closest(".zeile.stelle");
-  if (z) waehleStelle(Number(z.dataset.stelle));
-});
-zeilenBox.addEventListener("keydown", (ev) => {
-  if (modus !== "stelle" || (ev.key !== "Enter" && ev.key !== " ")) return;
-  const z = ev.target.closest(".zeile.stelle");
-  if (z) { ev.preventDefault(); waehleStelle(Number(z.dataset.stelle)); }
-});
-
-function faerbeStelle() {
-  zeilenBox.querySelectorAll(".zeile").forEach(z => z.classList.remove("gewaehlt", "pro", "contra"));
-  if (aktStelle < 0) return;
-  STELLEN[aktStelle].zeilen.forEach(n => {
-    zeilenBox.querySelector(`.zeile[data-n="${n}"]`).classList.add(eindruck ? eindruck : "gewaehlt");
-  });
-}
-
-function waehleStelle(i) {
-  aktStelle = i; eindruck = null;
-  faerbeStelle();
-  zeichneStellenmodus();
-  stellenBox.scrollIntoView({ behavior: reduziert ? "auto" : "smooth", block: "nearest" });
-}
-
-function karte(e) {
-  return `<div class="impuls ${e.seite}"><b>${e.aspekt}</b><p>${nb(e.frage)}</p>
-    <button class="knopf klein satz-zeigen" type="button">Satzbaustein zeigen</button>
-    <div class="satz" hidden><p>${nb(e.satz)}</p><button class="knopf klein etikett" type="button" data-aspekt="${e.aspekt}">Etikett „[${e.aspekt}]“ kopieren</button></div></div>`;
-}
-
-function zeichneStellenmodus() {
-  if (aktStelle < 0) {
-    stellenBox.innerHTML = `<ol class="schritte">
-      <li><b>Lies die Quelle.</b> Die Schlüsselstellen sind links mit einem blauen Balken gekennzeichnet.</li>
-      <li><b>Tippe eine Stelle an,</b> die dir auffällt.</li>
-      <li><b>Halte deinen Eindruck fest</b> und begründe ihn mit einem Prüfaspekt.</li></ol>`;
-    return;
-  }
-  const st = STELLEN[aktStelle];
-  let html = `<div class="stelle-kopf"><span class="stelle-z">${zText(st)}</span>${st.kurz}</div>
-    <h3 class="schritt">Wie wirkt die Stelle auf dich?</h3>
-    <div class="eindruck">
-      <button class="knopf${eindruck === "pro" ? " aktiv-pro" : ""}" type="button" data-e="pro">Hier stimme ich eher zu</button>
-      <button class="knopf${eindruck === "contra" ? " aktiv-contra" : ""}" type="button" data-e="contra">Hier sehe ich ein Problem</button>
-    </div>`;
-  if (eindruck) {
-    const passend = st.eintraege.filter(e => e.seite === eindruck);
-    const gegen = st.eintraege.filter(e => e.seite !== eindruck);
-    html += `<h3 class="schritt">Begründe deinen Eindruck mit einem Prüfaspekt</h3>`;
-    html += passend.length ? passend.map(karte).join("")
-      : `<p class="leer">Für diesen Eindruck gibt die Stelle wenig her. Schau dir die Gegenprobe an: Vielleicht trägt die andere Sicht besser.</p>`;
-    html += `<details class="gegenprobe"${passend.length ? "" : " open"}><summary>Gegenprobe: Was könnte man dagegen sagen?</summary>` +
-      (gegen.length ? gegen.map(karte).join("") : `<p class="leer">Zu dieser Stelle findest du kaum Argumente für die Gegenseite.</p>`) +
-      `</details>`;
-  }
-  html += `<p><button class="knopf klein" type="button" data-neu>Andere Stelle wählen</button></p>`;
-  stellenBox.innerHTML = html;
-}
-
-stellenBox.addEventListener("click", (ev) => {
-  const b = ev.target.closest("button");
-  if (!b) return;
-  if (b.dataset.e) { eindruck = b.dataset.e; faerbeStelle(); zeichneStellenmodus(); return; }
-  if (b.classList.contains("satz-zeigen")) { const s = b.nextElementSibling; s.hidden = false; b.remove(); return; }
-  if (b.classList.contains("etikett")) { kopiere(`[${b.dataset.aspekt}] `, b); return; }
-  if (b.hasAttribute("data-neu")) {
-    aktStelle = -1; eindruck = null; faerbeStelle(); zeichneStellenmodus();
-    const z = zeilenBox.querySelector(".zeile.stelle");
-    if (z) z.scrollIntoView({ behavior: reduziert ? "auto" : "smooth", block: "center" });
-  }
-});
-
-/* Umschalten zwischen den beiden Wegen */
-const tabStelle = document.getElementById("tab-stelle"), tabAspekt = document.getElementById("tab-aspekt");
-function setzeModus(m) {
-  modus = m;
-  document.body.classList.toggle("modus-stelle", m === "stelle");
-  tabStelle.setAttribute("aria-selected", String(m === "stelle"));
-  tabAspekt.setAttribute("aria-selected", String(m === "aspekt"));
-  stellenBox.hidden = m !== "stelle";
-  document.getElementById("aspektmodus").hidden = m !== "aspekt";
-  if (m === "stelle") { faerbeStelle(); }
-  else {
-    zeilenBox.querySelectorAll(".zeile").forEach(z => z.classList.remove("gewaehlt"));
-    if (offen >= 0 && stand[offen] >= 2) markiere(ASPEKTE[offen]); else markiere(null);
-  }
-}
-tabStelle.addEventListener("click", () => setzeModus("stelle"));
-tabAspekt.addEventListener("click", () => setzeModus("aspekt"));
-zeichneStellenmodus();
-setzeModus("stelle");
 </script>
 </body>
 </html>
