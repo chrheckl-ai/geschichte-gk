@@ -405,7 +405,7 @@ const ZEILEN = [
 /* Bereiche: [Startzeile, "erste Worte" (null = Zeilenanfang), Endzeile, "letzte Worte" (null = Zeilenende)].
    Markiert wird genau dieser Textteil, nicht die ganze Zeile. */
 const ASPEKTE = [
-  { name: "Schlüssigkeit", bezug: "beide Teile der These",
+  { name: "Schlüssigkeit", bezug: "Haltung zur Revolution und Herrschaftsverständnis",
     s1: "Inwiefern ist die Argumentation des Königs in sich schlüssig? Wo hat er einen Punkt, wo widerspricht er sich?",
     impulse: [
       { seite: "pro", bereiche: [[16, null, 20, "sei."]], text: "Lies Z. 16 ff.: Welche Pflichten leitet er aus seinem Amt ab? Passt sein Aufruf am Ende dazu?" },
@@ -416,17 +416,17 @@ const ASPEKTE = [
     impulse: [
       { seite: "contra", bereiche: [[2, "Ein unerhörter", 6, "Frieden an (…)."]], text: "Lies Z. 2 ff.: Wem gibt er die Schuld am 18. März? Wie verlässlich ist diese Darstellung?" } ],
     s3: "Er stellt den 18. März so dar, dass … (Z. …). Damit will er … Das halte ich für wenig verlässlich, weil …" },
-  { name: "Handlungsspielraum", bezug: "beide Teile der These",
+  { name: "Handlungsspielraum", bezug: "Haltung zur Revolution und Herrschaftsverständnis",
     s1: "Welche Handlungsmöglichkeiten hatte der König 1848, im März wie im November? Wo hätte er anders handeln können?",
     impulse: [
       { seite: "contra", bereiche: [[22, "[Denn]", 24, "beschreiten."], [28, "Unsere Verfassung", 31, "Das ist unmöglich."]], text: "Lies Z. 22 bis 24 und Z. 28 ff.: Welchen Weg hat er im März eingeschlagen? Hätte er ihn weitergehen können?" } ],
     s3: "Im März hat er … (Z. …), jetzt … (Z. …). Seinen Kurswechsel begründet er damit, dass … Das halte ich für vermeidbar, weil er …" },
-  { name: "Adressat und Wirkung", bezug: "beide Teile der These",
+  { name: "Adressat und Wirkung", bezug: "Haltung zur Revolution und Herrschaftsverständnis",
     s1: "Wen will der König mit seinem Aufruf gewinnen, und womit? Was lässt sich über die vermutliche Wirkung sagen?",
     impulse: [
       { seite: "pro", bereiche: [[28, "Unsere Verfassung", 29, "vereinbaren."], [33, "leidet hinfort", 35, "Eigentum anderer;"]], text: "Lies Z. 28 f. und Z. 33 ff.: Was bietet er an, und wovor warnt er? Wen kann er damit gewinnen?" } ],
     s3: "Er bietet … an und warnt vor … (Z. …). Damit will er … gewinnen. Das halte ich für zweckmäßig, weil …" },
-  { name: "Andere Positionen", bezug: "beide Teile der These",
+  { name: "Andere Positionen", bezug: "Haltung zur Revolution und Herrschaftsverständnis",
     s1: "Wie hätten Zeitgenossen mit anderen Positionen auf das Manifest reagiert? Wer hätte ihm eher zugestimmt, wer widersprochen?",
     impulse: [
       { seite: "pro", bereiche: [[29, "Doch wehe uns", 31, "Das ist unmöglich."]], text: "Lies Z. 29 ff. mit den Augen eines Liberalen (AB 2): Was davon könnte er unterschreiben?" },
@@ -444,7 +444,7 @@ const ASPEKTE = [
     impulse: [
       { seite: "pro", bereiche: [[9, "Das Verderben", 12, "Untergang."]], text: "Lies Z. 9 ff.: Was befürchtet er? Was stand mit Blick auf vergangene Revolutionen, zum Beispiel in Frankreich, tatsächlich zu befürchten?" } ],
     s3: "Er befürchtet … (Z. …). Damit begründet er, warum … Das halte ich für nachvollziehbar, weil in früheren Revolutionen … Wie die Revolution ausgehen würde, konnte er im November 1848 nicht wissen." },
-  { name: "Blick von heute", bezug: "beide Teile der These",
+  { name: "Blick von heute", bezug: "Haltung zur Revolution und Herrschaftsverständnis",
     s1: "Inwiefern hat sich erfüllt, was er im Manifest verspricht?",
     impulse: [
       { seite: "contra", bereiche: [[38, "Unsre Losung", 39, null]], text: "Lies die Losung in Z. 38 f.: Ist es so gekommen?" } ],
@@ -658,7 +658,7 @@ ASPEKTE.forEach((a, i) => {
   sec.innerHTML = `
     <button class="aspekt-kopf" type="button" aria-expanded="false" aria-controls="a${i}">
       <span class="name">${a.name}</span>
-      <span class="bezug">${a.bezug}</span>
+      <span class="bezug">betrifft: ${a.bezug}</span>
       <span class="pfeil" aria-hidden="true"></span>
     </button>
     <div class="aspekt-body" id="a${i}" hidden></div>`;
