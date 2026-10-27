@@ -60,19 +60,6 @@
   .kopf .zurueck { color: #fff; margin-left: 12px; text-underline-offset: 2px; }
   .kopf .auftrag { grid-column: 1 / -1; margin: 6px 0 0; font-size: .9rem; line-height: 1.45; max-width: 72em; }
   .kopf .auftrag b { font-weight: 600; }
-  .kialo {
-    display: inline-block;
-    background: #fff;
-    color: var(--petrol);
-    text-decoration: none;
-    font-weight: 600;
-    font-size: .95rem;
-    padding: 9px 16px;
-    border-radius: 6px;
-    white-space: nowrap;
-    margin-top: 2px;
-  }
-  .kialo:hover { background: var(--warm); }
 
   /* Arbeitsfläche */
   main {
@@ -87,6 +74,8 @@
   .material, .glossar { margin: 0 0 18px 46px; font-size: .88rem; line-height: 1.5; color: var(--grau); }
   .material summary, .glossar summary { cursor: pointer; color: var(--petrol); font-weight: 600; padding: 4px 0; }
   .material p { margin: 8px 0 0; }
+  .kontext ul { margin: 6px 0 0; padding-left: 18px; color: var(--ink); }
+  .kontext li { margin-bottom: 5px; }
   .aufgabe p { color: var(--ink); font-size: .95rem; }
   .glossar table { border-collapse: collapse; width: 100%; margin-top: 6px; color: var(--ink); }
   .glossar td { padding: 5px 10px 5px 0; vertical-align: top; border-top: 1px solid var(--linie); }
@@ -229,7 +218,6 @@
   }
   .knopf.weiter { background: var(--petrol); color: #fff; }
   .knopf.klein { border-width: 1px; font-weight: 500; font-size: .85rem; padding: 6px 10px; min-height: 36px; }
-  .etikett-zeile { border-top: 1px solid var(--linie); margin-top: 12px; padding-top: 4px; }
 
   /* Hochformat und schmale Bildschirme: Quelle oben, Hilfen unten */
   @media (max-width: 1000px), (orientation: portrait) {
@@ -252,15 +240,13 @@
     <h1>Manifest Friedrich Wilhelms IV. an sein Volk (November 1848)</h1>
     <p class="unter">Probeklausur Geschichte Q1: Hilfen zu Aufgabe 3 <a class="zurueck" href="../">Alle Materialien</a></p>
   </div>
-  <a class="kialo" id="kialo-link" href="https://www.kialo-edu.com/p/184b0f92-da7f-4435-a802-0353bbf7e21b/726347" target="_blank" rel="noopener">Zur Kialo-Diskussion</a>
 </header>
 
 <main>
   <section class="pane quelle" id="quelle" aria-label="Quelle">
     <details class="material aufgabe" open>
-      <summary>Aufgabe 3 und These in Kialo</summary>
+      <summary>Aufgabe 3</summary>
       <p><b>Aufgabe 3:</b> Nimm Stellung zu der in der Quelle zum Ausdruck kommenden Haltung des Königs zur Revolution und seinem Herrschaftsverständnis.</p>
-      <p><b>These in Kialo:</b> „Die Haltung des Königs zur Revolution und sein Herrschaftsverständnis sind vertretbar.“</p>
     </details>
     <details class="material" open>
       <summary>Materialgrundlage und Hinweise zum Material</summary>
@@ -291,6 +277,22 @@
         <tr><td class="w">Losung</td><td class="z">Z.&nbsp;38</td><td>Wahlspruch, Parole</td></tr>
       </table>
     </details>
+    <details class="material kontext">
+      <summary>Hilfe zum Kontext: Preußen 1848 (freiwillig)</summary>
+      <ul>
+        <li><b>Ende Februar:</b> In Paris wird König Louis-Philippe gestürzt, Frankreich wird Republik.</li>
+        <li><b>13. März:</b> Aufstand in Wien. Staatskanzler Metternich flieht nach England.</li>
+        <li><b>13. bis 16. März:</b> Auch in Berlin kommt es zu Zusammenstößen zwischen Demonstranten und Soldaten, es gibt erste Tote.</li>
+        <li><b>18. März:</b> Der König verkündet das Dekret (Fußnote 2). Als Soldaten den Platz vor dem Schloss räumen, fallen zwei Schüsse. Es folgen Barrikadenkämpfe bis zum nächsten Morgen mit über 250 Toten, vor allem Handwerker und Arbeiter.</li>
+        <li><b>19. März:</b> Der König zieht die Truppen aus Berlin ab und verneigt sich vor den aufgebahrten Toten.</li>
+        <li><b>29. März:</b> Liberale Minister übernehmen die Regierung (Märzministerium).</li>
+        <li><b>22. Mai:</b> Die preußische Nationalversammlung tritt in Berlin zusammen. Sie soll mit dem König eine Verfassung vereinbaren (vgl. Z. 28 f.).</li>
+        <li><b>Sommer und Herbst:</b> Die Bewegung spaltet sich in Liberale und Demokraten (AB 2). In Berlin kommt es immer wieder zu Unruhen.</li>
+        <li><b>31. Oktober:</b> Kaiserliche Truppen erobern Wien und schlagen den Aufstand dort nieder.</li>
+        <li><b>2. November:</b> Der König ernennt den konservativen Grafen Brandenburg zum Ministerpräsidenten.</li>
+      </ul>
+      <p><b>Im Buch:</b> Info „Revolution 1848/49 in Deutschland“, Teil 1 und 2.</p>
+    </details>
     <div class="titel">
       <p class="entwurf">Entwurf.</p>
       <p class="haupt">Manifest – An mein Volk.</p>
@@ -305,7 +307,7 @@
 
   <aside class="pane hilfen" aria-label="Hilfen zu Aufgabe 3">
     <h2>Hilfen</h2>
-    <p class="hinweis">In Kialo beginnt jedes Argument mit seinem Prüfaspekt in eckigen Klammern, z. B. <code>[Handlungsspielraum]</code>, und folgt dann dem Dreischritt.</p>
+    <p class="hinweis">Zwei Wege, ein Ziel: Beide Wege führen dich zu einem Argument mit Prüfaspekt. Formuliere es dann im Dreischritt.</p>
     <details class="urteilen">
       <summary>So formulierst du ein Urteil (Dreischritt)</summary>
       <ol class="dreischritt">
@@ -605,7 +607,6 @@ function zeichneKoerper(i) {
     const naechste = stand[i] + 1;
     html += `<button class="knopf weiter" type="button" data-stufe="${naechste}">Stufe ${naechste} zeigen: ${stufenName(a, naechste)}</button>`;
   }
-  html += `<div class="etikett-zeile"><button class="knopf klein etikett" type="button">Etikett „[${a.name}]“ kopieren</button></div>`;
   body.innerHTML = html;
 
   const weiter = body.querySelector(".weiter");
@@ -615,12 +616,10 @@ function zeichneKoerper(i) {
     if (stand[i] === 2) { markiere(a); springeZu(ersteZeile(a)); }
     const neu = body.querySelector(".stufe:last-of-type");
     if (neu) neu.scrollIntoView({ behavior: reduziert ? "auto" : "smooth", block: "nearest" });
-    const naechsterKnopf = body.querySelector(".weiter") || body.querySelector(".etikett");
+    const naechsterKnopf = body.querySelector(".weiter");
     if (naechsterKnopf) naechsterKnopf.focus({ preventScroll: true });
   });
   body.querySelectorAll(".zeigen").forEach(b => b.addEventListener("click", () => springeZu(a.impulse[Number(b.dataset.k)].ber[0].z1)));
-  const et = body.querySelector(".etikett");
-  et.addEventListener("click", () => kopiere(`[${a.name}] `, et));
 }
 
 function oeffne(i) {
@@ -697,7 +696,7 @@ function waehleStelle(i) {
 function karte(e) {
   return `<div class="impuls ${e.seite}"><b>${e.aspekt}</b><p>${nb(e.frage)}</p>
     <button class="knopf klein satz-zeigen" type="button">Satzbaustein zeigen</button>
-    <div class="satz" hidden><p>${nb(e.satz)}</p><button class="knopf klein etikett" type="button" data-aspekt="${e.aspekt}">Etikett „[${e.aspekt}]“ kopieren</button></div></div>`;
+    <div class="satz" hidden><p>${nb(e.satz)}</p></div></div>`;
 }
 function zeichneStellenmodus() {
   if (aktStelle < 0) {
@@ -732,7 +731,6 @@ stellenBox.addEventListener("click", (ev) => {
   if (!b) return;
   if (b.dataset.e) { eindruck = b.dataset.e; faerbeStelle(); zeichneStellenmodus(); return; }
   if (b.classList.contains("satz-zeigen")) { b.nextElementSibling.hidden = false; b.remove(); return; }
-  if (b.classList.contains("etikett")) { kopiere(`[${b.dataset.aspekt}] `, b); return; }
   if (b.hasAttribute("data-neu")) {
     aktStelle = -1; eindruck = null; faerbeStelle(); zeichneStellenmodus();
     springeZu(STELLEN[0].ber.z1);
@@ -756,34 +754,6 @@ tabAspekt.addEventListener("click", () => setzeModus("aspekt"));
 zeichneStellenmodus();
 setzeModus("stelle");
 
-/* Etikett für Kialo in die Zwischenablage */
-function kopiere(text, knopf) {
-  const alt = knopf.textContent;
-  const fertig = (ok) => {
-    knopf.textContent = ok ? "Kopiert: jetzt in Kialo einfügen" : `Bitte abtippen: ${text.trim()}`;
-    setTimeout(() => { knopf.textContent = alt; }, 2200);
-  };
-  try {
-    if (navigator.clipboard && window.isSecureContext) {
-      navigator.clipboard.writeText(text).then(() => fertig(true), () => fertig(ersatz(text)));
-    } else {
-      fertig(ersatz(text));
-    }
-  } catch (e) { fertig(false); }
-}
-function ersatz(text) {
-  try {
-    const ta = document.createElement("textarea");
-    ta.value = text;
-    ta.setAttribute("readonly", "");
-    ta.style.position = "fixed"; ta.style.opacity = "0";
-    document.body.appendChild(ta);
-    ta.select();
-    const ok = document.execCommand("copy");
-    document.body.removeChild(ta);
-    return ok;
-  } catch (e) { return false; }
-}
 </script>
 </body>
 </html>
