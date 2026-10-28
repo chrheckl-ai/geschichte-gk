@@ -176,6 +176,8 @@
   .impuls.contra { background: var(--contra-hell); border-left: 3px solid var(--contra); }
   .impuls.contra b { color: var(--contra-dunkel); }
   .urteilen { background: #fff; border: 1px solid var(--linie); border-radius: 8px; padding: 8px 12px; margin: 4px 0 0; font-size: .88rem; line-height: 1.45; }
+  #stellenmodus { margin: 4px 0 16px; }
+  .urteilen + .urteilen { margin-top: 8px; }
   .urteilen summary { cursor: pointer; font-weight: 600; color: var(--petrol); padding: 4px 0; }
   .urteilen p { margin: 6px 0 0; }
   .dreischritt { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
@@ -252,12 +254,7 @@
       <p><b>Aufgabe 3:</b> Nimm Stellung zu der in der Quelle zum Ausdruck kommenden Haltung des Königs zur Revolution und seinem Herrschaftsverständnis.</p>
       <ol class="auftrag-schritte">
         <li><b>Lies die Quelle.</b> Das Glossar erklärt schwierige Wörter, die Hilfe zum Kontext fasst die Ereignisse in Preußen 1848 zusammen.</li>
-        <li><b>Sammle Argumente aus beiden Richtungen:</b> Wo kannst du dem König zustimmen, wo nicht? Bei den Hilfen gibt es dafür zwei Wege, wähle einen:
-          <ul>
-            <li><b>Von einer Textstelle aus:</b> Tippe eine unterstrichene Stelle an und entscheide, ob du eher zustimmst oder ein Problem siehst. Die Seite zeigt dir den passenden Prüfaspekt.</li>
-            <li><b>Von den Prüfaspekten aus:</b> Wähle einen Prüfaspekt und öffne die Hilfen Stufe für Stufe.</li>
-          </ul>
-          Beide Wege führen zum selben Ziel: einem Argument mit Prüfaspekt. Notiere jedes Argument in Stichpunkten mit Zeilenangabe.</li>
+        <li><b>Sammle Argumente aus beiden Richtungen:</b> Wo kannst du dem König zustimmen, wo nicht? Tippe dafür in der Quelle eine farbig unterstrichene Stelle an und entscheide, ob du eher zustimmst oder ein Problem siehst. Die Hilfen zeigen dir dann einen passenden Prüfaspekt mit Frage und Satzbaustein. Notiere jedes Argument in Stichpunkten mit Zeilenangabe.</li>
         <li><b>Formuliere aus.</b> Schreibe Aufgabe 3 nach dem Blockprinzip (Kasten „So baust du Aufgabe 3 auf“), jedes Argument im Dreischritt.</li>
         <li><b>Lege deinen Text im OneNote-Kursnotizbuch ab.</b></li>
       </ol>
@@ -282,11 +279,17 @@
         <tr><td class="w">obliegen</td><td class="z">Z.&nbsp;16</td><td>als Pflicht zufallen</td></tr>
         <tr><td class="w">unveräußerlich</td><td class="z">Z.&nbsp;18</td><td>kann einem nicht genommen werden</td></tr>
         <tr><td class="w">angestammte Obrigkeit</td><td class="z">Z.&nbsp;18</td><td>seit Generationen herrschende Herrscherfamilie</td></tr>
+        <tr><td class="w">Schutz und Schirm</td><td class="z">Z.&nbsp;19</td><td>Schutz (Schirm: altes Wort für Schutz, Schild)</td></tr>
+        <tr><td class="w">wohlerworben</td><td class="z">Z.&nbsp;19</td><td>rechtmäßig erworben</td></tr>
         <tr><td class="w">Umsturz</td><td class="z">Z.&nbsp;22</td><td>gewaltsamer Sturz einer Regierung (hier: Paris, Wien)</td></tr>
+        <tr><td class="w">Dekret</td><td class="z">Z.&nbsp;24</td><td>Erlass, Anordnung des Herrschers (siehe Fußnote 2)</td></tr>
         <tr><td class="w">Märzgreuel</td><td class="z">Z.&nbsp;27</td><td>Gewalttaten im März 1848, aus Sicht des Königs</td></tr>
+        <tr><td class="w">Geheiß</td><td class="z">Z.&nbsp;28</td><td>Befehl, Anordnung</td></tr>
         <tr><td class="w">vereinbaren</td><td class="z">Z.&nbsp;29</td><td>aushandeln, sich einigen</td></tr>
         <tr><td class="w">Wühlen</td><td class="z">Z.&nbsp;30</td><td>heimliches Zersetzen, Aufruhr (Bild: Maulwurf)</td></tr>
+        <tr><td class="w">hinfort</td><td class="z">Z.&nbsp;33</td><td>von nun an, künftig</td></tr>
         <tr><td class="w">Gotteslästerung</td><td class="z">Z.&nbsp;33</td><td>Beleidigung Gottes</td></tr>
+        <tr><td class="w">besudeln</td><td class="z">Z.&nbsp;34</td><td>beschmutzen, entehren</td></tr>
         <tr><td class="w">fünftehalb Jahrhunderte</td><td class="z">Z.&nbsp;38</td><td>viereinhalb Jahrhunderte (450 Jahre)</td></tr>
         <tr><td class="w">Losung</td><td class="z">Z.&nbsp;38</td><td>Wahlspruch, Parole</td></tr>
       </table>
@@ -321,9 +324,9 @@
 
   <aside class="pane hilfen" aria-label="Hilfen zu Aufgabe 3">
     <h2>Hilfen</h2>
-    <p class="hinweis">Zwei Wege, ein Ziel: Beide Wege führen dich zu einem Argument mit Prüfaspekt. Formuliere es dann im Dreischritt.</p>
+    <div id="stellenmodus"></div>
     <details class="urteilen">
-      <summary>So formulierst du ein Urteil (Dreischritt)</summary>
+      <summary>So formulierst du ein Argument (Dreischritt)</summary>
       <ol class="dreischritt">
         <li class="d1"><b>1 Aussage aufgreifen (mit Zeilenangabe) und erläutern</b><span>„Der König behauptet, am 18. März hätten nur sehr wenige Untertanen mitgemacht, und gibt einem ‚bezahlte[n] Haufe[n] von Missetätern aller Nationen‘ die Schuld (Z. 2 ff.). So erscheint die Revolution als Werk von Fremden und Verbrechern. Er spricht ihr damit die Berechtigung ab und muss auf die Forderungen seiner eigenen Untertanen nicht eingehen.“</span></li>
         <li class="d2"><b>2 Eigene Positionierung</b><span>„Das halte ich für verzerrend, …“</span></li>
@@ -332,29 +335,20 @@
       <p class="zusammen"><b>Zusammen:</b> <span class="t1">Der König behauptet, am 18. März hätten nur sehr wenige Untertanen mitgemacht, und gibt einem „bezahlte[n] Haufe[n] von Missetätern aller Nationen“ die Schuld (Z. 2 ff.). So erscheint die Revolution als Werk von Fremden und Verbrechern. Er spricht ihr damit die Berechtigung ab und muss auf die Forderungen seiner eigenen Untertanen nicht eingehen.</span> <span class="t2">Das halte ich für verzerrend,</span> <span class="t3">weil auf den Barrikaden vor allem Berliner Handwerker, Arbeiter und Studenten kämpften.</span></p>
       <p><b>Urteilswörter pro:</b> nachvollziehbar, folgerichtig, zweckmäßig, angemessen, zutreffend</p>
       <p><b>Urteilswörter contra:</b> widersprüchlich, einseitig, verzerrend, unverhältnismäßig, vermeidbar, nicht (mehr) angemessen, wenig glaubwürdig</p>
-      <p><b>Wichtig:</b> Die Erläuterung sagt, was der König erreichen will. Dein „weil“ sagt, warum du das überzeugend findest oder nicht, und bringt dafür etwas Neues: Wissen aus dem Unterricht oder eine andere Textstelle. Pro heißt oft „aus seiner Lage verständlich“, nicht „richtig“.</p>
+      <p><b>Wichtig:</b> Die Erläuterung sagt, was der König damit meint oder erreichen will. Dein „weil“ sagt, warum du das überzeugend findest oder nicht, und bringt dafür etwas Neues: Wissen aus dem Unterricht oder eine andere Textstelle. Pro heißt oft „aus seiner Lage verständlich“, nicht „richtig“.</p>
     </details>
     <details class="urteilen">
       <summary>So baust du Aufgabe 3 auf</summary>
       <p><b>Empfohlen: Blockprinzip</b></p>
       <ol class="aufbau">
         <li><b>Einleitung:</b> Greife die Aufgabenstellung wörtlich auf, z. B. <q>Im Folgenden werde ich zu der in der Quelle zum Ausdruck kommenden Haltung des Königs zur Revolution und seinem Herrschaftsverständnis Stellung nehmen.</q></li>
-        <li><b>Block 1: Was spricht für ihn?</b> Zwei bis vier Argumente, je nach Ausführlichkeit der Begründung, jedes im Dreischritt, das wichtigste zuerst.</li>
-        <li><b>Block 2: Was spricht gegen ihn?</b> Ebenso. Überleitung z. B.: <q>Kritisch zu sehen ist jedoch, …</q></li>
+        <li><b>Block 1 (Pro): Wo stimmst du ihm eher zu?</b> Zwei bis vier Argumente, je nach Ausführlichkeit der Begründung, jedes im Dreischritt, das wichtigste zuerst.</li>
+        <li><b>Block 2 (Contra): Wo siehst du ein Problem?</b> Ebenso. Überleitung z. B.: <q>Kritisch zu sehen ist jedoch, …</q></li>
         <li><b>Fazit:</b> Gewichte: Welches Argument wiegt am schwersten? Beantworte damit die Aufgabe, z. B. <q>Insgesamt halte ich die Haltung des Königs für eher …, weil vor allem … schwerer wiegt als …</q></li>
       </ol>
       <p>Stimmst du ihm insgesamt eher zu, tauschst du die Blöcke. So steht die Seite, die dich mehr überzeugt, direkt vor dem Fazit.</p>
       <p><b>Alternative: Ping-Pong-Prinzip.</b> Du wägst zu jedem Punkt gleich Pro und Contra ab. Satzanfänge: <q>Zwar …, doch …</q>, <q>Insofern ist … nachvollziehbar, als …</q></p>
     </details>
-    <div class="modus" role="tablist" aria-label="Weg wählen">
-      <button type="button" role="tab" id="tab-stelle" aria-selected="true">Von einer Textstelle aus</button>
-      <button type="button" role="tab" id="tab-aspekt" aria-selected="false">Von den Prüfaspekten aus</button>
-    </div>
-    <div id="stellenmodus"></div>
-    <div id="aspektmodus" hidden>
-      <p class="hinweis">Du musst nicht alle Prüfaspekte abarbeiten. Wähle die aus, die beim Manifest etwas hergeben. Öffne die Hilfen Stufe für Stufe und erst dann, wenn du allein nicht weiterkommst.</p>
-      <div class="liste" id="liste"></div>
-    </div>
   </aside>
 </main>
 
@@ -402,58 +396,8 @@ const ZEILEN = [
   "freien Könige!“ (…)."
 ];
 
-/* Bereiche: [Startzeile, "erste Worte" (null = Zeilenanfang), Endzeile, "letzte Worte" (null = Zeilenende)].
+/* Schlüsselstellen: Bereiche [Startzeile, "erste Worte" (null = Zeilenanfang), Endzeile, "letzte Worte" (null = Zeilenende)].
    Markiert wird genau dieser Textteil, nicht die ganze Zeile. */
-const ASPEKTE = [
-  { name: "Schlüssigkeit", bezug: "Haltung zur Revolution und Herrschaftsverständnis",
-    s1: "Inwiefern ist die Argumentation des Königs in sich schlüssig? Wo hat er einen Punkt, wo widerspricht er sich?",
-    impulse: [
-      { seite: "pro", bereiche: [[16, null, 20, "sei."]], text: "Lies Z. 16 ff.: Welche Pflichten leitet er aus seinem Amt ab? Passt sein Aufruf am Ende dazu?" },
-      { seite: "contra", bereiche: [[24, "Das Resultat", 26, "Teutschland."], [29, "Doch wehe uns", 31, "Das ist unmöglich."]], text: "Lies Z. 24 bis 26 und Fußnote 2: Worauf ist er „stolz“? Passt das dazu, wie er in Z. 29 ff. über die Verfassung spricht?" } ],
-    s3: "Er leitet aus seinem Amt ab, dass … (Z. …). Damit begründet er, warum … Das halte ich für folgerichtig, weil … Er ist stolz auf …, erklärt aber … (Z. …). Damit will er … Das halte ich für widersprüchlich, weil …" },
-  { name: "Intention und Interessen", bezug: "Haltung zur Revolution und Herrschaftsverständnis",
-    s1: "Inwiefern prägen eigene Interessen seine Darstellung und seine Versprechen? Wie verlässlich und glaubwürdig sind sie?",
-    impulse: [
-      { seite: "contra", bereiche: [[2, "Ein unerhörter", 6, "Frieden an (…)."]], text: "Lies Z. 2 ff.: Wem gibt er die Schuld am 18. März? Wie verlässlich ist diese Darstellung?" },
-      { seite: "contra", bereiche: [[38, "Unsre Losung", 39, null], [26, "Gleich darauf", 28, "(…)."]], text: "Lies Z. 38 f. und Z. 26 f.: Was könnte „frei“ hier heißen? Unter welchen Umständen hat der König bisher Freiheiten gewährt? Wie glaubwürdig ist dann seine Losung?" } ],
-    s3: "Er stellt den 18. März so dar, dass … (Z. …). Damit will er … Das halte ich für wenig verlässlich, weil … Er verspricht … (Z. …). Damit will er … Das halte ich für wenig glaubwürdig, weil …" },
-  { name: "Handlungsspielraum", bezug: "Haltung zur Revolution und Herrschaftsverständnis",
-    s1: "Welche Handlungsmöglichkeiten hatte der König 1848, im März wie im November? Wo hätte er anders handeln können?",
-    impulse: [
-      { seite: "contra", bereiche: [[22, "[Denn]", 24, "beschreiten."], [28, "Unsere Verfassung", 31, "Das ist unmöglich."]], text: "Lies Z. 22 bis 24 und Z. 28 ff.: Welchen Weg hat er im März eingeschlagen? Hätte er ihn weitergehen können?" } ],
-    s3: "Im März hat er … (Z. …), jetzt … (Z. …). Seinen Kurswechsel begründet er damit, dass … Das halte ich für vermeidbar, weil er …" },
-  { name: "Adressat und Wirkung", bezug: "Haltung zur Revolution und Herrschaftsverständnis",
-    s1: "Wen will der König mit seinem Aufruf gewinnen, und womit? Was lässt sich über die vermutliche Wirkung sagen?",
-    impulse: [
-      { seite: "pro", bereiche: [[28, "Unsere Verfassung", 29, "vereinbaren."], [33, "leidet hinfort", 35, "Eigentum anderer;"]], text: "Lies Z. 28 f. und Z. 33 ff.: Was bietet er an, und wovor warnt er? Wen kann er damit gewinnen?" } ],
-    s3: "Er bietet … an und warnt vor … (Z. …). Damit will er … gewinnen. Das halte ich für zweckmäßig, weil …" },
-  { name: "Andere Positionen", bezug: "Haltung zur Revolution und Herrschaftsverständnis",
-    s1: "Wie hätten Zeitgenossen mit anderen Positionen auf das Manifest reagiert? Wer hätte ihm eher zugestimmt, wer widersprochen?",
-    impulse: [
-      { seite: "pro", bereiche: [[29, "Doch wehe uns", 31, "Das ist unmöglich."]], text: "Lies Z. 29 ff. mit den Augen eines Liberalen (AB 2): Was davon könnte er unterschreiben?" },
-      { seite: "contra", bereiche: [[17, "Mein Volk, ein jeder", 18, "Obrigkeit,"]], text: "Lies Z. 17 f. mit den Augen eines Demokraten (AB 2): Als was sieht der König das Volk? Was würde ein Demokrat entgegnen?" },
-      { seite: "contra", bereiche: [[35, "Vertraut auf mich", 38, "geherrscht (…)."]], text: "Lies Z. 35 ff. mit den Augen eines Liberalen (AB 2): Woraus leitet der König seine Herrschaft ab? Was folgt daraus für die Bindung an eine Verfassung?" } ],
-    s3: "Er lehnt es ab, … (Z. …). Damit will er … Das halte ich für nachvollziehbar, weil ein Liberaler ihm hier möglicherweise zugestimmt hätte: … Er sieht … als … (Z. …). Damit macht er deutlich, dass … Das halte ich für nicht angemessen, weil ein Demokrat oder Liberaler möglicherweise eingewandt hätte, dass …" },
-  { name: "Leerstellen", bezug: "Haltung zur Revolution",
-    s1: "Was lässt der König weg? Wo verzerrt das das Bild, und wo ist es aus seiner Lage verständlich?",
-    impulse: [
-      { seite: "contra", bereiche: [[22, "[Denn]", 23, "ergriff,"]], text: "Lies Z. 22 f.: Woher kam die Revolution nach seiner Darstellung? Was fehlt an dieser Erklärung?" },
-      { seite: "pro", bereiche: [[33, "leidet hinfort", 34, "Königs,"]], text: "Lies Z. 33 f.: Wovor hat er Angst? Warum wäre es für ihn gefährlich, die Ursachen der Revolution zu nennen?" } ],
-    s3: "Er erklärt die Revolution mit … (Z. …). So erscheint die Revolution als … Das halte ich für verzerrend, weil er weglässt, dass … Zugleich fürchtet er … (Z. …). Das zeigt, dass … Aus seiner Lage halte ich es deshalb für folgerichtig, dass er die Ursachen nicht nennt, weil …" },
-  { name: "Wissenshorizont", bezug: "Haltung zur Revolution",
-    s1: "Was konnte der König im November 1848 (nicht) wissen? Wie wirkt sich das auf dein Urteil aus?",
-    impulse: [
-      { seite: "pro", bereiche: [[9, "Das Verderben", 12, "Untergang."]], text: "Lies Z. 9 ff.: Was befürchtet er? Was stand mit Blick auf vergangene Revolutionen, zum Beispiel in Frankreich, tatsächlich zu befürchten?" } ],
-    s3: "Er befürchtet … (Z. …). Damit begründet er, warum … Das halte ich für nachvollziehbar, weil in früheren Revolutionen … Wie die Revolution ausgehen würde, konnte er im November 1848 nicht wissen." },
-  { name: "Sprache", bezug: "Haltung zur Revolution",
-    s1: "Inwiefern verrät seine Sprache seine Haltung zur Revolution? Wo verzerrt sie, und wo ist sie aus seiner Sicht zweckmäßig?",
-    impulse: [
-      { seite: "contra", bereiche: [[9, "Das Verderben", 12, "Untergang."]], text: "Lies Z. 9 ff.: Mit welchen Bildern beschreibt er die Revolution? Was folgt daraus für seinen Umgang mit ihr?" },
-      { seite: "pro", bereiche: [[31, "Laßt uns", 33, "bekämpfen;"]], text: "Lies Z. 31 ff.: Wozu ruft er auf? Warum braucht er dafür starke Bilder?" } ],
-    s3: "Er beschreibt die Revolution als … (Z. …). So erscheint sie als … Das halte ich für verzerrend, weil … Er ruft dazu auf, … (Z. …). Damit will er … Aus seiner Lage halte ich diese Bildsprache für zweckmäßig, weil …" }
-];
-
-/* Schlüsselstellen für den Weg „Von einer Textstelle aus“ */
 const STELLEN = [
   { bereich: [2, "Ein unerhörter", 6, "Frieden an (…)."], kurz: "„Ein unerhörter Verrat …“", eintraege: [
     { aspekt: "Intention und Interessen", seite: "contra", frage: "Wem gibt er die Schuld am 18. März? Wie verlässlich ist diese Darstellung?", satz: "Er stellt den 18. März so dar, dass … (Z. …). Damit will er … Das halte ich für wenig verlässlich, weil …" } ] },
@@ -482,8 +426,6 @@ const STELLEN = [
     { aspekt: "Intention und Interessen", seite: "contra", frage: "Lies auch Z. 26 f.: Was könnte „frei“ hier heißen? Unter welchen Umständen hat der König bisher Freiheiten gewährt? Wie glaubwürdig ist dann seine Losung?", satz: "Er verspricht … (Z. …). Damit will er … Das halte ich für wenig glaubwürdig, weil …" } ] }
 ];
 
-const STUFEN = ["Leitfrage", "Denkanstöße", "Satzbaustein"];
-const stufenName = (a, s) => (s === 2 && a.impulse.length === 1) ? "Denkanstoß" : STUFEN[s - 1];
 const reduziert = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
 
 /* Zeilen in Bausteine zerlegen: Text, Fußnotenzeichen, gesperrte Wörter */
@@ -514,12 +456,11 @@ function pos(z, phrase, ende) {
   return ende ? i + phrase.length : i;
 }
 const bereich = (b) => ({ z1: b[0], a: pos(b[0], b[1], false), z2: b[2], b: pos(b[2], b[3], true) });
-ASPEKTE.forEach(a => a.impulse.forEach(x => { x.ber = x.bereiche.map(bereich); }));
 STELLEN.forEach(s => { s.ber = bereich(s.bereich); });
 
 /* Schnittstellen pro Zeile: Anfang und Ende jedes Bereichs */
 const GRENZEN = ZEILEN.map((_, i) => new Set([0, SICHTBAR[i].length]));
-[...ASPEKTE.flatMap(a => a.impulse.flatMap(x => x.ber)), ...STELLEN.map(s => s.ber)]
+STELLEN.map(s => s.ber)
   .forEach(r => { GRENZEN[r.z1 - 1].add(r.a); GRENZEN[r.z2 - 1].add(r.b); });
 const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
 function segmentHtml(i, a, b, letztes) {
@@ -588,80 +529,11 @@ function springeZu(z) {
   const ziel = zeilenBox.querySelector(`.zeile[data-n="${z}"]`);
   if (ziel) ziel.scrollIntoView({ behavior: reduziert ? "auto" : "smooth", block: "center" });
 }
-const markiere = (a) => hebeHervor(a ? a.impulse.map(x => ({ ber: x.ber, cls: x.seite })) : []);
-const ersteZeile = (a) => Math.min(...a.impulse.flatMap(x => x.ber.map(r => r.z1)));
 
-/* Weg „Von den Prüfaspekten aus“ */
-const stand = ASPEKTE.map(() => 0);
-let offen = -1;
-const listeBox = document.getElementById("liste");
-const nb = (t) => t.replace(/Z\. (\d+)( ff?\.)?/g, (m, n, f) => "Z. " + n + (f ? " " + f.trim() : ""));
-const KOPF = { pro: "Pro: Wo hat er einen Punkt?", contra: "Contra: Wo hakt es?" };
+const nb = (t) => t.replace(/Z\. (\d+)( ff?\.)?/g, (m, n, f) => "Z. " + n + (f ? " " + f.trim() : ""));
 
-function stufeHtml(a, s) {
-  if (s === 1) return `<div class="stufe s1"><h3>Stufe 1: ${stufenName(a, 1)}</h3><p>${nb(a.s1)}</p></div>`;
-  if (s === 2) return `<div class="stufe s2"><h3>Stufe 2: ${stufenName(a, 2)}</h3>` +
-    a.impulse.map((x, k) => `<div class="impuls ${x.seite}"><b>${KOPF[x.seite]}</b><p>${nb(x.text)}</p><button class="knopf klein zeigen" type="button" data-k="${k}">Stelle zeigen</button></div>`).join("") +
-    `</div>`;
-  return `<div class="stufe s3"><h3>Stufe 3: ${stufenName(a, 3)}</h3><p>${nb(a.s3)}</p></div>`;
-}
-
-function zeichneKoerper(i) {
-  const a = ASPEKTE[i];
-  const body = document.getElementById("a" + i);
-  let html = "";
-  for (let s = 1; s <= stand[i]; s++) html += stufeHtml(a, s);
-  if (stand[i] < 3) {
-    const naechste = stand[i] + 1;
-    html += `<button class="knopf weiter" type="button" data-stufe="${naechste}">Stufe ${naechste} zeigen: ${stufenName(a, naechste)}</button>`;
-  }
-  body.innerHTML = html;
-
-  const weiter = body.querySelector(".weiter");
-  if (weiter) weiter.addEventListener("click", () => {
-    stand[i] = Number(weiter.dataset.stufe);
-    zeichneKoerper(i);
-    if (stand[i] === 2) { markiere(a); springeZu(ersteZeile(a)); }
-    const neu = body.querySelector(".stufe:last-of-type");
-    if (neu) neu.scrollIntoView({ behavior: reduziert ? "auto" : "smooth", block: "nearest" });
-    const naechsterKnopf = body.querySelector(".weiter");
-    if (naechsterKnopf) naechsterKnopf.focus({ preventScroll: true });
-  });
-  body.querySelectorAll(".zeigen").forEach(b => b.addEventListener("click", () => springeZu(a.impulse[Number(b.dataset.k)].ber[0].z1)));
-}
-
-function oeffne(i) {
-  offen = (offen === i) ? -1 : i;
-  ASPEKTE.forEach((a, j) => {
-    const sec = listeBox.children[j];
-    const auf = j === offen;
-    sec.classList.toggle("offen", auf);
-    sec.querySelector(".aspekt-kopf").setAttribute("aria-expanded", String(auf));
-    document.getElementById("a" + j).hidden = !auf;
-  });
-  if (offen >= 0) {
-    zeichneKoerper(offen);
-    const a = ASPEKTE[offen];
-    if (stand[offen] >= 2) { markiere(a); springeZu(ersteZeile(a)); } else markiere(null);
-  } else markiere(null);
-}
-
-ASPEKTE.forEach((a, i) => {
-  const sec = document.createElement("section");
-  sec.className = "aspekt";
-  sec.innerHTML = `
-    <button class="aspekt-kopf" type="button" aria-expanded="false" aria-controls="a${i}">
-      <span class="name">${a.name}</span>
-      <span class="bezug">betrifft: ${a.bezug}</span>
-      <span class="pfeil" aria-hidden="true"></span>
-    </button>
-    <div class="aspekt-body" id="a${i}" hidden></div>`;
-  sec.querySelector(".aspekt-kopf").addEventListener("click", () => oeffne(i));
-  listeBox.appendChild(sec);
-});
-
-/* Weg „Von einer Textstelle aus“ */
-let modus = "stelle", aktStelle = -1, eindruck = null;
+/* Schlüsselstellen antippen */
+let aktStelle = -1, eindruck = null;
 const stellenBox = document.getElementById("stellenmodus");
 const zText = (st) => {
   const a = st.ber.z1, b = st.ber.z2;
@@ -682,12 +554,12 @@ STELLEN.forEach((st, i) => {
   });
 });
 zeilenBox.addEventListener("click", (ev) => {
-  if (modus !== "stelle" || ev.target.closest("a")) return;
+  if (ev.target.closest("a")) return;
   const s = ev.target.closest(".seg.stelle");
   if (s) waehleStelle(Number(s.dataset.stelle));
 });
 zeilenBox.addEventListener("keydown", (ev) => {
-  if (modus !== "stelle" || (ev.key !== "Enter" && ev.key !== " ")) return;
+  if (ev.key !== "Enter" && ev.key !== " ") return;
   const s = ev.target.closest(".seg.stelle");
   if (s) { ev.preventDefault(); waehleStelle(Number(s.dataset.stelle)); }
 });
@@ -745,22 +617,7 @@ stellenBox.addEventListener("click", (ev) => {
   }
 });
 
-/* Umschalten zwischen den beiden Wegen */
-const tabStelle = document.getElementById("tab-stelle"), tabAspekt = document.getElementById("tab-aspekt");
-function setzeModus(m) {
-  modus = m;
-  document.body.classList.toggle("modus-stelle", m === "stelle");
-  tabStelle.setAttribute("aria-selected", String(m === "stelle"));
-  tabAspekt.setAttribute("aria-selected", String(m === "aspekt"));
-  stellenBox.hidden = m !== "stelle";
-  document.getElementById("aspektmodus").hidden = m !== "aspekt";
-  if (m === "stelle") faerbeStelle();
-  else if (offen >= 0 && stand[offen] >= 2) markiere(ASPEKTE[offen]); else markiere(null);
-}
-tabStelle.addEventListener("click", () => setzeModus("stelle"));
-tabAspekt.addEventListener("click", () => setzeModus("aspekt"));
 zeichneStellenmodus();
-setzeModus("stelle");
 
 </script>
 </body>
