@@ -1,0 +1,638 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Modrow-Rede 1989: Hilfen zu Aufgabe 3</title>
+<style>
+  :root {
+    color-scheme: light;
+    --petrol: #17415C;
+    --petrol-hell: #E6EEF2;
+    --ink: #1D2A33;
+    --grau: #5F6B70;
+    --linie: #D5DBDE;
+    --papier: #FFFFFF;
+    --panel: #F2F4F5;
+    --warm: #FBF3E7;
+    --amber: #D9A55B;
+    --amber-dunkel: #8A5A12;
+    --pro: #4C9A5B;
+    --pro-hell: #E9F4EB;
+    --pro-dunkel: #2F6B3A;
+    --contra: #C2504A;
+    --contra-hell: #FBECEB;
+    --contra-dunkel: #8E2E29;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, sans-serif;
+    --qsize: 15px;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; }
+  html, body { margin: 0; height: 100%; }
+  body {
+    font-family: var(--sans);
+    color: var(--ink);
+    background: var(--papier);
+    display: grid;
+    grid-template-rows: auto minmax(0, 1fr);
+    height: 100vh;
+    height: 100dvh;
+    overflow: hidden;
+  }
+  button { font: inherit; color: inherit; }
+  :focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+
+  /* Kopf */
+  .kopf {
+    background: var(--petrol);
+    color: #fff;
+    padding: 12px 20px 14px;
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    gap: 6px 20px;
+    align-items: start;
+  }
+  .kopf h1 { margin: 0; font-family: var(--serif); font-weight: 600; font-size: 1.3rem; line-height: 1.25; }
+  .kopf .unter { margin: 2px 0 0; font-size: .85rem; opacity: .8; }
+  .kopf .zurueck { color: #fff; margin-left: 12px; text-underline-offset: 2px; }
+  .kopf .auftrag { grid-column: 1 / -1; margin: 6px 0 0; font-size: .9rem; line-height: 1.45; max-width: 72em; }
+  .kopf .auftrag b { font-weight: 600; }
+
+  /* Arbeitsfläche */
+  main {
+    display: grid;
+    grid-template-columns: minmax(0, 1.6fr) minmax(330px, 1fr);
+    min-height: 0;
+  }
+  .pane { overflow-y: auto; -webkit-overflow-scrolling: touch; min-height: 0; }
+
+  /* Quelle */
+  .quelle { padding: 18px 26px 40px 14px; }
+  .material, .glossar { margin: 0 0 18px 46px; font-size: .88rem; line-height: 1.5; color: var(--grau); }
+  .material summary, .glossar summary { cursor: pointer; color: var(--petrol); font-weight: 600; padding: 4px 0; }
+  .material p { margin: 8px 0 0; }
+  .auftrag-schritte { margin: 8px 0 0; padding-left: 20px; color: var(--ink); }
+  .auftrag-schritte > li { margin-bottom: 6px; }
+  .auftrag-schritte ul { margin: 4px 0; padding-left: 18px; }
+  .kontext ul { margin: 6px 0 0; padding-left: 18px; color: var(--ink); }
+  .kontext li { margin-bottom: 5px; }
+  .aufgabe p { color: var(--ink); font-size: .95rem; }
+  .glossar table { border-collapse: collapse; width: 100%; margin-top: 6px; color: var(--ink); }
+  .glossar td { padding: 5px 10px 5px 0; vertical-align: top; border-top: 1px solid var(--linie); }
+  .glossar td.w { font-weight: 600; }
+  .marker { background: linear-gradient(to bottom, transparent 8%, #FFEB5C 8%, #FFEB5C 92%, transparent 92%); color: var(--ink); padding: 1px 6px; border-radius: 3px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  .glossar td.z { color: var(--grau); white-space: nowrap; font-variant-numeric: tabular-nums; }
+  .titel { font-family: var(--serif); text-align: center; margin: 0 0 14px 46px; }
+  .titel .entwurf { font-style: italic; font-size: 1rem; margin: 0; }
+  .titel .haupt { font-size: 1.15rem; font-weight: 600; margin: 2px 0 0; }
+  .zeilen { position: relative; }
+  .zeile {
+    display: grid;
+    grid-template-columns: 34px minmax(0, 1fr);
+    column-gap: 12px;
+    border-radius: 3px;
+    transition: background-color .25s ease;
+  }
+  .zeile .nr {
+    font-size: 12px;
+    color: var(--grau);
+    text-align: right;
+    font-variant-numeric: tabular-nums;
+    line-height: calc(var(--qsize) * 1.65);
+    visibility: hidden;
+    user-select: none;
+    -webkit-user-select: none;
+  }
+  .zeile .nr.fuenf { visibility: visible; }
+  .zeile .txt {
+    font-family: var(--serif);
+    font-size: var(--qsize);
+    line-height: 1.65;
+    white-space: nowrap;
+    text-align: justify;
+    text-align-last: justify;
+    padding-right: 6px;
+  }
+  .zeile.letzte .txt { text-align-last: left; }
+  .seg.pro { background: #D3ECD8; }
+  .seg.contra { background: #F6D6D3; }
+  .seg.gewaehlt { background: #D6E5EE; }
+  .seg.pro, .seg.contra, .seg.gewaehlt { border-radius: 2px; -webkit-box-decoration-break: clone; box-decoration-break: clone; text-decoration: none !important; }
+  .zeile.m-pro .nr, .zeile.m-contra .nr, .zeile.m-gewaehlt .nr { visibility: visible; font-weight: 700; }
+  .zeile.m-pro .nr { color: var(--pro-dunkel); }
+  .zeile.m-contra .nr { color: var(--contra-dunkel); }
+  .zeile.m-gewaehlt .nr { color: var(--petrol); }
+  .modus-stelle .seg.stelle { cursor: pointer; text-decoration-line: underline; text-decoration-style: solid; text-decoration-thickness: 2px; text-underline-offset: 4px; }
+  .modus-stelle .seg.stelle-a { text-decoration-color: #3F7491; }
+  .modus-stelle .seg.stelle-b { text-decoration-color: #B07D2A; }
+  .sperr { letter-spacing: .28em; margin-right: -.28em; }
+  sup { line-height: 0; }
+  sup a { color: var(--petrol); text-decoration: none; font-family: var(--sans); font-weight: 700; font-size: .72em; padding: 0 2px; }
+  .messung { position: absolute; visibility: hidden; left: 0; top: 0; width: 0; height: 0; overflow: hidden; white-space: nowrap; font-family: var(--serif); font-size: 100px; }
+  .messung span { display: block; width: max-content; }
+  .fussnoten { margin: 22px 0 0 46px; padding-top: 10px; border-top: 1px solid var(--linie); font-size: .85rem; line-height: 1.5; color: var(--grau); }
+  .fussnoten p { margin: 0 0 6px; padding: 2px 4px; border-radius: 3px; }
+  .fussnoten p:target { background: var(--warm); color: var(--ink); }
+
+  /* Prüfaspekte */
+  .hilfen { background: var(--panel); border-left: 1px solid var(--linie); padding: 18px 18px 40px; }
+  .hilfen h2 { margin: 0 0 6px; font-family: var(--serif); font-size: 1.2rem; color: var(--petrol); }
+  .hinweis { margin: 0 0 8px; font-size: .9rem; line-height: 1.5; }
+  .hinweis code { font-family: var(--sans); background: #fff; border: 1px solid var(--linie); border-radius: 4px; padding: 0 4px; }
+  .liste { margin-top: 14px; display: grid; gap: 8px; }
+  .aspekt { background: #fff; border: 1px solid var(--linie); border-radius: 8px; }
+  .aspekt.offen { border-color: var(--petrol); }
+  .aspekt-kopf {
+    width: 100%;
+    display: grid;
+    grid-template-columns: minmax(0, 1fr) auto;
+    align-items: center;
+    gap: 2px 10px;
+    text-align: left;
+    background: none;
+    border: 0;
+    padding: 12px 14px;
+    cursor: pointer;
+    min-height: 52px;
+  }
+  .aspekt-kopf .name { font-weight: 600; font-size: 1rem; color: var(--petrol); }
+  .aspekt-kopf .bezug { grid-column: 1; font-size: .8rem; color: var(--grau); }
+  .aspekt-kopf .pfeil { grid-row: 1 / span 2; grid-column: 2; width: 10px; height: 10px; border-right: 2px solid var(--petrol); border-bottom: 2px solid var(--petrol); transform: rotate(45deg); transition: transform .2s ease; margin-right: 4px; }
+  .aspekt.offen .pfeil { transform: rotate(-135deg); }
+  .aspekt-body { padding: 0 14px 14px; }
+  .stufe { border-top: 1px solid var(--linie); padding: 10px 0 2px; }
+  .stufe h3 { margin: 0 0 4px; font-size: .78rem; font-weight: 600; color: var(--grau); }
+  .stufe p { margin: 0 0 6px; font-size: .95rem; line-height: 1.5; }
+  .stufe.s3 p { font-family: var(--serif); font-style: italic; }
+  .impuls { margin: 6px 0 8px; padding: 8px 10px 6px; border-radius: 6px; }
+  .impuls b { display: block; font-size: .85rem; margin-bottom: 2px; }
+  .impuls p { margin: 0; }
+  .impuls .knopf { margin-top: 6px; }
+  .impuls.pro { background: var(--pro-hell); border-left: 3px solid var(--pro); }
+  .impuls.pro b { color: var(--pro-dunkel); }
+  .impuls.contra { background: var(--contra-hell); border-left: 3px solid var(--contra); }
+  .impuls.contra b { color: var(--contra-dunkel); }
+  .urteilen { background: #fff; border: 1px solid var(--linie); border-radius: 8px; padding: 8px 12px; margin: 4px 0 0; font-size: .88rem; line-height: 1.45; }
+  #stellenmodus { margin: 4px 0 16px; }
+  .urteilen + .urteilen { margin-top: 8px; }
+  .urteilen summary { cursor: pointer; font-weight: 600; color: var(--petrol); padding: 4px 0; }
+  .urteilen p { margin: 6px 0 0; }
+  .dreischritt { list-style: none; margin: 8px 0 0; padding: 0; display: grid; gap: 6px; }
+  .dreischritt li { border-left-width: 4px; border-left-style: solid; border-radius: 4px; padding: 6px 8px; }
+  .dreischritt li b { display: block; font-size: .82rem; }
+  .dreischritt li span, .zusammen span { font-family: var(--serif); font-style: italic; }
+  .d1, .t1 { background: var(--petrol-hell); border-color: var(--petrol); }
+  .d2, .t2 { background: var(--warm); border-color: #B07D2A; }
+  .d3, .t3 { background: #F1ECF6; border-color: #6B4C8A; }
+  .d1 b { color: var(--petrol); } .d2 b { color: var(--amber-dunkel); } .d3 b { color: #4E3466; }
+  .zusammen span { padding: 1px 3px; border-radius: 3px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  .aufbau { margin: 6px 0 0; padding-left: 20px; }
+  .aufbau li { margin-bottom: 6px; }
+  .aufbau q { font-family: var(--serif); font-style: italic; quotes: "„" "“"; }
+  .modus { display: grid; grid-template-columns: 1fr 1fr; margin: 14px 0 12px; border: 1.5px solid var(--petrol); border-radius: 8px; overflow: hidden; }
+  .modus button { border: 0; background: #fff; color: var(--petrol); font-weight: 600; font-size: .9rem; padding: 10px 8px; min-height: 44px; cursor: pointer; }
+  .modus button[aria-selected="true"] { background: var(--petrol); color: #fff; }
+  .schritte { margin: 0; padding-left: 20px; font-size: .95rem; line-height: 1.5; }
+  .schritte li { margin-bottom: 6px; }
+  .stelle-kopf { font-family: var(--serif); font-size: 1.02rem; margin: 2px 0 6px; }
+  .stelle-z { font-family: var(--sans); font-size: .8rem; font-weight: 700; color: var(--petrol); margin-right: 8px; }
+  h3.schritt { font-size: .82rem; font-weight: 600; color: var(--grau); margin: 14px 0 6px; }
+  .eindruck { display: flex; flex-wrap: wrap; gap: 8px; }
+  .eindruck .knopf { margin: 0; }
+  .knopf.aktiv-pro { background: var(--pro); border-color: var(--pro); color: #fff; }
+  .knopf.aktiv-contra { background: var(--contra); border-color: var(--contra); color: #fff; }
+  .leer { font-size: .9rem; color: var(--grau); margin: 4px 0 8px; }
+  .gegenprobe { margin-top: 12px; }
+  .gegenprobe summary { cursor: pointer; font-weight: 600; color: var(--petrol); padding: 6px 0; }
+  .satz p { font-family: var(--serif); font-style: italic; margin-top: 6px; }
+  .knopf {
+    display: inline-block;
+    border: 1.5px solid var(--petrol);
+    background: #fff;
+    color: var(--petrol);
+    border-radius: 6px;
+    padding: 9px 14px;
+    font-size: .92rem;
+    font-weight: 600;
+    cursor: pointer;
+    margin: 8px 8px 0 0;
+    min-height: 44px;
+  }
+  .knopf.weiter { background: var(--petrol); color: #fff; }
+  .knopf.klein { border-width: 1px; font-weight: 500; font-size: .85rem; padding: 6px 10px; min-height: 36px; }
+
+  /* Hochformat und schmale Bildschirme: Quelle oben, Hilfen unten */
+  @media (max-width: 1000px), (orientation: portrait) {
+    main { grid-template-columns: minmax(0, 1fr); grid-template-rows: minmax(0, 1.15fr) minmax(0, 1fr); }
+    .hilfen { border-left: 0; border-top: 2px solid var(--petrol); }
+    .kopf h1 { font-size: 1.15rem; }
+  }
+  @media (max-width: 560px) {
+    .kopf { grid-template-columns: minmax(0, 1fr); }
+    .quelle { padding-left: 6px; padding-right: 10px; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    * { transition: none !important; scroll-behavior: auto !important; }
+  }
+</style>
+</head>
+<body class="modus-stelle">
+<header class="kopf">
+  <div>
+    <h1>Hans Modrow: Rede auf dem Parteitag der SED (Dezember 1989)</h1>
+    <p class="unter">Übung Geschichte: Hilfen zu Aufgabe 3 <a class="zurueck" href="../">Alle Materialien</a></p>
+  </div>
+</header>
+
+<main>
+  <section class="pane quelle" id="quelle" aria-label="Quelle">
+    <details class="material aufgabe" open>
+      <summary>Übung: Aufgabe 3 bearbeiten</summary>
+      <p><b>Aufgabe 3:</b> Beurteile die Sichtweise des Redners.</p>
+      <ol class="auftrag-schritte">
+        <li><b>Lies die Quelle.</b> Das Glossar erklärt schwierige Wörter, die Hilfe zum Kontext fasst die Ereignisse in der DDR 1989 zusammen.</li>
+        <li><b>Sammle Argumente aus beiden Richtungen:</b> Wo kannst du Modrow zustimmen, wo nicht? Tippe dafür in der Quelle eine farbig unterstrichene Stelle an und entscheide, ob du eher zustimmst oder ein Problem siehst. Die Hilfen zeigen dir dann einen passenden Prüfaspekt mit Frage und Satzbaustein. Notiere jedes Argument in Stichpunkten mit Zeilenangabe.</li>
+        <li><b>Formuliere aus.</b> Schreibe Aufgabe 3 nach dem Blockprinzip (Kasten „So baust du Aufgabe 3 auf“), jedes Argument im Dreischritt.</li>
+        <li><b>Lege deinen Text im OneNote-Kursnotizbuch ab.</b></li>
+      </ol>
+    </details>
+    <details class="material" open>
+      <summary>Materialgrundlage und Hinweise zum Redner</summary>
+      <p>Hans Modrow: Eröffnungsrede auf dem außerordentlichen Parteitag der SED am 8. Dezember 1989 in Berlin (Rechtschreibung und Hervorhebungen wie im Original)</p>
+      <p><b>Hinweise zum Redner:</b> Hans Modrow (1928–2023) war stellvertretender Parteivorsitzender der SED, Vorsitzender des Ministerrates vom 13. November 1989 bis 12. April 1990 und führte in dieser Zeit die Regierungsgeschäfte der DDR. Die SED löste sich auf dem außerordentlichen Parteitag im Dezember 1989 auf und formierte sich als SED-PDS (Sozialistische Einheitspartei Deutschlands – Partei des Demokratischen Sozialismus) neu.</p>
+    </details>
+    <details class="glossar">
+      <summary><span class="marker">Glossar: schwierige Wörter</span></summary>
+      <table>
+        <tr><td class="w">Genossinnen und Genossen</td><td class="z">Z.&nbsp;1</td><td>Anrede unter Mitgliedern sozialistischer Parteien</td></tr>
+        <tr><td class="w">Parteitag, Delegierte</td><td class="z">Z.&nbsp;2 f.</td><td>Versammlung einer Partei; die dafür gewählten Vertreter</td></tr>
+        <tr><td class="w">Prozeß, laßt, daß, paßt</td><td class="z">Z.&nbsp;5, 8, 31, 60</td><td>alte Rechtschreibung (Prozess, lasst, dass, passt)</td></tr>
+        <tr><td class="w">Karl Marx … Otto Grotewohl</td><td class="z">Z.&nbsp;8–10</td><td>Vordenker und Politiker des Sozialismus (siehe Fußnote 1)</td></tr>
+        <tr><td class="w">(Beifall)</td><td class="z">Z.&nbsp;11</td><td>Applaus der Zuhörer, im Protokoll vermerkt</td></tr>
+        <tr><td class="w">Amtsmißbrauch</td><td class="z">Z.&nbsp;22</td><td>ein Amt zum eigenen Vorteil ausnutzen</td></tr>
+        <tr><td class="w">Korruption</td><td class="z">Z.&nbsp;22</td><td>Bestechlichkeit</td></tr>
+        <tr><td class="w">sozialistische Partner, Verbündete</td><td class="z">Z.&nbsp;28, 31</td><td>die anderen Staaten des Ostblocks, vor allem die Sowjetunion</td></tr>
+        <tr><td class="w">Souveränität</td><td class="z">Z.&nbsp;30</td><td>Unabhängigkeit eines Staates</td></tr>
+        <tr><td class="w">Ausverkauf</td><td class="z">Z.&nbsp;30</td><td>hier: Preisgabe der DDR an die Bundesrepublik</td></tr>
+        <tr><td class="w">BRD</td><td class="z">Z.&nbsp;30</td><td>Bundesrepublik Deutschland (in der DDR übliche Abkürzung)</td></tr>
+        <tr><td class="w">Anachronismus</td><td class="z">Z.&nbsp;34</td><td>etwas, das nicht mehr in die Zeit passt</td></tr>
+        <tr><td class="w">großdeutscher Chauvinismus</td><td class="z">Z.&nbsp;34 f.</td><td>übersteigerter Nationalismus eines großen, mächtigen Deutschlands</td></tr>
+        <tr><td class="w">forcieren</td><td class="z">Z.&nbsp;46</td><td>beschleunigen, vorantreiben</td></tr>
+        <tr><td class="w">konföderativ</td><td class="z">Z.&nbsp;49</td><td>in Form eines Staatenbundes (Bund selbstständiger Staaten)</td></tr>
+        <tr><td class="w">Erörterung</td><td class="z">Z.&nbsp;50</td><td>Besprechung, Beratung</td></tr>
+        <tr><td class="w">Ära</td><td class="z">Z.&nbsp;56</td><td>Zeitalter, Epoche</td></tr>
+        <tr><td class="w">Sperriegel</td><td class="z">Z.&nbsp;57</td><td>Absperrung; hier: Grenzen, die Europa teilen</td></tr>
+        <tr><td class="w">freizügig</td><td class="z">Z.&nbsp;59</td><td>hier: mit freiem Reiseverkehr</td></tr>
+        <tr><td class="w">entmilitarisiert, humanistisch</td><td class="z">Z.&nbsp;61</td><td>ohne Militär; an der Würde des Menschen orientiert</td></tr>
+      </table>
+    </details>
+    <details class="material kontext">
+      <summary>Hilfe zum Kontext: DDR 1989 (freiwillig)</summary>
+      <ul>
+        <li><b>Mai 1989:</b> Bei den Kommunalwahlen am 7. Mai weisen Oppositionelle Wahlfälschung nach.</li>
+        <li><b>Sommer 1989:</b> Die SED-Führung lehnt Gorbatschows Reformkurs ab. Tausende fliehen über Ungarn in den Westen; am 11. September öffnet Ungarn seine Grenze für DDR-Bürger.</li>
+        <li><b>September und Oktober:</b> Bürgerbewegungen wie das Neue Forum entstehen. Sie wollen die DDR erneuern und demokratisieren. Bei den Montagsdemonstrationen in Leipzig rufen die Menschen „Wir sind das Volk!“.</li>
+        <li><b>18. Oktober:</b> Erich Honecker tritt zurück, Egon Krenz wird Chef der SED.</li>
+        <li><b>4. November:</b> In Ost-Berlin findet die größte Protestdemonstration in der Geschichte der DDR statt.</li>
+        <li><b>9. November:</b> Die Mauer wird geöffnet. Hunderttausende DDR-Bürger reisen in den Westen.</li>
+        <li><b>13. November:</b> Die Volkskammer wählt Hans Modrow zum Vorsitzenden des Ministerrates.</li>
+        <li><b>28. November:</b> Bundeskanzler Kohl legt ein Zehn-Punkte-Programm vor: zuerst Zusammenarbeit, dann „konföderative Strukturen“, am Ende als Ziel die staatliche Einheit Deutschlands.</li>
+        <li><b>1. Dezember:</b> Die Volkskammer streicht die führende Rolle der SED aus der Verfassung.</li>
+        <li><b>3. Dezember:</b> Politbüro und Zentralkomitee der SED treten zurück.</li>
+        <li><b>7. Dezember:</b> Der Zentrale Runde Tisch tagt zum ersten Mal: Regierung, Parteien und Bürgerbewegungen beraten gemeinsam.</li>
+        <li><b>Ausland:</b> Großbritannien und Frankreich haben Vorbehalte gegen ein vereinigtes Deutschland. Die USA unter Präsident Bush unterstützen dagegen eine Vereinigung.</li>
+      </ul>
+    </details>
+    <div class="zeilen" id="zeilen"></div>
+    <div class="fussnoten">
+      <p id="fn1"><b>1</b> Politikerin und Politiker, die den Sozialismus begründeten bzw. ihn umzusetzen versuchten.</p>
+    </div>
+  </section>
+
+  <aside class="pane hilfen" aria-label="Hilfen zu Aufgabe 3">
+    <h2>Hilfen</h2>
+    <div id="stellenmodus"></div>
+    <details class="urteilen">
+      <summary>So formulierst du ein Argument (Dreischritt)</summary>
+      <ol class="dreischritt">
+        <li class="d1"><b>1 Aussage aufgreifen (mit Zeilenangabe) und erläutern</b><span>„Modrow behauptet, auch Präsident Bush wolle ‚am Bestehen zweier deutscher Staaten‘ festhalten (Z. 42 ff.). So erscheint die Teilung Deutschlands als Wille aller Großmächte. Damit will er zeigen, dass die DDR als eigener Staat gesichert ist.“</span></li>
+        <li class="d2"><b>2 Eigene Positionierung</b><span>„Das halte ich für verzerrend, …“</span></li>
+        <li class="d3"><b>3 Begründung</b><span>„…, weil die USA eine Vereinigung Deutschlands unterstützten. Modrow schränkt seine Aussage sogar selbst ein: ‚meines Wissens‘, ‚wenn ich das richtig interpretiere‘ (Z. 42, 44 f.).“</span></li>
+      </ol>
+      <p class="zusammen"><b>Zusammen:</b> <span class="t1">Modrow behauptet, auch Präsident Bush wolle „am Bestehen zweier deutscher Staaten“ festhalten (Z. 42 ff.). So erscheint die Teilung Deutschlands als Wille aller Großmächte. Damit will er zeigen, dass die DDR als eigener Staat gesichert ist.</span> <span class="t2">Das halte ich für verzerrend,</span> <span class="t3">weil die USA eine Vereinigung Deutschlands unterstützten. Modrow schränkt seine Aussage sogar selbst ein: „meines Wissens“, „wenn ich das richtig interpretiere“ (Z. 42, 44 f.).</span></p>
+      <p><b>Urteilswörter pro:</b> nachvollziehbar, folgerichtig, zweckmäßig, angemessen, zutreffend</p>
+      <p><b>Urteilswörter contra:</b> widersprüchlich, einseitig, verzerrend, unverhältnismäßig, vermeidbar, nicht (mehr) angemessen, wenig glaubwürdig, unrealistisch</p>
+      <p><b>Wichtig:</b> Die Erläuterung sagt, was der Redner damit meint oder erreichen will. Dein „weil“ sagt, warum du das überzeugend findest oder nicht, und bringt dafür etwas Neues: Wissen aus dem Unterricht oder eine andere Textstelle. Pro heißt oft „aus seiner Lage verständlich“, nicht „richtig“.</p>
+    </details>
+    <details class="urteilen">
+      <summary>So baust du Aufgabe 3 auf</summary>
+      <p><b>Empfohlen: Blockprinzip</b></p>
+      <ol class="aufbau">
+        <li><b>Einleitung:</b> Greife die Aufgabenstellung wörtlich auf, z. B.: <q>Im Folgenden werde ich die Sichtweise des Redners beurteilen.</q></li>
+        <li><b>Block 1 (Pro): Wo stimmst du ihm eher zu?</b> Zwei bis vier Argumente, je nach Ausführlichkeit der Begründung, jedes im Dreischritt.</li>
+        <li><b>Block 2 (Contra): Wo stimmst du nicht zu?</b> Auch hier möglichst zwei bis vier Argumente, je nach Ausführlichkeit der Begründung, jedes im Dreischritt. Überleitung nicht vergessen, z. B.: <q>Kritisch zu sehen ist jedoch, …</q></li>
+        <li><b>Fazit:</b> Wiederhole keine einzelnen Argumente, sondern ziehe eine Gesamtbilanz: Wie beurteilst du insgesamt Modrows Sicht auf die Lage der DDR, wie seine Erwartungen an die Zukunft? Dein „weil“ bündelt hier mehrere Argumente zu einer Gesamteinschätzung. Die beiden Urteile können unterschiedlich ausfallen, z. B.: <q>Insgesamt halte ich Modrows Sicht auf die Lage der DDR für eher …, weil … Seine Erwartungen an die Zukunft halte ich dagegen / ebenfalls für eher …, weil …</q></li>
+      </ol>
+      <p><b>Alternative: Ping-Pong-Prinzip.</b> Du wägst zu jedem Punkt gleich Pro und Contra ab. Satzanfänge: <q>Zwar …, doch …</q>, <q>Insofern ist … nachvollziehbar, als …</q></p>
+    </details>
+  </aside>
+</main>
+
+<script>
+/* Quelle: 63 Zeilen, Umbruch wie im Original. {FN1} = Fußnotenzeichen, {KURSIV:...} = kursiv, ¶ = Absatzende */
+const ROH = [
+  "Liebe Genossinnen und Genossen! Wenn ich zur Lage im Land sprechen soll, dann ist es",
+  "zuerst natürlich auch das Wort für und an unsere Partei. Zu diesem außerordentlichen Partei-",
+  "tag sind aus allen Teilen unserer Republik die gewählten Delegierten zusammengekommen.",
+  "Wir wurden gewählt nach kritischer Auseinandersetzung und oft langem, offenem Meinungs-",
+  "streit. Dieser nicht selten schmerzliche Prozeß war Beginn der Abrechnung mit Vergangenem,",
+  "das nicht vergessen werden kann und nicht vergessen werden darf.¶",
+  "Mit dieser Wahl der Parteitagsdelegierten wurde zugleich eine Hoffnung, ja ein Wille deut-",
+  "lich: Laßt uns diese Partei, die sich auf Karl Marx und Friedrich Engels, Wilhelm Liebknecht",
+  "und August Bebel, Rosa Luxemburg und Karl Liebknecht, Ernst Thälmann und Rudolf Breit-",
+  "scheid, Wilhelm Pieck und Otto Grotewohl{FN1} beruft, laßt diese Partei nicht zerbrechen, nicht",
+  "untergehen, sondern macht sie sauber und stark, {KURSIV:(Beifall)} macht sie sauber, damit jeder Genosse",
+  "jedem Bürger gerade in die Augen blicken kann, macht sie stark, damit sie dem gesellschaft-",
+  "lichen Fortschritt in unserem Lande dienen kann – und das bedeutet für mich, dem Volk zu",
+  "dienen. […]¶",
+  "Unsere erste Aufgabe wird darin bestehen, dieses Land zu bewahren, und dem sollten, ja",
+  "müssen wir alles andere unterordnen. Es geht darum, unserem Land die Existenz, den Frieden",
+  "zu bewahren, und beides ist bedroht, wie sich in diesen Tagen zeigt.¶",
+  "Die erste Frage gilt also der Lage, dem inneren Zustand unserer Republik, für die sich die",
+  "meisten unter uns so viele Jahre eingesetzt haben und die jetzt nach Heilung schreit.¶",
+  "Erstens ist es notwendig und möglich, überall für Ordnung, Gesetz und Recht zu sorgen. Dafür",
+  "hat die Regierung in diesen Tagen eine Reihe von Maßnahmen getroffen. Das gilt auch für die",
+  "Sicherung von Beweisen für Rechtsbruch, Amtsmißbrauch und Korruption unter der früheren",
+  "sogenannten Partei- und Staatsführung.¶",
+  "[…]¶",
+  "Außenpolitisch bläst diesem Staat der Wind nicht ins Gesicht, und zwar so lange nicht, wie",
+  "wir, alle ehrlichen Bürger, gemeinsam für innenpolitische Stabilisierung, für menschlichen",
+  "Anstand sorgen und insbesondere für wirtschaftliche Stabilität, aus der allein wirtschaftlicher",
+  "Aufschwung erwachsen kann. Die sozialistischen Partner erwarten von uns – und damit sind",
+  "alle Kräfte gemeint, die eine erneuerte sozialistische Gesellschaft zu tragen bereit sind – eine",
+  "Stabilisierung dieses Staates in voller Souveränität, also keinen Ausverkauf an die BRD.¶",
+  "Unsere Verbündeten sagen ebenso wie meine Regierung, daß eine Vereinigung der beiden",
+  "deutschen Staaten zu einem Staat nicht auf der Tagesordnung steht. {KURSIV:(Beifall)}¶",
+  "Und von „Wiedervereinigung“ sollte man richtiger Weise überhaupt nicht reden, weil das",
+  "Wort „wieder“ ein Anachronismus ist und berechtigte Bedenken, ja Ängste vor großdeut-",
+  "schem Chauvinismus weckt. Unsere Verbündeten, an erster Stelle die Sowjetunion, ebenso",
+  "aber die unmittelbaren Nachbarländer und alle anderen Partnerstaaten, setzen auf eine souve-",
+  "räne sozialistische Deutsche Demokratische Republik, die außenpolitisch eine Voraussetzung",
+  "für politische Stabilität in Europa ist. {KURSIV:(Beifall)}¶",
+  "[…]¶",
+  "Ich darf hier hinzufügen, daß die erklärten Interessen anderer Staaten, beispielsweise Frank-",
+  "reichs und Großbritanniens ebenfalls auf die Existenz zweier deutscher Staaten gerichtet sind.",
+  "Beim Treffen mit Michail Sergejewitsch Gorbatschow hat meines Wissens auch Präsident",
+  "Bush bekräftigt, dass die USA an den bestehenden Grenzen, am Bestehen zweier deutscher",
+  "Staaten, an den Realitäten der Nachkriegszeit festhalten und – wenn ich das richtig interpre-",
+  "tiere – nicht die Absicht haben, die Ereignisse in der DDR in Richtung Wiedervereinigung zu",
+  "forcieren. {KURSIV:(Beifall)}¶",
+  "[…]¶",
+  "Wenn Bundeskanzler Helmut Kohl diesen Gedanken aufgegriffen und mit dem Hinweis",
+  "auf konföderative Schritte ausgebaut hat, so ist dies, meine ich, maßvoller Ansatz für bevor-",
+  "stehende Erörterungen, wobei die DDR vor allem an dem interessiert ist, was man für 1990",
+  "und das folgende Jahr konkret einleiten könnte, um erst einmal die Kooperation auszubauen.¶",
+  "[…]¶",
+  "Als Staat im Zentrum Europas, auch als sozialistischer Staat haben wir nur eine Chance, wenn",
+  "wir uns in den Weg zur Überwindung der Teilung Europas einordnen. In den langen Jahren",
+  "der Konfrontation hatte die DDR eine stabilisierende Funktion als ein bedeutender Faktor des",
+  "europäischen Friedens. Heute stehen wir am Beginn einer neuen Ära, entwickelt sich ein ande-",
+  "res Europa. In ihm gibt es keinen Platz mehr für Sperriegel, in ihm hat die DDR einen Platz",
+  "nur als solider Baustein eines gemeinsamen europäischen Hauses, in dem souveräne Staaten",
+  "unterschiedlicher politischer und sozialer Ordnungen gleichberechtigt, freizügig, ja auch groß-",
+  "zügig und tolerant zusammenwirken. Nur eine neue DDR paßt in dieses Europa, denn es soll",
+  "in der Perspektive ein entmilitarisiertes, demokratisches, humanistisches und ökologisch ver-",
+  "nünftig gestaltetes Europa werden. {KURSIV:(Beifall)}¶",
+  "[…]"
+];
+const ABSATZ = ROH.map(t => t.endsWith("¶"));
+const ZEILEN = ROH.map(t => t.replace(/¶$/, ""));
+
+/* Schlüsselstellen: Bereiche [Startzeile, "erste Worte" (null = Zeilenanfang), Endzeile, "letzte Worte" (null = Zeilenende)].
+   Markiert wird genau dieser Textteil, nicht die ganze Zeile. */
+const STELLEN = [
+  { bereich: [7, "Mit dieser Wahl", 14, "dienen."], kurz: "„Laßt uns diese Partei … nicht zerbrechen …“", eintraege: [
+    { aspekt: "Adressat und Wirkung", seite: "pro", frage: "Er spricht zu den Delegierten des Parteitags. Was will er bei ihnen mit der Reihe großer Namen (Z. 8 ff.) und dem Ruf „macht sie sauber und stark“ erreichen?", satz: "Er beruft sich auf … und ruft dazu auf, … (Z. …). Damit will er die Delegierten … Das halte ich für zweckmäßig, weil …" },
+    { aspekt: "Intention und Interessen", seite: "contra", frage: "Er will die Partei retten, damit sie „dem Volk“ dient (Z. 13 f.). Welches Interesse hat er als Parteiführer daran? Wie realistisch ist es, dass die SED das Vertrauen der Bürger zurückgewinnt (Hilfe zum Kontext)?", satz: "Er will, dass die Partei … (Z. …). Damit will er … Das halte ich für unrealistisch, weil …" } ] },
+  { bereich: [15, null, 20, "Recht zu sorgen."], kurz: "„… dieses Land zu bewahren …“", eintraege: [
+    { aspekt: "Wissenshorizont", seite: "pro", frage: "Er sagt, Existenz und Frieden der DDR seien „bedroht“ (Z. 16 f.). Lies die Hilfe zum Kontext: Was sprach im Dezember 1989 dafür?", satz: "Er sieht … bedroht (Z. …). Damit begründet er, warum … Das halte ich für zutreffend, weil …" },
+    { aspekt: "Leerstellen", seite: "contra", frage: "Als erste Antwort auf die Lage nennt er „Ordnung, Gesetz und Recht“ (Z. 20). Lies die Hilfe zum Kontext: Was forderten die Menschen im Herbst 1989? Kommt das bei ihm vor?", satz: "Er antwortet auf die Krise mit … (Z. …). So erscheinen die Proteste als … Das halte ich für einseitig, weil er weglässt, dass …" } ] },
+  { bereich: [20, "Dafür", 23, "Staatsführung."], kurz: "„… Rechtsbruch, Amtsmißbrauch und Korruption …“", eintraege: [
+    { aspekt: "Schlüssigkeit", seite: "pro", frage: "Die Regierung sichert Beweise für Rechtsbruch und Korruption der früheren Führung (Z. 21 ff.). Passt das zu seinem Ruf, die Partei „sauber“ zu machen (Z. 11)?", satz: "Er kündigt an, dass … (Z. …). Damit zeigt er, dass … Das halte ich für folgerichtig, weil …" },
+    { aspekt: "Schlüssigkeit", seite: "contra", frage: "Lies auch Z. 18 f.: Wie spricht er über die Republik, für die sich viele „so viele Jahre eingesetzt haben“? Passt das dazu, dass ihre Führung Recht gebrochen hat?", satz: "Er würdigt …, spricht aber zugleich von … (Z. …). Damit will er … Das halte ich für widersprüchlich, weil …" } ] },
+  { bereich: [25, null, 30, "an die BRD."], kurz: "„… keinen Ausverkauf an die BRD“", eintraege: [
+    { aspekt: "Wissenshorizont", seite: "contra", frage: "Er setzt auf wirtschaftliche Stabilität aus eigener Kraft und lehnt einen „Ausverkauf an die BRD“ ab (Z. 27 ff.). Lies die Hilfe zum Kontext: Was zeigten Flucht und Reisen in den Westen über dessen Anziehungskraft? Hätte er das wissen können?", satz: "Er erwartet, dass … (Z. …). Damit will er … Das halte ich für unrealistisch, weil …" } ] },
+  { bereich: [31, null, 35, "Chauvinismus weckt."], kurz: "„… nicht auf der Tagesordnung …“", eintraege: [
+    { aspekt: "Andere Positionen", seite: "pro", frage: "Er spricht von „Ängste[n] vor großdeutschem Chauvinismus“ (Z. 34 f.). Wer hatte 1989 Vorbehalte gegen ein vereinigtes Deutschland (Hilfe zum Kontext)? Hatten diese Vorbehalte Gründe?", satz: "Er sagt, dass … (Z. …). Damit will er … Das halte ich für nachvollziehbar, weil …" },
+    { aspekt: "Blick von heute", seite: "contra", frage: "Er sagt, eine Vereinigung stehe „nicht auf der Tagesordnung“ (Z. 31 f.). Wie ist es gekommen? Was geschah am 3. Oktober 1990?", satz: "Er erklärt, dass … (Z. …). Damit will er … Aus heutiger Sicht halte ich diese Einschätzung für unrealistisch, weil …" } ] },
+  { bereich: [40, null, 46, "forcieren."], kurz: "„… am Bestehen zweier deutscher Staaten …“", eintraege: [
+    { aspekt: "Andere Positionen", seite: "contra", frage: "Er behauptet, auch die USA wollten an zwei deutschen Staaten festhalten (Z. 42 ff.). Wie stand die US-Regierung tatsächlich zur deutschen Einheit (Hilfe zum Kontext)? Achte auch darauf, wie vorsichtig er selbst formuliert (Z. 42, 44 f.).", satz: "Er behauptet, dass … (Z. …). So erscheint … Das halte ich für verzerrend, weil …" } ] },
+  { bereich: [48, null, 51, "auszubauen."], kurz: "„… maßvoller Ansatz …“", eintraege: [
+    { aspekt: "Handlungsspielraum", seite: "pro", frage: "Er greift Kohls Vorschlag auf und will zuerst die Zusammenarbeit ausbauen (Z. 48 ff.). Welche anderen Möglichkeiten hatte die DDR-Regierung im Dezember 1989?", satz: "Er nennt Kohls Vorschlag einen … (Z. …). Damit will er … Das halte ich für zweckmäßig, weil …" },
+    { aspekt: "Leerstellen", seite: "contra", frage: "Lies die Hilfe zum Kontext: Welches Ziel hatte Kohls Zehn-Punkte-Programm am Ende? Erwähnt Modrow dieses Ziel?", satz: "Er stellt Kohls Plan als … dar (Z. …). So erscheint … Das halte ich für einseitig, weil er weglässt, dass …" } ] },
+  { bereich: [53, null, 62, "werden."], kurz: "„… ein anderes Europa …“", eintraege: [
+    { aspekt: "Blick von heute", seite: "pro", frage: "Er erwartet die „Überwindung der Teilung Europas“ und ein „andere[s] Europa“ (Z. 54 ff.). Ist es so gekommen?", satz: "Er erwartet, dass … (Z. …). Damit begründet er, warum … Aus heutiger Sicht halte ich diese Einschätzung für zutreffend, weil …" },
+    { aspekt: "Sprache", seite: "contra", frage: "Lies Z. 55 f.: Mit welchen Worten beschreibt er die Rolle der DDR in den Jahren der Konfrontation? Passt das zur Mauer, die erst einen Monat zuvor geöffnet worden war?", satz: "Er beschreibt die DDR als … (Z. …). So erscheint sie als … Das halte ich für verzerrend, weil …" } ] }
+];
+
+const reduziert = window.matchMedia("(prefers-reduced-motion: reduce)").matches;
+
+/* Zeilen in Bausteine zerlegen: Text, Fußnotenzeichen, gesperrte Wörter */
+const TOKEN = /\{FN(\d)\}|\{(SPERR|KURSIV):([^}]+)\}/g;
+function zeileHtml(t) {
+  return t
+    .replace(/\{FN(\d)\}/g, (m, n) => `<sup><a href="#fn${n}" aria-label="Fußnote ${n}">${n}</a></sup>`)
+    .replace(/\{SPERR:([^}]+)\}/g, (m, w) => `<span class="sperr">${w}</span>`)
+    .replace(/\{KURSIV:([^}]+)\}/g, (m, w) => `<i>${w}</i>`);
+}
+function atome(t) {
+  const out = []; let last = 0, m;
+  TOKEN.lastIndex = 0;
+  while ((m = TOKEN.exec(t))) {
+    if (m.index > last) out.push({ t: "text", s: t.slice(last, m.index) });
+    out.push(m[1] ? { t: "fn", n: m[1] } : { t: m[2] === "SPERR" ? "sperr" : "kursiv", s: m[3] });
+    last = TOKEN.lastIndex;
+  }
+  if (last < t.length) out.push({ t: "text", s: t.slice(last) });
+  return out;
+}
+const ATOME = ZEILEN.map(atome);
+const SICHTBAR = ATOME.map(at => at.map(x => x.t === "fn" ? "" : x.s).join(""));
+function pos(z, phrase, ende) {
+  const v = SICHTBAR[z - 1];
+  if (phrase == null) return ende ? v.length : 0;
+  const i = v.indexOf(phrase);
+  if (i < 0) throw new Error(`Textstelle nicht gefunden: Z. ${z} „${phrase}“`);
+  return ende ? i + phrase.length : i;
+}
+const bereich = (b) => ({ z1: b[0], a: pos(b[0], b[1], false), z2: b[2], b: pos(b[2], b[3], true) });
+STELLEN.forEach(s => { s.ber = bereich(s.bereich); });
+
+/* Schnittstellen pro Zeile: Anfang und Ende jedes Bereichs */
+const GRENZEN = ZEILEN.map((_, i) => new Set([0, SICHTBAR[i].length]));
+STELLEN.map(s => s.ber)
+  .forEach(r => { GRENZEN[r.z1 - 1].add(r.a); GRENZEN[r.z2 - 1].add(r.b); });
+const esc = (s) => s.replace(/&/g, "&amp;").replace(/</g, "&lt;");
+function segmentHtml(i, a, b, letztes) {
+  let off = 0, html = "";
+  for (const x of ATOME[i]) {
+    if (x.t === "fn") {
+      if ((off >= a && off < b) || (letztes && off === b)) html += `<sup><a href="#fn${x.n}" aria-label="Fußnote ${x.n}">${x.n}</a></sup>`;
+      continue;
+    }
+    const s0 = off, s1 = off + x.s.length; off = s1;
+    const lo = Math.max(a, s0), hi = Math.min(b, s1);
+    if (lo >= hi) continue;
+    const teil = esc(x.s.slice(lo - s0, hi - s0));
+    html += x.t === "sperr" ? `<span class="sperr">${esc(x.s)}</span>` : x.t === "kursiv" ? `<i>${teil}</i>` : teil;
+  }
+  return html;
+}
+
+/* Quelle aufbauen */
+const zeilenBox = document.getElementById("zeilen");
+ZEILEN.forEach((t, i) => {
+  const n = i + 1;
+  const g = [...GRENZEN[i]].sort((x, y) => x - y);
+  let inner = "";
+  for (let k = 0; k < g.length - 1; k++) {
+    inner += `<span class="seg" data-z="${n}" data-a="${g[k]}" data-b="${g[k + 1]}">${segmentHtml(i, g[k], g[k + 1], k === g.length - 2)}</span>`;
+  }
+  const div = document.createElement("div");
+  div.className = "zeile" + (n === ZEILEN.length || ABSATZ[i] ? " letzte" : "");
+  div.dataset.n = n;
+  div.innerHTML = `<span class="nr${n % 5 === 0 ? " fuenf" : ""}">${n}</span><span class="txt">${inner}</span>`;
+  zeilenBox.appendChild(div);
+});
+const SEGS = [...zeilenBox.querySelectorAll(".seg")].map(el => ({ el, z: +el.dataset.z, a: +el.dataset.a, b: +el.dataset.b }));
+const drin = (s, r) => (s.z > r.z1 || (s.z === r.z1 && s.a >= r.a)) && (s.z < r.z2 || (s.z === r.z2 && s.b <= r.b));
+
+/* Schriftgröße so wählen, dass jede Zeile genau in die Breite passt (Zeilenzählung bleibt wie auf Papier) */
+const messung = document.createElement("div");
+messung.className = "messung";
+messung.setAttribute("aria-hidden", "true");
+messung.innerHTML = ZEILEN.map(t => `<span>${zeileHtml(t)}</span>`).join("");
+zeilenBox.appendChild(messung);
+function einpassen() {
+  const probe = zeilenBox.querySelector(".zeile .txt");
+  if (!probe) return;
+  const verfuegbar = probe.clientWidth - 8;
+  let breiteste = 0;
+  messung.querySelectorAll("span").forEach(s => { breiteste = Math.max(breiteste, s.getBoundingClientRect().width); });
+  if (!breiteste || verfuegbar <= 0) return;
+  const groesse = Math.max(9, Math.min(19, verfuegbar * 100 / breiteste));
+  document.documentElement.style.setProperty("--qsize", groesse.toFixed(2) + "px");
+}
+einpassen();
+if (document.fonts && document.fonts.ready) document.fonts.ready.then(einpassen);
+let rt;
+window.addEventListener("resize", () => { clearTimeout(rt); rt = setTimeout(einpassen, 80); });
+
+/* Markieren: nur die Textteile, wie mit einem Textmarker */
+function hebeHervor(liste) {
+  SEGS.forEach(s => s.el.classList.remove("pro", "contra", "gewaehlt"));
+  zeilenBox.querySelectorAll(".zeile").forEach(z => z.classList.remove("m-pro", "m-contra", "m-gewaehlt"));
+  liste.forEach(({ ber, cls }) => ber.forEach(r => SEGS.forEach(s => {
+    if (drin(s, r)) { s.el.classList.add(cls); s.el.parentNode.parentNode.classList.add("m-" + cls); }
+  })));
+}
+function springeZu(z) {
+  const ziel = zeilenBox.querySelector(`.zeile[data-n="${z}"]`);
+  if (ziel) ziel.scrollIntoView({ behavior: reduziert ? "auto" : "smooth", block: "center" });
+}
+
+const nb = (t) => t.replace(/Z\. (\d+)( ff?\.)?/g, (m, n, f) => "Z. " + n + (f ? " " + f.trim() : ""));
+
+/* Schlüsselstellen antippen */
+let aktStelle = -1, eindruck = null;
+const stellenBox = document.getElementById("stellenmodus");
+const zText = (st) => {
+  const a = st.ber.z1, b = st.ber.z2;
+  return a === b ? `Z. ${a}` : (b === a + 1 ? `Z. ${a} f.` : `Z. ${a} bis ${b}`);
+};
+STELLEN.forEach((st, i) => {
+  let erstes = true;
+  SEGS.forEach(s => {
+    if (!drin(s, st.ber)) return;
+    s.el.classList.add("stelle", i % 2 ? "stelle-b" : "stelle-a");
+    s.el.dataset.stelle = i;
+    if (erstes) {
+      s.el.tabIndex = 0;
+      s.el.setAttribute("role", "button");
+      s.el.setAttribute("aria-label", `Schlüsselstelle ${zText(st).replace(/ /g, " ")} auswählen`);
+      erstes = false;
+    }
+  });
+});
+zeilenBox.addEventListener("click", (ev) => {
+  if (ev.target.closest("a")) return;
+  const s = ev.target.closest(".seg.stelle");
+  if (s) waehleStelle(Number(s.dataset.stelle));
+});
+zeilenBox.addEventListener("keydown", (ev) => {
+  if (ev.key !== "Enter" && ev.key !== " ") return;
+  const s = ev.target.closest(".seg.stelle");
+  if (s) { ev.preventDefault(); waehleStelle(Number(s.dataset.stelle)); }
+});
+
+function faerbeStelle() {
+  hebeHervor(aktStelle < 0 ? [] : [{ ber: [STELLEN[aktStelle].ber], cls: eindruck || "gewaehlt" }]);
+}
+function waehleStelle(i) {
+  aktStelle = i; eindruck = null;
+  faerbeStelle();
+  zeichneStellenmodus();
+  stellenBox.scrollIntoView({ behavior: reduziert ? "auto" : "smooth", block: "nearest" });
+}
+function karte(e) {
+  return `<div class="impuls ${e.seite}"><b>${e.aspekt}</b><p>${nb(e.frage)}</p>
+    <button class="knopf klein satz-zeigen" type="button">Satzbaustein zeigen</button>
+    <div class="satz" hidden><p>${nb(e.satz)}</p></div></div>`;
+}
+function zeichneStellenmodus() {
+  if (aktStelle < 0) {
+    stellenBox.innerHTML = `<ol class="schritte">
+      <li><b>Lies die Quelle.</b> Die Schlüsselstellen sind farbig unterstrichen.</li>
+      <li><b>Tippe eine Stelle an,</b> die dir auffällt.</li>
+      <li><b>Halte deinen Eindruck fest</b> und begründe ihn mit einem Prüfaspekt.</li></ol>`;
+    return;
+  }
+  const st = STELLEN[aktStelle];
+  let html = `<div class="stelle-kopf"><span class="stelle-z">${zText(st)}</span>${st.kurz}</div>
+    <h3 class="schritt">Wie wirkt die Aussage auf dich?</h3>
+    <div class="eindruck">
+      <button class="knopf${eindruck === "pro" ? " aktiv-pro" : ""}" type="button" data-e="pro">Hier stimme ich eher zu</button>
+      <button class="knopf${eindruck === "contra" ? " aktiv-contra" : ""}" type="button" data-e="contra">Hier sehe ich ein Problem</button>
+    </div>`;
+  if (eindruck) {
+    const passend = st.eintraege.filter(e => e.seite === eindruck);
+    const gegen = st.eintraege.filter(e => e.seite !== eindruck);
+    html += `<h3 class="schritt">Begründe deinen Eindruck mit einem Prüfaspekt</h3>`;
+    html += passend.length ? passend.map(karte).join("")
+      : `<p class="leer">Für diesen Eindruck gibt die Stelle wenig her. Schau dir die Gegenprobe an: Vielleicht trägt die andere Sicht besser.</p>`;
+    html += `<details class="gegenprobe"${passend.length ? "" : " open"}><summary>Gegenprobe: Was könnte man dagegen sagen?</summary>` +
+      (gegen.length ? gegen.map(karte).join("") : `<p class="leer">Zu dieser Stelle findest du kaum Argumente für die Gegenseite.</p>`) +
+      `</details>`;
+  }
+  html += `<p><button class="knopf klein" type="button" data-neu>Andere Stelle wählen</button></p>`;
+  stellenBox.innerHTML = html;
+}
+stellenBox.addEventListener("click", (ev) => {
+  const b = ev.target.closest("button");
+  if (!b) return;
+  if (b.dataset.e) { eindruck = b.dataset.e; faerbeStelle(); zeichneStellenmodus(); return; }
+  if (b.classList.contains("satz-zeigen")) { b.nextElementSibling.hidden = false; b.remove(); return; }
+  if (b.hasAttribute("data-neu")) {
+    aktStelle = -1; eindruck = null; faerbeStelle(); zeichneStellenmodus();
+    springeZu(STELLEN[0].ber.z1);
+  }
+});
+
+zeichneStellenmodus();
+
+</script>
+</body>
+</html>
