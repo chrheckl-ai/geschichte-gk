@@ -1,0 +1,747 @@
+<!doctype html>
+<html lang="de">
+<head>
+<meta charset="utf-8">
+<meta name="viewport" content="width=device-width, initial-scale=1, viewport-fit=cover">
+<title>Quelleninterpretation in der Geschichtsklausur: Methodenblatt Sek II</title>
+<meta name="description" content="Methodenblatt für die Quelleninterpretation in der Geschichtsklausur (Sekundarstufe II): Analyse, historische Einordnung, Beurteilung. Mit Beispielen, Formulierungshilfen und häufigen Fehlern.">
+<style>
+  :root {
+    color-scheme: light;
+    --petrol: #17415C;
+    --petrol-hell: #E6EEF2;
+    --ink: #1D2A33;
+    --grau: #5F6B70;
+    --linie: #D5DBDE;
+    --papier: #FFFFFF;
+    --panel: #F2F4F5;
+    --warm: #FBF3E7;
+    --amber: #D9A55B;
+    --amber-dunkel: #8A5A12;
+    --lila: #6B4C8A;
+    --lila-hell: #F1ECF6;
+    --lila-dunkel: #4E3466;
+    --pro: #4C9A5B;
+    --pro-hell: #E9F4EB;
+    --pro-dunkel: #2F6B3A;
+    --contra: #C2504A;
+    --contra-hell: #FBECEB;
+    --contra-dunkel: #8E2E29;
+    --serif: "Iowan Old Style", "Palatino Linotype", Palatino, "Book Antiqua", Georgia, serif;
+    --sans: -apple-system, BlinkMacSystemFont, "Segoe UI", system-ui, Roboto, sans-serif;
+  }
+  * { box-sizing: border-box; }
+  html { -webkit-text-size-adjust: 100%; scroll-behavior: smooth; scroll-padding-top: 64px; }
+  body { margin: 0; font-family: var(--sans); color: var(--ink); background: var(--papier); line-height: 1.55; }
+  a { color: var(--petrol); text-underline-offset: 2px; }
+  :focus-visible { outline: 3px solid var(--amber); outline-offset: 2px; }
+  b, strong { font-weight: 600; }
+
+  /* Kopf */
+  .kopf {
+    background: var(--petrol);
+    color: #fff;
+    padding: 30px 20px 26px;
+    padding-left: max(20px, env(safe-area-inset-left));
+    padding-right: max(20px, env(safe-area-inset-right));
+  }
+  .kopf-innen {
+    max-width: 880px; margin: 0 auto;
+    display: grid; grid-template-columns: minmax(0, 1fr) auto; gap: 16px 28px; align-items: end;
+  }
+  .kopf .ueber { margin: 0 0 6px; font-size: .8rem; letter-spacing: .08em; text-transform: uppercase; opacity: .78; }
+  .kopf .ueber a { color: #fff; }
+  .kopf h1 { margin: 0; font-family: var(--serif); font-weight: 600; font-size: 2rem; line-height: 1.2; }
+  .kopf .unter { margin: 8px 0 0; font-size: 1rem; opacity: .85; max-width: 46em; }
+  .download {
+    display: inline-flex; align-items: center; gap: 10px;
+    background: var(--amber); color: var(--ink); text-decoration: none;
+    font-weight: 600; font-size: .95rem; padding: 12px 18px; border-radius: 8px;
+    min-height: 46px; white-space: nowrap; box-shadow: 0 2px 0 rgba(0,0,0,.18);
+  }
+  .download:hover { background: #E3B46F; }
+  .download svg { width: 20px; height: 20px; flex: none; }
+
+  /* Navigation */
+  .nav {
+    position: sticky; top: 0; z-index: 5;
+    background: #fff; border-bottom: 1px solid var(--linie);
+    box-shadow: 0 1px 0 rgba(23,65,92,.04);
+  }
+  .nav ul {
+    list-style: none; margin: 0 auto; padding: 0 12px; max-width: 904px;
+    display: flex; gap: 2px; overflow-x: auto; -webkit-overflow-scrolling: touch; scrollbar-width: none;
+  }
+  .nav ul::-webkit-scrollbar { display: none; }
+  .nav a {
+    display: block; padding: 13px 12px; text-decoration: none; color: var(--grau);
+    font-size: .9rem; font-weight: 600; white-space: nowrap; border-bottom: 3px solid transparent;
+  }
+  .nav a:hover { color: var(--petrol); }
+  .nav a.aktiv { color: var(--petrol); border-bottom-color: var(--amber); }
+  .nav a .n { color: var(--amber-dunkel); font-variant-numeric: tabular-nums; margin-right: 4px; }
+
+  /* Inhalt */
+  main { max-width: 880px; margin: 0 auto; padding: 8px 20px 64px; }
+  section.teil { padding-top: 36px; }
+  section.teil + section.teil { margin-top: 20px; border-top: 1px solid var(--linie); }
+  .kapitel { display: grid; grid-template-columns: auto minmax(0, 1fr); gap: 0 16px; align-items: baseline; margin: 0 0 10px; }
+  .kapitel .ziffer { font-family: var(--serif); font-size: 2.6rem; line-height: 1; color: var(--amber); font-weight: 600; }
+  .kapitel h2 { margin: 0; font-family: var(--serif); color: var(--petrol); font-size: 1.65rem; line-height: 1.2; font-weight: 600; }
+  .kapitel .thema { grid-column: 2; margin: 2px 0 0; color: var(--grau); font-size: .95rem; }
+  h3 { font-family: var(--serif); color: var(--petrol); font-size: 1.2rem; margin: 28px 0 8px; font-weight: 600; }
+  h4 { font-size: .82rem; font-weight: 600; color: var(--grau); text-transform: uppercase; letter-spacing: .06em; margin: 18px 0 6px; }
+  p { margin: 0 0 12px; }
+  .einleitung { font-size: 1.05rem; }
+  ul.punkte, ol.schritte { margin: 0 0 14px; padding-left: 22px; }
+  ul.punkte li, ol.schritte li { margin-bottom: 7px; }
+  ol.schritte { counter-reset: s; list-style: none; padding-left: 0; display: grid; gap: 8px; }
+  ol.schritte li { counter-increment: s; display: grid; grid-template-columns: 32px minmax(0, 1fr); gap: 12px; align-items: start; }
+  ol.schritte li::before {
+    content: counter(s); display: grid; place-items: center;
+    width: 32px; height: 32px; border-radius: 50%; background: var(--petrol); color: #fff;
+    font-weight: 700; font-size: .95rem; font-variant-numeric: tabular-nums;
+  }
+
+  /* Merksatz */
+  .merksatz {
+    background: var(--petrol-hell); border-left: 4px solid var(--petrol); border-radius: 6px;
+    padding: 14px 18px; margin: 10px 0 20px; font-size: 1.02rem;
+  }
+  .merksatz p:last-child { margin: 0; }
+
+  /* Aufgaben-Übersicht */
+  .aufgaben { display: grid; grid-template-columns: repeat(3, minmax(0, 1fr)); gap: 12px; margin: 16px 0 10px; }
+  .aufgabe-karte {
+    border: 1px solid var(--linie); border-top: 5px solid var(--petrol); border-radius: 8px;
+    padding: 14px 16px 16px; background: #fff; display: grid; gap: 8px; align-content: start; text-decoration: none; color: inherit;
+  }
+  .aufgabe-karte:hover { background: var(--panel); }
+  .aufgabe-karte .nr { font-family: var(--serif); font-size: 2rem; line-height: 1; color: var(--petrol); font-weight: 600; }
+  .aufgabe-karte .op { font-weight: 600; color: var(--petrol); font-size: 1.02rem; }
+  .aufgabe-karte .was { font-size: .92rem; color: var(--ink); }
+  .aufgabe-karte .tempus { font-size: .82rem; color: var(--grau); border-top: 1px solid var(--linie); padding-top: 8px; margin-top: 2px; }
+  .aufgabe-karte .tempus b { color: var(--amber-dunkel); }
+
+  /* Tabellen */
+  table.tab { border-collapse: collapse; width: 100%; margin: 8px 0 16px; font-size: .95rem; }
+  table.tab th { text-align: left; font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; color: var(--grau); padding: 6px 10px 6px 0; border-bottom: 2px solid var(--petrol); font-weight: 600; }
+  table.tab td { padding: 10px 12px 10px 0; vertical-align: top; border-bottom: 1px solid var(--linie); }
+  table.tab td.k { font-weight: 600; color: var(--petrol); white-space: nowrap; }
+  table.tab td.k small { display: block; font-weight: 400; color: var(--grau); font-size: .82rem; white-space: normal; }
+  table.tab ul { margin: 0; padding-left: 18px; }
+  table.tab ul li { margin-bottom: 4px; }
+  table.tab tr:last-child td { border-bottom: 0; }
+
+  /* Kästen */
+  .kasten { border: 1px solid var(--linie); border-radius: 8px; padding: 14px 18px; margin: 10px 0 18px; background: #fff; }
+  .kasten > :last-child { margin-bottom: 0; }
+  .kasten .etikett { display: inline-block; font-size: .75rem; font-weight: 700; letter-spacing: .08em; text-transform: uppercase; padding: 2px 8px; border-radius: 4px; margin-bottom: 8px; }
+  .beispiel { background: var(--warm); border-color: #EBD9BC; }
+  .beispiel .etikett { background: var(--amber); color: var(--ink); }
+  .beispiel .text { font-family: var(--serif); font-size: 1.02rem; line-height: 1.6; }
+  .vorlage { background: var(--petrol-hell); border-color: #C9D8E1; }
+  .vorlage .etikett { background: var(--petrol); color: #fff; }
+  .vorlage .text { font-family: var(--serif); font-size: 1.02rem; line-height: 1.65; }
+  .vorlage i { color: var(--petrol); }
+  .vorlage .ein { color: var(--amber-dunkel); font-style: normal; }
+  .tipp { background: var(--panel); }
+  .tipp .etikett { background: var(--grau); color: #fff; }
+  .warnung { background: var(--contra-hell); border-color: #EFC9C6; }
+  .warnung .etikett { background: var(--contra); color: #fff; }
+  .warnung ul { margin: 0; padding-left: 20px; }
+  .leitfrage { font-family: var(--serif); font-size: 1.08rem; color: var(--petrol); margin: 8px 0 0; }
+
+  /* Pro / Contra */
+  .zweispaltig { display: grid; grid-template-columns: 1fr 1fr; gap: 12px; margin: 12px 0 18px; }
+  .seite { border-radius: 8px; padding: 14px 16px; }
+  .seite h4 { margin: 0 0 10px; text-transform: none; letter-spacing: 0; font-size: 1rem; }
+  .seite ul { margin: 0; padding-left: 20px; font-size: .95rem; }
+  .seite li { margin-bottom: 8px; }
+  .seite.contra { background: var(--contra-hell); border-left: 4px solid var(--contra); }
+  .seite.contra h4 { color: var(--contra-dunkel); }
+  .seite.pro { background: var(--pro-hell); border-left: 4px solid var(--pro); }
+  .seite.pro h4 { color: var(--pro-dunkel); }
+  .woerter { display: flex; flex-wrap: wrap; gap: 6px; margin: 6px 0 2px; }
+  .wort { font-size: .88rem; padding: 3px 10px; border-radius: 999px; border: 1px solid; background: #fff; }
+  .wort.pro { color: var(--pro-dunkel); border-color: var(--pro); }
+  .wort.contra { color: var(--contra-dunkel); border-color: var(--contra); }
+  .wort.neutral { color: var(--petrol); border-color: var(--petrol); }
+
+  /* Dreischritt */
+  .dreischritt { list-style: none; margin: 10px 0 12px; padding: 0; display: grid; gap: 8px; }
+  .dreischritt li { border-left: 4px solid; border-radius: 6px; padding: 10px 14px; }
+  .dreischritt li b { display: block; font-size: .85rem; margin-bottom: 3px; }
+  .dreischritt li span, .zusammen span { font-family: var(--serif); font-style: italic; font-size: 1.02rem; }
+  .d1 { background: var(--petrol-hell); border-color: var(--petrol); } .d1 b { color: var(--petrol); }
+  .d2 { background: var(--warm); border-color: #B07D2A; } .d2 b { color: var(--amber-dunkel); }
+  .d3 { background: var(--lila-hell); border-color: var(--lila); } .d3 b { color: var(--lila-dunkel); }
+  .zusammen { margin: 0 0 10px; font-size: .95rem; }
+  .zusammen span { padding: 1px 3px; border-radius: 3px; -webkit-box-decoration-break: clone; box-decoration-break: clone; }
+  .zusammen .t1 { background: var(--petrol-hell); } .zusammen .t2 { background: var(--warm); } .zusammen .t3 { background: var(--lila-hell); }
+
+  /* Aufbau */
+  .aufbau { list-style: none; margin: 10px 0 12px; padding: 0; display: grid; gap: 6px; }
+  .aufbau li { display: grid; grid-template-columns: 34px minmax(0, 1fr); gap: 12px; align-items: start; padding: 10px 12px; border-radius: 6px; background: var(--panel); }
+  .aufbau li .z { font-family: var(--serif); font-size: 1.4rem; line-height: 1.1; color: var(--petrol); font-weight: 600; }
+  .aufbau li.pro { background: var(--pro-hell); } .aufbau li.contra { background: var(--contra-hell); }
+  .aufbau li.pro .z { color: var(--pro-dunkel); } .aufbau li.contra .z { color: var(--contra-dunkel); }
+  q { font-family: var(--serif); font-style: italic; quotes: "„" "“"; }
+
+  /* Fehlerbeispiele */
+  .fehlerbeispiel { border: 1px solid var(--linie); border-radius: 8px; overflow: hidden; margin: 12px 0; }
+  .fehlerbeispiel h4 { margin: 0; padding: 10px 16px; background: var(--petrol); color: #fff; text-transform: none; letter-spacing: 0; font-size: .95rem; }
+  .fehlerbeispiel .schlecht, .fehlerbeispiel .gut { padding: 12px 16px; }
+  .fehlerbeispiel .schlecht { background: var(--contra-hell); }
+  .fehlerbeispiel .gut { background: var(--pro-hell); border-top: 1px solid #fff; }
+  .fehlerbeispiel .lbl { display: block; font-size: .78rem; font-weight: 700; letter-spacing: .06em; text-transform: uppercase; margin-bottom: 4px; }
+  .fehlerbeispiel .schlecht .lbl { color: var(--contra-dunkel); } .fehlerbeispiel .gut .lbl { color: var(--pro-dunkel); }
+  .fehlerbeispiel .zitat { font-family: var(--serif); font-size: 1.02rem; margin: 0 0 8px; }
+  .fehlerbeispiel .schlecht .zitat { font-style: italic; }
+  .fehlerbeispiel .fehlt { margin: 0; font-size: .92rem; }
+  .fehlerbeispiel .gut .zitat { margin: 0; }
+
+  /* Tools */
+  .tools { display: grid; gap: 12px; margin: 12px 0; }
+  .tool { border: 1px solid var(--linie); border-left: 4px solid var(--petrol); border-radius: 8px; padding: 14px 18px; display: grid; grid-template-columns: minmax(150px, 190px) minmax(0, 1fr); gap: 6px 20px; }
+  .tool .name { font-weight: 600; color: var(--petrol); font-size: 1.02rem; }
+  .tool .name small { display: block; font-weight: 400; color: var(--grau); font-size: .85rem; }
+  .tool p { margin: 0 0 8px; font-size: .95rem; }
+  .tool p:last-child { margin: 0; }
+  .tool .zugang { display: inline-block; font-weight: 600; background: var(--panel); border: 1px solid var(--linie); border-radius: 6px; padding: 3px 10px; }
+
+  /* Fuß */
+  footer { border-top: 1px solid var(--linie); margin-top: 20px; padding: 24px 20px 48px; }
+  .fuss-innen { max-width: 880px; margin: 0 auto; display: flex; flex-wrap: wrap; gap: 14px 28px; align-items: center; justify-content: space-between; color: var(--grau); font-size: .9rem; }
+
+  @media (max-width: 720px) {
+    .kopf h1 { font-size: 1.55rem; }
+    .kopf-innen { grid-template-columns: minmax(0, 1fr); align-items: start; }
+    .aufgaben { grid-template-columns: minmax(0, 1fr); }
+    .zweispaltig { grid-template-columns: minmax(0, 1fr); }
+    .tool { grid-template-columns: minmax(0, 1fr); }
+    .kapitel .ziffer { font-size: 2.1rem; }
+    .kapitel h2 { font-size: 1.4rem; }
+    table.tab td.k { white-space: normal; }
+  }
+  @media (max-width: 600px) {
+    /* Tabellen werden zu gestapelten Karten */
+    table.tab, table.tab tbody, table.tab tr, table.tab td { display: block; }
+    table.tab thead { display: none; }
+    table.tab tr { border: 1px solid var(--linie); border-left: 4px solid var(--petrol); border-radius: 6px; padding: 10px 12px; margin-bottom: 8px; }
+    table.tab td { padding: 0 0 6px; border: 0; }
+    table.tab td:last-child { padding-bottom: 0; }
+    table.tab td.k { font-size: 1rem; }
+  }
+  @media (prefers-reduced-motion: reduce) {
+    html { scroll-behavior: auto; }
+  }
+  @media print {
+    .nav, .download { display: none; }
+    .kopf { background: #fff; color: var(--ink); padding: 0 0 12px; border-bottom: 2px solid var(--petrol); }
+    .kopf .ueber a { color: var(--ink); }
+    section.teil { page-break-inside: auto; }
+    .kasten, .aufgabe-karte, .fehlerbeispiel, .tool, .seite { page-break-inside: avoid; }
+  }
+</style>
+</head>
+<body>
+
+<header class="kopf">
+  <div class="kopf-innen">
+    <div>
+      <p class="ueber"><a href="../">Geschichte Grundkurs</a> · Methodenblatt Sekundarstufe II</p>
+      <h1>Quelleninterpretation in der Geschichtsklausur</h1>
+      <p class="unter">Die Klausur besteht aus drei Teilaufgaben, die aufeinander aufbauen. Halte sie sauber auseinander.</p>
+    </div>
+    <a class="download" href="Methodenblatt_Quelleninterpretation_Sek_II_Heckl.pdf" download>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+      Methodenblatt als PDF
+    </a>
+  </div>
+</header>
+
+<nav class="nav" aria-label="Abschnitte">
+  <ul>
+    <li><a href="#ueberblick">Überblick</a></li>
+    <li><a href="#aufgabe1"><span class="n">1</span>Analyse</a></li>
+    <li><a href="#aufgabe2"><span class="n">2</span>Einordnung</a></li>
+    <li><a href="#aufgabe3"><span class="n">3</span>Beurteilung</a></li>
+    <li><a href="#fehler">Häufige Fehler</a></li>
+    <li><a href="#tools">Tools</a></li>
+  </ul>
+</nav>
+
+<main>
+
+<!-- ÜBERBLICK -->
+<section class="teil" id="ueberblick">
+  <div class="kapitel">
+    <span class="ziffer" aria-hidden="true">§</span>
+    <h2>Die drei Teilaufgaben</h2>
+    <p class="thema">Operator, Anforderung und Tempus auf einen Blick</p>
+  </div>
+
+  <div class="aufgaben">
+    <a class="aufgabe-karte" href="#aufgabe1">
+      <span class="nr">1</span>
+      <span class="op">analysieren, zusammenfassen</span>
+      <span class="was">Formale Merkmale der Quelle und ihr Inhalt</span>
+      <span class="tempus">Tempus: <b>Präsens</b></span>
+    </a>
+    <a class="aufgabe-karte" href="#aufgabe2">
+      <span class="nr">2</span>
+      <span class="op">einordnen, erläutern</span>
+      <span class="was">Der historische Zusammenhang, der zur Quelle führt</span>
+      <span class="tempus">Tempus: <b>Präteritum</b>, bei Vorzeitigkeit Plusquamperfekt</span>
+    </a>
+    <a class="aufgabe-karte" href="#aufgabe3">
+      <span class="nr">3</span>
+      <span class="op">beurteilen, Stellung nehmen, bewerten</span>
+      <span class="was">Ein begründetes Urteil</span>
+      <span class="tempus">Tempus: <b>Präsens</b> für dein Urteil, <b>Präteritum</b> für historische Sachverhalte</span>
+    </a>
+  </div>
+
+  <h3>Bevor du schreibst</h3>
+  <ol class="schritte">
+    <li><span><b>Lies die Quelle zweimal.</b> Beim zweiten Lesen markierst du Sinnabschnitte und notierst am Rand die Kernaussage jedes Abschnitts.</span></li>
+    <li><span><b>Mache dir den historischen Kontext klar,</b> bevor du mit der formalen Analyse beginnst. Ohne ihn erfasst du die Intention des Verfassers nicht präzise.</span></li>
+    <li><span><b>Lege auf dem Schmierblatt drei Spalten an:</b> Stichwörter für Aufgabe 2, Gedankenblitze für Aufgabe 3, offene Fragen. Was dir während Aufgabe 1 zur Beurteilung einfällt, ist später weg, wenn du es nicht notierst.</span></li>
+    <li><span><b>Prüfe, welcher Operator in Aufgabe 3 steht.</b> Er entscheidet, woran du misst und was du am Ende lieferst. Die Übersicht dazu findest du im <a href="#operatoren">Abschnitt zu Aufgabe 3</a>.</span></li>
+  </ol>
+</section>
+
+<!-- AUFGABE 1 -->
+<section class="teil" id="aufgabe1">
+  <div class="kapitel">
+    <span class="ziffer">1</span>
+    <h2>Analyse der Quelle</h2>
+    <p class="thema">Formale Merkmale, Inhaltswiedergabe und gedanklicher Aufbau</p>
+  </div>
+
+  <h3>a) Formale Merkmale: die W-Fragen</h3>
+  <p>Nicht jede Unterfrage lässt sich immer beantworten. Schreibe die Ergebnisse als zusammenhängenden Absatz, nicht als Liste.</p>
+
+  <table class="tab">
+    <thead><tr><th>Frage</th><th>Merkmal</th><th>Worauf du achtest</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Wer? Wo?</td><td>Autor</td><td><ul>
+        <li>Lebensdaten, Beruf oder öffentliches Amt</li>
+        <li>Verhältnis zum Geschehen: beteiligt, betroffen, beobachtend?</li>
+        <li>Perspektive und Weltanschauung, aus der geurteilt wird</li>
+        <li>Umfeld, in dem die Quelle entstanden ist</li></ul></td></tr>
+      <tr><td class="k">Wann?</td><td>Entstehungszeitpunkt</td><td>Das Abfassungsdatum, nicht das Erscheinungsjahr der Quellensammlung, aus der der Text stammt</td></tr>
+      <tr><td class="k">Was?</td><td>Thema</td><td>Worüber spricht der Verfasser?</td></tr>
+      <tr><td class="k">Wie?</td><td>Quellengattung</td><td><ul>
+        <li>Rede, Brief, Tagebucheintrag, Flugblatt, Gesetzestext und so weiter</li>
+        <li>Die Gattung wird hier nur benannt. Was sie für die Aussagekraft bedeutet, gehört in Aufgabe 3.</li></ul></td></tr>
+      <tr><td class="k">An wen?</td><td>Adressaten</td><td>Wer sollte den Text lesen oder hören? Gibt es neben dem unmittelbaren Adressaten ein weiteres Publikum?</td></tr>
+      <tr><td class="k">Warum?</td><td>Intention und Anlass</td><td>Was will der Verfasser erreichen? Welches Ereignis hat ihn zum Schreiben veranlasst?</td></tr>
+    </tbody>
+  </table>
+
+  <h4>So formulierst du den Einstieg</h4>
+  <p>Die Schrägstriche markieren Alternativen, aus denen du wählst. In den eckigen Klammern steht, was du einsetzt.</p>
+  <div class="kasten vorlage">
+    <span class="etikett">Formulierungshilfe</span>
+    <div class="text">
+      <p>Bei <i>der vorliegenden Textquelle / dem vorliegenden Darstellungstext / der vorliegenden Bildquelle</i> handelt es sich um <i>einen Brief / eine Rede / ein Flugblatt / einen Zeitungsartikel / einen Auszug aus der Monografie XY / eine politische Karikatur</i>. Verfasst beziehungsweise gezeichnet wurde <i>der Text / die Karikatur</i> von <span class="ein">[Name]</span>, <span class="ein">[Kurzinformation als Apposition, etwa „einem sozialdemokratischen Gewerkschaftsführer“ oder „einem Professor für mittelalterliche Geschichte an der Universität Erlangen“]</span>. <i>Der Text / Die Karikatur</i> entstand am <span class="ein">[Datum]</span> <span class="ein">[gegebenenfalls Hinweis auf einen abweichenden Veröffentlichungszeitpunkt]</span>.</p>
+      <p>Primäre Adressaten waren <span class="ein">[Person oder Gruppe]</span>, darüber hinaus richtet sich <i>der Text / die Karikatur</i> an <span class="ein">[weiteres Publikum]</span>. Zentrales Thema ist <i>…</i> / In <i>der Quelle / der Karikatur</i> wird <i>…</i> thematisiert.</p>
+      <p>Vermutlicher Anlass war <i>…</i> / <i>Die Quelle / Die Karikatur</i> entstand anlässlich <i>…</i></p>
+      <p><i>Der Verfasser / Der Zeichner</i> verfolgt mit <i>dem Text / der Karikatur</i> die Intention, <i>…</i></p>
+    </div>
+  </div>
+
+  <h4>So klingt das ausformuliert</h4>
+  <div class="kasten beispiel">
+    <span class="etikett">Beispiel</span>
+    <p class="text">Bei der vorliegenden Textquelle handelt es sich um einen Brief des österreichischen Staatskanzlers Klemens von Metternich an seinen engsten Mitarbeiter Friedrich von Gentz, verfasst am 17. Juni 1819. Primärer Adressat ist Gentz selbst; für eine Öffentlichkeit war der Brief nicht bestimmt. Zentrales Thema sind die Maßnahmen, die die deutschen Regierungen nach Metternichs Auffassung gegen die Presse und gegen oppositionelle Bestrebungen ergreifen sollen. Anlass war die Ermordung August von Kotzebues durch den Burschenschaftler Carl Ludwig Sand. Metternich verfolgt die Intention, Gentz für seine Vorschläge zu gewinnen und ihn zur Mitarbeit bei der Vorbereitung des Karlsbader Kongresses zu bewegen.</p>
+  </div>
+
+  <h3>b) Inhaltswiedergabe und gedanklicher Aufbau</h3>
+  <p>Gerade bei längeren Texten droht die Inhaltswiedergabe zu ausführlich zu werden und kostet Zeit, die dir später fehlt. Trotzdem müssen die Kernaussagen und der gedankliche Aufbau deutlich werden. Der Ausweg führt über die Funktion der Abschnitte.</p>
+
+  <h4>So gehst du vor</h4>
+  <ol class="schritte">
+    <li><span><b>Bilde Sinnabschnitte</b> und halte die Kernaussage jedes Abschnitts am Rand fest. Aus allen Randnotizen zusammen ergeben sich Hauptanliegen, Leitgedanken und Argumentationsstruktur.</span></li>
+    <li><span><b>Frage dich:</b> Welches Ziel verfolgt der Verfasser, und wie versucht er es zu erreichen? Formuliere für jeden Abschnitt eine Funktion, etwa Dringlichkeit erzeugen, Zustimmung sichern, eine Forderung begründen, Widerspruch entkräften.</span></li>
+    <li><span><b>Verbinde die Kernaussagen mit der Funktion,</b> die du ermittelt hast. So entsteht aus einer Nacherzählung eine Analyse.</span></li>
+  </ol>
+
+  <div class="kasten beispiel">
+    <span class="etikett">Beispiel</span>
+    <p class="text">Indem Metternich die Presse gleich im ersten Satz als „das größte und demnach das dringendste Uebel“ (Z. 1) bezeichnet, erzeugt er den Handlungsdruck, aus dem er anschließend seine Vorschläge ableitet. Sein Rückgriff auf den Bundesbegriff (vgl. Z. 15 ff.) verwandelt diese Vorschläge in eine Pflicht, die sich aus dem Wesen des Bundes selbst ergebe.</p>
+  </div>
+
+  <h4>Wie du die Aussagen des Verfassers wiedergibst</h4>
+  <p>Dieselbe Aussage lässt sich in drei Konstruktionen fassen. Wechsle zwischen ihnen ab, damit dein Text nicht monoton wird.</p>
+  <table class="tab">
+    <thead><tr><th>Form</th><th>Beispiel (Z. 1 f.)</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Indirekte Rede</td><td>Metternich erklärt, keine andere Erscheinung bedrohe die Ordnung so unmittelbar wie die Presse (vgl. Z. 1 f.).</td></tr>
+      <tr><td class="k">Mit dass-Satz</td><td>Metternich erklärt, dass er in der Presse die dringlichste Bedrohung erkenne (vgl. Z. 1 f.).</td></tr>
+      <tr><td class="k">Mit Verfasserbezug<small>laut, zufolge, nach</small></td><td>Nach Metternichs Auffassung geht von der Presse die größte Gefahr für die bestehende Ordnung aus (vgl. Z. 1 f.).</td></tr>
+    </tbody>
+  </table>
+
+  <div class="kasten tipp">
+    <span class="etikett">Darauf achtest du</span>
+    <ul class="punkte" style="margin-bottom:0">
+      <li>Das einleitende Verb steht immer im Indikativ: <i>Metternich erklärt</i>, nicht <i>Metternich erkläre</i>.</li>
+      <li>Bei Formengleichheit von Konjunktiv I und Indikativ weichst du auf den Konjunktiv II aus: „die Regierungen hätten“, nicht „haben“.</li>
+      <li>„vgl.“ steht bei sinngemäßer Wiedergabe, beim wörtlichen Zitat entfällt es. Der Satzpunkt steht nach der Klammer.</li>
+    </ul>
+  </div>
+
+  <div class="kasten">
+    <span class="etikett" style="background:var(--petrol);color:#fff">So kannst du das üben</span>
+    <p>Die Analyse lässt sich gut mit FelloFish üben. So gehst du vor:</p>
+    <ul class="punkte">
+      <li>Such dir eine Quelle, etwa aus dem Schulbuch. Eine, die wir im Unterricht nicht behandelt haben, oder auch eine bekannte.</li>
+      <li>Bearbeite daran Teilaufgabe 1 a und b.</li>
+      <li>Lade dein Ergebnis bei FelloFish hoch und hol dir ein Feedback. Nutze dazu diese Aufgabe: <a href="https://t1p.de/k9p1o"><b>t1p.de/k9p1o</b></a> (Passwort: heckl)</li>
+    </ul>
+    <p>FelloFish beurteilt dabei nicht den Inhalt, sondern die sprachliche Stimmigkeit und die Schlüssigkeit deiner Aussagen.</p>
+  </div>
+</section>
+
+<!-- AUFGABE 2 -->
+<section class="teil" id="aufgabe2">
+  <div class="kapitel">
+    <span class="ziffer">2</span>
+    <h2>Einordnung in den historischen Zusammenhang</h2>
+    <p class="thema">Was der Quelle vorausging: Entwicklungen, Ursachen, Zusammenhänge</p>
+  </div>
+
+  <p class="einleitung">Du machst den Sachverhalt, den die Quelle behandelt, durch zusätzliche historische Informationen verständlich und verknüpfst ihn zu Entwicklungen und Strukturen. Im Mittelpunkt steht, was der Quelle vorausging.</p>
+  <p>Gefordert ist die Einordnung in eine bestimmte historische Phase, etwa „die Zeit des Vormärz“, oft mit Anfangs- und Endjahr in der Aufgabenstellung. Diese Phase stellst du am Stück dar, als zusammenhängenden Text über Entwicklungen, Ursachen und Zusammenhänge, nicht als abschnittsweise Begleitung der Quelle.</p>
+
+  <h3>Vorbereitung</h3>
+  <ul class="punkte">
+    <li>Lege vor der Niederschrift eine Stichwortsammlung an. Keine ganzen Sätze, möglichst auch keine Stichwortsätze.</li>
+    <li>Die Sammlung enthält nur die zentralen, meist von der Geschichtswissenschaft geprägten Begriffe, die in deinem Text fallen müssen, etwa „Restauration“ oder „Vormärz“. Achte im Unterricht gezielt auf solche Begriffe.</li>
+    <li>Überlege anhand deiner Stichwortsammlung, welche Aspekte diese Quelle verlangt. Ein auswendig gelernter Kontexttext, blind heruntergeschrieben, geht am Schwerpunkt der Quelle vorbei. Bei Metternichs Brief trägt die Presse- und Zensurfrage weiter als etwa die wirtschaftliche Entwicklung des Vormärz.</li>
+  </ul>
+
+  <h3>Was hineingehört</h3>
+  <ul class="punkte">
+    <li>langfristige Ursachen und kurzfristige Anlässe und deren Wirkungen</li>
+    <li>Motive der Handelnden</li>
+    <li>wenn es hilft: eine Phaseneinteilung als Orientierung, Wendepunkte</li>
+    <li>wenn es trägt: Merkmale der Epoche, Grundkonflikte der Zeit</li>
+  </ul>
+
+  <h3>Am Stück darstellen, punktuell belegen</h3>
+  <p>Deine Darstellung läuft als eigener, zusammenhängender Text. Immer dann, wenn sich etwas davon in der Quelle wiederfindet, setzt du eine Klammer mit der Zeilenangabe dahinter. Damit zeigst du, dass du den Zusammenhang zwischen Kontext und Quelle erkannt hast, ohne die Quelle ein zweites Mal wiederzugeben. Ohne diese Verweise steht dein Kontextwissen unverbunden neben der Quelle, und genau darauf achtet die Korrektur.</p>
+
+  <div class="kasten beispiel">
+    <span class="etikett">Beispiel</span>
+    <p class="text">Die Ermordung August von Kotzebues durch den Burschenschaftler Carl Ludwig Sand im März 1819 traf auf eine Stimmung, in der die Regierungen die national und liberal gesinnte Bewegung ohnehin als Bedrohung wahrnahmen. Die Tat eines Einzelnen wurde so zum Anlass für Maßnahmen gegen eine ganze Bewegung (vgl. Z. 10 ff.). Erschwerend kam hinzu, dass der Deutsche Bund als Staatenbund über keine eigene Exekutive verfügte: Gegen eine Bewegung, die über die Grenzen der Einzelstaaten hinausgriff, ließ sich nur gemeinsam vorgehen, weshalb Metternich seine Vorschläge aus dem Wesen des Bundes ableitet (vgl. Z. 15 ff.). Seit dem Wartburgfest 1817 war zudem sichtbar geworden, dass Zeitungen und Zeitschriften eine überregionale politische Öffentlichkeit schufen (vgl. Z. 36 ff.).</p>
+  </div>
+
+  <div class="kasten tipp">
+    <span class="etikett">Darauf achtest du</span>
+    <ul class="punkte" style="margin-bottom:0">
+      <li><b>Tempus:</b> Präteritum, bei Vorzeitigkeit Plusquamperfekt. Nicht Präsens, nicht Perfekt.</li>
+      <li><b>Eingrenzung:</b> Aspekte, die die Aufgabenstellung nicht verlangt, weil sie vor oder nach dem umgrenzten Zeitraum liegen, lässt du weg oder reißt sie in einem Satz an.</li>
+      <li><b>Textbezug:</b> Stelle immer wieder Verbindungen zur Quelle her und belege sie mit Zeilenangaben.</li>
+    </ul>
+  </div>
+
+  <div class="kasten">
+    <span class="etikett" style="background:var(--petrol);color:#fff">So merkst du, ob du den Kontext beherrschst</span>
+    <p>Du beherrschst den Kontext, wenn du ihn jemandem erklären kannst, der das Thema nicht kennt: Entwicklungen, ihre Ursachen, die zentralen Begriffe und die Zusammenhänge dazwischen. Such dir dafür jemanden, der dir naive Fragen stellt. Warum war das ein Problem? Wer wollte was? Was hat das eine mit dem anderen zu tun? Ein Mitschüler, der sich unwissend stellt, genügt. Wo du ins Stocken gerätst, sitzt die Lücke.</p>
+  </div>
+</section>
+
+<!-- AUFGABE 3 -->
+<section class="teil" id="aufgabe3">
+  <div class="kapitel">
+    <span class="ziffer">3</span>
+    <h2>Beurteilung</h2>
+    <p class="thema">Sachurteil, Prüfaspekte, Dreischritt und Aufbau</p>
+  </div>
+
+  <div class="merksatz">
+    <p><b>Was ein Sachurteil ist.</b> Beim Sachurteil beurteilst du die Quelle und den Sachverhalt an den Maßstäben der damaligen Zeit. Entscheidend sind die Denk- und Handlungsspielräume, die dem Verfasser in seiner Situation offenstanden. Diese Spielräume wirken oft mildernd.</p>
+    <p>Deine Leitfrage lautet nicht „War das gut?“, sondern:</p>
+    <p class="leitfrage"><b>War das unter den damaligen Bedingungen nachvollziehbar, folgerichtig, alternativlos? Oder war es widersprüchlich, unverhältnismäßig, vermeidbar?</b></p>
+  </div>
+
+  <h3>Ohne Kontextwissen kein Urteil</h3>
+  <p>Aufgabe 3 steht und fällt mit dem, was du dir für Aufgabe 2 erarbeitet hast. Stell dir jemanden vor, der von Fußball nichts versteht und die Leistung eines Spielers begründet beurteilen soll. Nach zwei Sätzen ist klar, dass das Wissen fehlt. Bei einer Quelle ist es genauso. Handlungsspielräume, Alternativen, zeitgenössische Gegenpositionen, Wissenshorizont: Das alles lässt sich nur beurteilen, wenn man die Zeit kennt. Ob jemand das Thema wirklich durchdrungen hat oder Gelerntes wiedergibt, zeigt sich deshalb meist erst hier.</p>
+
+  <h3>Woran misst du?</h3>
+  <p>Jedes historische Urteil braucht einen Maßstab. Beim Sachurteil ist das kein moralischer, sondern einer aus der Zeit: ob eine Argumentation schlüssig ist, ob eine Darstellung sachlich zutrifft, welche Handlungsspielräume damals bestanden. Der Maßstab wechselt von Argument zu Argument. Welchen du anlegst, ergibt sich aus dem Prüfaspekt, den du wählst (<a href="#pruefaspekte">Tabelle unten</a>). Sichtbar wird er in deinem „weil“.</p>
+
+  <h3>Schritt für Schritt</h3>
+  <ol class="schritte">
+    <li><span><b>Argumente sammeln.</b> Geh die zentralen Aussagen des Verfassers durch und frag bei jeder: Wo kann ich ihm zustimmen, wo nicht? Welcher Prüfaspekt aus der Tabelle unten passt? Notiere Stichpunkte mit Zeilenangabe auf dem Schmierblatt.</span></li>
+    <li><span><b>Auswählen.</b> Nimm für jede Seite zwei bis vier Argumente, die bei dieser Quelle etwas hergeben. Wichtiges geht vor Feinheiten.</span></li>
+    <li><span><b>Ausformulieren.</b> Schreibe jedes Argument im Dreischritt und baue den Text nach dem Blockprinzip auf (siehe die beiden Kästen unten).</span></li>
+  </ol>
+
+  <h3 id="pruefaspekte">Prüfaspekte</h3>
+  <p>Du musst nicht alle abarbeiten. Wähle die aus, die bei dieser Quelle etwas hergeben, und arbeite dich vom Wichtigen zum weniger Wichtigen vor. Jeder Prüfaspekt ist zugleich der Maßstab für das Argument, das du damit gewinnst.</p>
+  <table class="tab">
+    <thead><tr><th>Aspekt</th><th>Leitfragen</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Schlüssigkeit</td><td>Trägt die Begründung die Forderung? Wo springt die Argumentation, wo wird behauptet statt begründet?</td></tr>
+      <tr><td class="k">Intention und Interessen</td><td>Welche Motive und Interessen stehen hinter der Darstellung? Wem nützt sie? Was folgt daraus für ihre Verlässlichkeit?</td></tr>
+      <tr><td class="k">Handlungsspielraum</td><td>Welche Alternativen standen dem Verfasser offen? Welche Zwänge schränkten ihn ein?</td></tr>
+      <tr><td class="k">Adressat und Wirkung</td><td>Richtet sich der Text an einen besonderen Kreis? Was lässt sich über die Wirkung auf Zeitgenossen sagen?</td></tr>
+      <tr><td class="k">Andere Positionen</td><td>Welche zeitgenössischen Gegenpositionen kennst du? Wie hätten sie auf diesen Text reagiert?</td></tr>
+      <tr><td class="k">Leerstellen</td><td>Welche Themen und Probleme kommen nicht vor? Ist das Zufall oder Absicht?</td></tr>
+      <tr><td class="k">Wissenshorizont</td><td>Über wie viel Wissen verfügte der Verfasser? Was konnte er nicht wissen, und wie wirkt sich das auf dein Urteil aus?</td></tr>
+      <tr><td class="k">Blick von heute</td><td>Haben sich die Einschätzungen des Verfassers bestätigt oder wurden sie widerlegt? Was weiß die Forschung heute über den weiteren Verlauf?</td></tr>
+      <tr><td class="k">Sprache</td><td>Sprachliche Besonderheiten erläuterst du nur, wenn sie für den Erkenntniswert der Quelle entscheidend sind.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Beispiel: Metternichs Brief an Gentz vom 17. Juni 1819</h3>
+  <p>So sieht eine Sammlung von Argumenten aus, aus der ein Sachurteil entsteht. Noch sind es Stichpunkte. Im Text formulierst du jedes Argument im Dreischritt aus.</p>
+  <div class="zweispaltig">
+    <div class="seite contra">
+      <h4>Kritik (Contra)</h4>
+      <ul>
+        <li>Er setzt Presse und Nationalbewegung pauschal mit Umsturz gleich und unterstellt eine geschlossene „Partei“, die es in dieser Form nicht gab (vgl. Z. 33 ff.).</li>
+        <li>Die Tat eines Einzelnen dient ihm als Anlass für Maßnahmen gegen eine ganze Bewegung (vgl. Z. 10 ff.).</li>
+        <li>Mit dem Vorwurf der Felonie verschiebt er die Souveränität der Einzelstaaten: Was als Schutz des Bundes auftritt, begründet ein Eingriffsrecht gegen dessen Mitglieder (vgl. Z. 30 ff. und Z. 44 ff.).</li>
+        <li>Seine Erwartung, gemeinsame Maßregeln sicherten die Ruhe dauerhaft (vgl. Z. 10 ff.), wurde durch 1830 und 1848 widerlegt.</li>
+      </ul>
+    </div>
+    <div class="seite pro">
+      <h4>Zustimmung (Pro)</h4>
+      <ul>
+        <li>Nach Revolution und napoleonischen Kriegen galt die „Erhaltung der öffentlichen Ruhe“ (Z. 11 f.) vielen Zeitgenossen als vorrangiges Gut.</li>
+        <li>Als Staatskanzler war er auf den Erhalt der Gesamtordnung verpflichtet, die er im Bundesgedanken ausdrücklich benennt (vgl. Z. 15 ff.), nicht auf liberale Reform.</li>
+        <li>Die Ermordung Kotzebues erzeugte einen Handlungsdruck, den die Eile des Briefes spiegelt (vgl. Z. 6 ff.).</li>
+        <li>Seine Beobachtung, dass eine überregionale Öffentlichkeit entstanden war, traf sachlich zu (vgl. Z. 36 ff.).</li>
+      </ul>
+    </div>
+  </div>
+
+  <div class="kasten warnung">
+    <span class="etikett">Drei Warnungen</span>
+    <ul>
+      <li>Urteile nicht zu affirmativ. Im Erwartungshorizont überwiegen in der Regel die kritischen Aspekte.</li>
+      <li>Eine kritische und zugleich differenzierte Beurteilung ist schwerer als begründete Zustimmung. Genau dafür gibt es die Punkte.</li>
+      <li>Notiere dir Einfälle zu Aufgabe 3 schon, während du Aufgabe 1 und 2 bearbeitest. Am Ende der Klausur fehlt dafür die Zeit.</li>
+    </ul>
+  </div>
+
+  <h3>So schreibst du Aufgabe 3</h3>
+
+  <div class="kasten">
+    <span class="etikett" style="background:var(--petrol);color:#fff">So formulierst du ein Argument (Dreischritt)</span>
+    <ol class="dreischritt">
+      <li class="d1"><b>1 Aussage aufgreifen (mit Zeilenangabe) und erläutern</b><span>„Metternich bezeichnet die Presse als ‚das größte und demnach das dringendste Uebel‘ (Z. 1) und unterstellt eine geschlossene ‚Partei‘ des Umsturzes (vgl. Z. 33 ff.). So erscheint jede öffentliche Kritik als Gefahr für die Ordnung. Damit rechtfertigt er scharfe Maßnahmen gegen die ganze Bewegung.“</span></li>
+      <li class="d2"><b>2 Eigene Positionierung</b><span>„Das halte ich für verzerrend, …“</span></li>
+      <li class="d3"><b>3 Begründung</b><span>„…, weil es eine solche geschlossene ‚Partei‘ nicht gab. Die meisten Anhänger der Nationalbewegung forderten eine Verfassung und die Einheit Deutschlands, aber keinen gewaltsamen Umsturz.“</span></li>
+    </ol>
+
+    <h4>Urteilswörter</h4>
+    <div class="woerter">
+      <span class="wort pro">nachvollziehbar</span><span class="wort pro">folgerichtig</span><span class="wort pro">zweckmäßig</span><span class="wort pro">angemessen</span><span class="wort pro">zutreffend</span>
+    </div>
+    <div class="woerter">
+      <span class="wort contra">widersprüchlich</span><span class="wort contra">einseitig</span><span class="wort contra">verzerrend</span><span class="wort contra">unverhältnismäßig</span><span class="wort contra">vermeidbar</span><span class="wort contra">nicht (mehr) angemessen</span><span class="wort contra">wenig glaubwürdig</span>
+    </div>
+
+    <h4>Bausteine zum Erläutern</h4>
+    <div class="woerter">
+      <span class="wort neutral">„Damit will er …“</span><span class="wort neutral">„So erscheint …“</span><span class="wort neutral">„Damit begründet er, warum …“</span><span class="wort neutral">„Damit macht er deutlich, dass …“</span>
+    </div>
+    <h4>Bausteine zum Positionieren</h4>
+    <div class="woerter">
+      <span class="wort neutral">„Das halte ich für …, weil …“</span><span class="wort neutral">„Aus seiner Lage halte ich … für …, weil …“</span>
+    </div>
+
+    <p style="margin-top:14px"><b>Wichtig:</b> Die Erläuterung sagt, was der Verfasser damit meint oder erreichen will. Dein „weil“ sagt, warum du das überzeugend findest oder nicht, und bringt dafür etwas Neues: Wissen aus dem Unterricht oder eine andere Textstelle. Pro heißt oft „aus seiner Lage verständlich“, nicht „richtig“.</p>
+  </div>
+
+  <div class="kasten">
+    <span class="etikett" style="background:var(--petrol);color:#fff">So baust du Aufgabe 3 auf</span>
+    <h4 style="margin-top:4px">Empfohlen: Blockprinzip</h4>
+    <ol class="aufbau">
+      <li><span class="z">1</span><span><b>Einleitung:</b> Greife die Aufgabenstellung wörtlich auf, z. B.: <q>Im Folgenden werde ich Metternichs Vorgehen gegen die Presse beurteilen.</q></span></li>
+      <li class="pro"><span class="z">2</span><span><b>Block 1 (Pro): Wo stimmst du ihm eher zu?</b> Zwei bis vier Argumente, je nach Ausführlichkeit der Begründung, jedes im Dreischritt.</span></li>
+      <li class="contra"><span class="z">3</span><span><b>Block 2 (Contra): Wo stimmst du nicht zu?</b> Auch hier möglichst zwei bis vier Argumente, je nach Ausführlichkeit der Begründung, jedes im Dreischritt. Überleitung nicht vergessen, z. B.: <q>Kritisch zu sehen ist jedoch, …</q></span></li>
+      <li><span class="z">4</span><span><b>Fazit:</b> Wiederhole keine einzelnen Argumente, sondern ziehe eine Gesamtbilanz zu den Aspekten der Aufgabe. Dein „weil“ bündelt hier mehrere Argumente zu einer Gesamteinschätzung. Die Teilurteile können unterschiedlich ausfallen, z. B.: <q>Insgesamt halte ich [ersten Aspekt] für eher …, weil … [Zweiten Aspekt] halte ich dagegen / ebenfalls für eher …, weil …</q></span></li>
+    </ol>
+    <p><b>Alternative: Ping-Pong-Prinzip.</b> Du wägst zu jedem Punkt gleich Pro und Contra ab. Satzanfänge: <q>Zwar …, doch …</q>, <q>Insofern ist … nachvollziehbar, als …</q></p>
+  </div>
+
+  <h3 id="operatoren">Die drei Operatoren in Aufgabe 3</h3>
+  <p>Welcher Operator in der Aufgabe steht, entscheidet darüber, welche Art von Maßstäben du anlegst und was am Ende dastehen muss.</p>
+  <div class="tab-scroll">
+  <table class="tab">
+    <thead><tr><th>Operator</th><th>Was du lieferst</th><th>Woran du misst</th></tr></thead>
+    <tbody>
+      <tr><td class="k">beurteilen</td><td>Ein Sachurteil zum historischen Sachverhalt: Welchen Stellenwert hat er im Zusammenhang?</td><td>Schlüssigkeit, Triftigkeit, damalige Handlungsspielräume. Ohne persönlichen Wertebezug.</td></tr>
+      <tr><td class="k">Stellung nehmen</td><td>Die Prüfung einer vorgelegten These, Deutung oder Position, häufig aus einem Darstellungstext, und eine begründete Einschätzung dazu.</td><td>Dieselben Maßstäbe wie beim Sachurteil, angewandt auf die vorgelegte Position.</td></tr>
+      <tr><td class="k">bewerten</td><td>Zuerst ein Sachurteil, danach zusätzlich ein Werturteil.</td><td>Zusätzlich eigene Wertmaßstäbe, die du offenlegst und begründest, auf Grundlage der Werte des Grundgesetzes.</td></tr>
+    </tbody>
+  </table>
+  </div>
+
+  <h4>So gehst du bei „Nehmen Sie Stellung“ vor</h4>
+  <p>Der Operator meint nicht deine persönliche Meinung, sondern die Prüfung einer fremden Position. „Kritisch“ heißt dabei prüfend, nicht ablehnend. Gefordert sind Argumente aus beiden Richtungen: Wo hat der Autor recht, wo überzeichnet, verkürzt oder übersieht er etwas? Am Ende steht ein Fazit, das deine Argumente zu einer Gesamteinschätzung bündelt. Wer nur widerspricht, verschenkt die Hälfte.</p>
+  <p>Nutze dafür die Ergebnisse aus Aufgabe 1 und 2. Wer dort sauber gearbeitet hat, hat die Prüfpunkte bereits beisammen.</p>
+
+  <h4>Und das Werturteil?</h4>
+  <p>Das Werturteil ist die Ausnahme. Es gehört nur dann in die Klausur, wenn „bewerte“ dasteht. Dann steht es klar abgesetzt am Ende und ist als heutige Perspektive erkennbar, zum Beispiel: <q>Gemessen an der Pressefreiheit als Grundrecht erscheint Metternichs Vorschlag als der Versuch, politische Willensbildung im Kern zu unterbinden.</q></p>
+  <p>Die Reihenfolge ist dabei fest: erst das Sachurteil aus der Zeit heraus, dann das Werturteil aus heutiger Sicht. Wer mit den heutigen Maßstäben beginnt, verfehlt das Sachurteil.</p>
+</section>
+
+<!-- HÄUFIGE FEHLER -->
+<section class="teil" id="fehler">
+  <div class="kapitel">
+    <span class="ziffer" aria-hidden="true">!</span>
+    <h2>Häufige Fehler</h2>
+    <p class="thema">Und wie du sie vermeidest</p>
+  </div>
+
+  <table class="tab">
+    <thead><tr><th>Fehler</th><th>So vermeidest du ihn</th></tr></thead>
+    <tbody>
+      <tr><td class="k">Fehlende Zeilenangaben</td><td>Jede Kernaussage bekommt einen Beleg, sinngemäß mit „vgl.“, wörtlich ohne.</td></tr>
+      <tr><td class="k">Bewertung schon in Aufgabe 1</td><td>Die Inhaltswiedergabe bleibt urteilsfrei. Notiere die Bewertung auf dem Schmierblatt.</td></tr>
+      <tr><td class="k">Präsens in Aufgabe 2</td><td>Der historische Kontext steht im Präteritum.</td></tr>
+      <tr><td class="k">Nacherzählung statt Analyse</td><td>Verbinde jede Kernaussage mit der Funktion, die der Abschnitt im Text erfüllt.</td></tr>
+      <tr><td class="k">Urteil nur in eine Richtung</td><td>Ein Urteil braucht beide Seiten. Frage bei jedem Kritikpunkt, ob der Verfasser damals anders handeln konnte, und bei jeder Zustimmung, was dagegen spricht.</td></tr>
+      <tr><td class="k">Keine Einleitung</td><td>Greife die Aufgabenstellung in einem Satz wörtlich auf.</td></tr>
+      <tr><td class="k">Behauptung ohne Begründung</td><td>Jedes Urteil braucht ein „weil“ (Beispiel unten).</td></tr>
+      <tr><td class="k">Erläuterung statt Urteil</td><td>Nach der Erläuterung folgt immer deine Positionierung mit Urteilswort (Beispiel unten).</td></tr>
+      <tr><td class="k">„Weil“ wiederholt die Erläuterung</td><td>Die Begründung bringt etwas Neues: Wissen aus dem Unterricht oder eine andere Textstelle (Beispiel unten).</td></tr>
+      <tr><td class="k">Fazit ohne Position</td><td>Aufgabe 3 endet mit einem Fazit, das deine Argumente zu einer Gesamteinschätzung bündelt, nicht mit dem letzten geprüften Detail (Beispiel unten).</td></tr>
+      <tr><td class="k">Werturteil ohne Anlass</td><td>Heutige Wertmaßstäbe gehören nur dann hinein, wenn „bewerte“ dasteht.</td></tr>
+    </tbody>
+  </table>
+
+  <h3>Typische Fehler in Aufgabe 3: Beispiele und Verbesserungen</h3>
+  <p>Die Beispiele beziehen sich auf Metternichs Brief an Gentz.</p>
+
+  <div class="fehlerbeispiel">
+    <h4>Behauptung ohne Begründung</h4>
+    <div class="schlecht">
+      <span class="lbl">Fehlerhaft</span>
+      <p class="zitat">„Metternich betont die ‚Erhaltung der öffentlichen Ruhe‘ (Z. 11 f.). Damit will er zeigen, dass es ihm um Ordnung geht. Das halte ich für sehr nachvollziehbar.“</p>
+      <p class="fehlt"><b>Was fehlt:</b> Es gibt kein „weil“. „Sehr“ verstärkt das Urteil nur, es begründet es nicht.</p>
+    </div>
+    <div class="gut">
+      <span class="lbl">Besser</span>
+      <p class="zitat">„… Das halte ich aus seiner Lage für nachvollziehbar, weil nach der Französischen Revolution und den napoleonischen Kriegen vielen Zeitgenossen Ruhe und Ordnung als wichtigstes Gut galten.“</p>
+    </div>
+  </div>
+
+  <div class="fehlerbeispiel">
+    <h4>Erläuterung statt Urteil</h4>
+    <div class="schlecht">
+      <span class="lbl">Fehlerhaft</span>
+      <p class="zitat">„Metternich nimmt die Tat eines Einzelnen zum Anlass für Maßnahmen gegen die ganze Bewegung (vgl. Z. 10 ff.). Damit will er die Burschenschaften und die Presse insgesamt treffen. So erscheint die ganze Nationalbewegung als gefährlich.“</p>
+      <p class="fehlt"><b>Was fehlt:</b> Der Absatz erläutert nur. Positionierung und Begründung fehlen, man erfährt nicht, wie du das beurteilst.</p>
+    </div>
+    <div class="gut">
+      <span class="lbl">Besser</span>
+      <p class="zitat">„… So erscheint die ganze Nationalbewegung als gefährlich. Das halte ich für unverhältnismäßig, weil Sand allein handelte und die Burschenschaften keine Gewalt, sondern Einheit und eine Verfassung forderten.“</p>
+    </div>
+  </div>
+
+  <div class="fehlerbeispiel">
+    <h4>„Weil“ wiederholt die Erläuterung</h4>
+    <div class="schlecht">
+      <span class="lbl">Fehlerhaft</span>
+      <p class="zitat">„Metternich sieht sich dem Erhalt der Gesamtordnung des Bundes verpflichtet (vgl. Z. 15 ff.). Damit will er den Deutschen Bund schützen. Das halte ich für folgerichtig, weil er den Bund schützen will.“</p>
+      <p class="fehlt"><b>Was fehlt:</b> Die Begründung sagt dasselbe wie die Erläuterung. Das ist ein Zirkel, kein Argument.</p>
+    </div>
+    <div class="gut">
+      <span class="lbl">Besser</span>
+      <p class="zitat">„… Das halte ich für folgerichtig, weil der Deutsche Bund keine eigene Exekutive besaß und sich eine Bewegung, die über die Grenzen der Einzelstaaten hinausgriff, nur gemeinsam aufhalten ließ.“</p>
+    </div>
+  </div>
+
+  <div class="fehlerbeispiel">
+    <h4>Fazit ohne Position</h4>
+    <div class="schlecht">
+      <span class="lbl">Fehlerhaft</span>
+      <p class="zitat">„Insgesamt hat Metternich in manchen Punkten recht und in manchen nicht.“</p>
+      <p class="fehlt"><b>Was fehlt:</b> Das Fazit ist nur ein Satz. Es nimmt keine Position ein, zieht keine Gesamtbilanz und hat kein „weil“.</p>
+    </div>
+    <div class="gut">
+      <span class="lbl">Besser</span>
+      <p class="zitat">„Insgesamt halte ich Metternichs Sorge um die öffentliche Ruhe aus seiner Lage für eher nachvollziehbar, weil nach Revolution und Krieg Ordnung vielen als wichtigstes Gut galt und der Bund nur gemeinsam handeln konnte. Seine Maßnahmen halte ich dagegen für unverhältnismäßig, weil er die Tat eines Einzelnen nutzte, um eine ganze Bewegung zu unterdrücken, die meist friedlich Verfassung und Einheit forderte.“</p>
+    </div>
+  </div>
+</section>
+
+<!-- TOOLS -->
+<section class="teil" id="tools">
+  <div class="kapitel">
+    <span class="ziffer" aria-hidden="true">✦</span>
+    <h2>Tools zur Vorbereitung</h2>
+    <p class="thema">Die Nutzung ist grundsätzlich freiwillig (Ausnahme: Aufgaben, die im DSGVO-konformen FelloFish ausdrücklich als Hausaufgaben oder Aufgaben im Unterricht bearbeitet werden).</p>
+  </div>
+
+  <div class="tools">
+    <div class="tool">
+      <div class="name">FelloFish<small>Schreibassistent</small></div>
+      <div>
+        <p>Feedback zu deinen Textanalysen, entlang der Kriterien, die auch in der Klausur gelten. Beurteilt wird die sprachliche Stimmigkeit und die Schlüssigkeit deiner Aussagen, nicht der Inhalt.</p>
+        <p>Über diesen Link kannst du deine Quellenanalyse (Teilaufgabe 1 der Klausur) hochladen: <a class="zugang" href="https://t1p.de/k9p1o">t1p.de/k9p1o</a> (Passwort: heckl)</p>
+      </div>
+    </div>
+    <div class="tool">
+      <div class="name">Geschichtsbuddy<small>Fobizz KI-Assistent</small></div>
+      <div>
+        <p>Fragen zum Inhalt und zur Klausur. Er fragt dich ab, erklärt dir, was unklar geblieben ist, und weiß, wie man gute Geschichtsklausuren schreibt. Außerdem gibt er dir inhaltliches Feedback zu deinen Texten. Nutzbar für alle drei Teilaufgaben.</p>
+        <p>Zugang über <a class="zugang" href="https://go.fobizz.com/?otp=ydsw3a">go.fobizz.com</a> mit dem persönlichen Zugangscode, den du von mir erhalten hast. Hebe ihn gut auf, indem du ihn z. B. abfotografierst.</p>
+      </div>
+    </div>
+    <div class="tool">
+      <div class="name">NotebookLM<small>Google</small></div>
+      <div>
+        <p>NotebookLM ist ein Werkzeug von Google, in das du eigene Materialien hochlädst, etwa Zusammenfassungen aus dem Geschichtsbuch, deine Mitschriften oder Arbeitsblätter. Es beantwortet dann Fragen ausschließlich auf Grundlage dieser Materialien und erstellt daraus Zusammenfassungen, Zeitleisten oder Podcasts, mit denen du den historischen Kontext wiederholen kannst. Einige Schüler*innen berichten von guten Erfahrungen bei der Vorbereitung des historischen Kontexts.</p>
+        <p><b>Das Tool ist allerdings nicht datenschutzkonform:</b> Melde dich nicht mit deiner Schuladresse an und gib (auch/gerade) dort keine personenbezogenen Daten ein.</p>
+      </div>
+    </div>
+  </div>
+</section>
+
+</main>
+
+<footer>
+  <div class="fuss-innen">
+    <span>Verfasser: Christoph Heckl · Geschichte Grundkurs</span>
+    <a class="download" href="Methodenblatt_Quelleninterpretation_Sek_II_Heckl.pdf" download>
+      <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round" aria-hidden="true"><path d="M12 3v12"/><path d="m7 10 5 5 5-5"/><path d="M5 21h14"/></svg>
+      Methodenblatt als PDF
+    </a>
+  </div>
+</footer>
+
+<script>
+  // Aktiven Abschnitt in der Navigation markieren
+  (function () {
+    var links = Array.prototype.slice.call(document.querySelectorAll('.nav a'));
+    var ziele = links.map(function (a) { return document.querySelector(a.getAttribute('href')); });
+    function setzeAktiv() {
+      var y = window.scrollY + 90, aktiv = 0;
+      ziele.forEach(function (el, i) { if (el && el.offsetTop <= y) aktiv = i; });
+      links.forEach(function (a, i) { a.classList.toggle('aktiv', i === aktiv); });
+      // Navigationsleiste nur horizontal nachführen, nie die Seite scrollen
+      var a = links[aktiv], ul = a && a.closest('ul');
+      if (ul) {
+        var l = a.offsetLeft, r = l + a.offsetWidth;
+        if (l < ul.scrollLeft) ul.scrollLeft = l - 12;
+        else if (r > ul.scrollLeft + ul.clientWidth) ul.scrollLeft = r - ul.clientWidth + 12;
+      }
+    }
+    window.addEventListener('scroll', setzeAktiv, { passive: true });
+    window.addEventListener('resize', setzeAktiv);
+    setzeAktiv();
+  })();
+</script>
+</body>
+</html>
