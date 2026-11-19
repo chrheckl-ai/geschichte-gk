@@ -215,7 +215,11 @@
   .notiz.contra { background: var(--contra-hell); border-color: var(--contra); }
   .notiz-kopf { display: flex; justify-content: space-between; align-items: center; gap: 8px; font-size: .8rem; font-weight: 600; color: var(--ink); }
   .notiz-kopf button { background: none; border: 0; color: var(--grau); font-size: 1.2rem; line-height: 1; min-width: 36px; min-height: 36px; cursor: pointer; }
-  .notiz textarea { width: 100%; margin-top: 4px; font: inherit; font-size: 16px; line-height: 1.4; padding: 6px 8px; border: 1px solid var(--linie); border-radius: 4px; background: #fff; resize: vertical; min-height: 58px; }
+  .notiz textarea { width: 100%; margin-top: 4px; font: inherit; font-size: 16px; line-height: 1.4; padding: 6px 8px; border: 1px solid var(--linie); border-radius: 4px; background: #fff; resize: vertical; min-height: 110px; }
+  .notiz .text { margin: 4px 0 0; padding: 6px 8px; background: #fff; border-radius: 4px; white-space: pre-wrap; font-size: .95rem; line-height: 1.45; }
+  .notiz .aktionen { display: flex; align-items: center; gap: 10px; margin-top: 6px; }
+  .notiz .ok { font-size: .8rem; font-weight: 600; color: var(--pro-dunkel); }
+  .notiz.contra .ok { color: var(--contra-dunkel); }
   .sammel-fuss { display: flex; flex-wrap: wrap; gap: 8px; align-items: center; margin-top: 8px; }
   .sammel-fuss .stand { flex: 1 1 100%; font-size: .82rem; color: var(--grau); margin: 0; }
   .knopf.notieren.erledigt { opacity: .7; cursor: default; }
@@ -269,7 +273,7 @@
       <p><b>Aufgabe 3:</b> Nimm Stellung zu der in der Quelle zum Ausdruck kommenden Haltung des Königs zur Revolution und seinem Herrschaftsverständnis.</p>
       <ol class="auftrag-schritte">
         <li><b>Lies die Quelle.</b> Das Glossar erklärt schwierige Wörter, die Hilfe zum Kontext fasst die Ereignisse in Preußen 1848 zusammen.</li>
-        <li><b>Sammle Argumente aus beiden Richtungen:</b> Wo kannst du dem König zustimmen, wo nicht? Tippe dafür in der Quelle eine farbig unterstrichene Stelle an und entscheide, ob du eher zustimmst oder ein Problem siehst. Die Hilfen zeigen dir dann einen passenden Prüfaspekt mit Frage und Satzbaustein. Tippe auf „Als Argument notieren“ und halte dein Argument unter „Meine Argumente“ in Stichpunkten fest.</li>
+        <li><b>Sammle Argumente aus beiden Richtungen:</b> Wo kannst du dem König zustimmen, wo nicht? Tippe dafür in der Quelle eine farbig unterstrichene Stelle an und entscheide, ob du eher oder teilweise zustimmst oder ein Problem siehst. Die Hilfen zeigen dir dann einen passenden Prüfaspekt mit Frage und Satzbaustein. Tippe auf „Als Argument notieren“ und halte dein Argument unter „Meine Argumente“ in Stichpunkten fest.</li>
         <li><b>Formuliere aus.</b> Schreibe Aufgabe 3 nach dem Blockprinzip (Kasten „So baust du Aufgabe 3 auf“), jedes Argument im Dreischritt.</li>
         <li><b>Lege deinen Text im OneNote-Kursnotizbuch ab.</b> Mit „Alles kopieren“ kannst du auch deine Stichpunkte dort einfügen.</li>
       </ol>
@@ -618,8 +622,11 @@ function zeichneSammlung() {
   const block = (liste, seite, titel) => liste.length ? `<h4 class="${seite}">${titel}</h4>` + liste.map(n =>
     `<div class="notiz ${seite}"><div class="notiz-kopf"><span>${zText(STELLEN[n.st])} · ${esc(n.aspekt)}</span>
       <button type="button" data-weg="${esc(n.key)}" aria-label="Argument entfernen">×</button></div>
-      <textarea data-key="${esc(n.key)}" rows="2" placeholder="Dein Stichpunkt: Was sagt er? Wie urteilst du? Warum?">${esc(n.text || "")}</textarea></div>`).join("") : "";
-  sammelBox.innerHTML = block(pro, "pro", "Pro: Hier stimme ich eher zu") + block(contra, "contra", "Contra: Hier sehe ich ein Problem") +
+      ${n.fertig
+        ? `<p class="text">${esc(n.text)}</p><div class="aktionen"><button class="knopf klein" type="button" data-bearbeiten="${esc(n.key)}">Bearbeiten</button><span class="ok">Gespeichert ✓</span></div>`
+        : `<textarea data-key="${esc(n.key)}" rows="4" placeholder="Dein Stichpunkt: Was sagt er? Wie urteilst du? Warum?">${esc(n.text || "")}</textarea>
+           <div class="aktionen"><button class="knopf klein weiter" type="button" data-speichern="${esc(n.key)}">Speichern</button></div>`}</div>`).join("") : "";
+  sammelBox.innerHTML = block(pro, "pro", "Pro: Hier stimme ich eher oder teilweise zu") + block(contra, "contra", "Contra: Hier sehe ich ein Problem") +
     `<div class="sammel-fuss"><p class="stand">${stellen} von ${STELLEN.length} Stellen genutzt. Deine Notizen bleiben nur auf diesem Gerät.</p>
       <button class="knopf klein weiter" type="button" data-kopieren>Alles kopieren</button>
       <button class="knopf klein" type="button" data-leeren>${leerenBestaetigen ? "Wirklich alles löschen?" : "Liste leeren"}</button></div>`;
@@ -629,7 +636,7 @@ function alsText() {
   const pro = notizen.filter(n => n.seite === "pro").sort((a, b) => a.st - b.st).map(zeile);
   const contra = notizen.filter(n => n.seite === "contra").sort((a, b) => a.st - b.st).map(zeile);
   return ["Meine Argumente zu Aufgabe 3 (Manifest Friedrich Wilhelms IV.)", "",
-    "Pro (hier stimme ich eher zu)", ...(pro.length ? pro : ["• …"]), "",
+    "Pro (hier stimme ich eher oder teilweise zu)", ...(pro.length ? pro : ["• …"]), "",
     "Contra (hier sehe ich ein Problem)", ...(contra.length ? contra : ["• …"])].join("\n");
 }
 function kopieren(knopf) {
@@ -652,6 +659,23 @@ sammelBox.addEventListener("click", (ev) => {
   const b = ev.target.closest("button");
   if (!b) return;
   if (b.dataset.weg) { notizen = notizen.filter(n => n.key !== b.dataset.weg); speichern(); zeichneSammlung(); zeichneStellenmodus(); return; }
+  if (b.dataset.speichern) {
+    const n = notizen.find(x => x.key === b.dataset.speichern);
+    const t = sammelBox.querySelector(`textarea[data-key="${CSS.escape(b.dataset.speichern)}"]`);
+    if (n && t) {
+      n.text = t.value;
+      if (!n.text.trim()) { t.focus(); t.placeholder = "Schreib zuerst einen Stichpunkt, dann speichern."; return; }
+      n.fertig = true; speichern(); zeichneSammlung();
+    }
+    return;
+  }
+  if (b.dataset.bearbeiten) {
+    const n = notizen.find(x => x.key === b.dataset.bearbeiten);
+    if (n) { n.fertig = false; speichern(); zeichneSammlung();
+      const t = sammelBox.querySelector(`textarea[data-key="${CSS.escape(n.key)}"]`);
+      if (t) { t.focus(); t.setSelectionRange(t.value.length, t.value.length); } }
+    return;
+  }
   if (b.hasAttribute("data-kopieren")) { kopieren(b); return; }
   if (b.hasAttribute("data-leeren")) {
     if (!leerenBestaetigen) { leerenBestaetigen = true; zeichneSammlung(); setTimeout(() => { if (leerenBestaetigen) { leerenBestaetigen = false; zeichneSammlung(); } }, 4000); return; }
@@ -670,7 +694,7 @@ function zeichneStellenmodus() {
   let html = `<div class="stelle-kopf"><span class="stelle-z">${zText(st)}</span>${st.kurz}</div>
     <h3 class="schritt">Wie wirkt die Aussage auf dich?</h3>
     <div class="eindruck">
-      <button class="knopf${eindruck === "pro" ? " aktiv-pro" : ""}" type="button" data-e="pro">Hier stimme ich eher zu</button>
+      <button class="knopf${eindruck === "pro" ? " aktiv-pro" : ""}" type="button" data-e="pro">Hier stimme ich eher oder teilweise zu</button>
       <button class="knopf${eindruck === "contra" ? " aktiv-contra" : ""}" type="button" data-e="contra">Hier sehe ich ein Problem</button>
     </div>`;
   if (eindruck) {
