@@ -206,7 +206,27 @@
   .eindruck .knopf { margin: 0; }
   .knopf.aktiv-pro { background: var(--pro); border-color: var(--pro); color: #fff; }
   .knopf.aktiv-contra { background: var(--contra); border-color: var(--contra); color: #fff; }
-  .sammlung { margin: 14px 0 8px; border-color: var(--petrol); }
+  .hilfen h2.bereich { margin-top: 26px; }
+  .hilfen h2 .zaehler { font-family: var(--sans); font-weight: 500; color: var(--grau); font-size: .8rem; }
+  .urteilen.hilfe { background: transparent; border-style: dashed; }
+  .ablauf { list-style: none; margin: 4px 0 0; padding: 0; background: #fff; border: 1px solid var(--linie); border-radius: 8px; }
+  .ablauf > li { display: grid; grid-template-columns: 28px minmax(0, 1fr); gap: 10px; padding: 12px 12px; border-top: 1px solid var(--linie); }
+  .ablauf > li:first-child { border-top: 0; }
+  .ablauf .kreis { width: 28px; height: 28px; border-radius: 50%; display: grid; place-items: center; font-weight: 700; font-size: .88rem; background: var(--petrol); color: #fff; }
+  .ablauf li.erledigt .kreis { background: var(--pro); }
+  .ablauf li.offen .kreis { background: #C5CDD1; }
+  .ablauf li.offen .s-titel, .ablauf li.offen .s-hinweis { color: #9AA4A8; }
+  .s-titel { font-weight: 600; color: var(--petrol); font-size: .95rem; margin: 4px 0 6px; }
+  .s-hinweis { font-size: .88rem; color: var(--grau); margin: 0; line-height: 1.45; }
+  .s-stelle { display: flex; flex-wrap: wrap; align-items: baseline; gap: 4px 10px; font-family: var(--serif); font-size: 1rem; }
+  .s-stelle .stelle-z { font-family: var(--sans); }
+  .link-knopf { background: none; border: 0; color: var(--petrol); text-decoration: underline; font: inherit; font-family: var(--sans); font-size: .85rem; padding: 6px 2px; min-height: 36px; cursor: pointer; }
+  .festhalten textarea { width: 100%; font: inherit; font-size: 16px; line-height: 1.4; padding: 8px; border: 1px solid var(--linie); border-radius: 4px; background: #fff; resize: vertical; min-height: 110px; }
+  .festhalten .aktionen { display: flex; flex-wrap: wrap; align-items: center; gap: 10px; margin-top: 8px; }
+  .festhalten .text { margin: 0; padding: 8px; border-radius: 4px; white-space: pre-wrap; font-size: .95rem; line-height: 1.45; }
+  .festhalten.pro .text { background: var(--pro-hell); } .festhalten.contra .text { background: var(--contra-hell); }
+  .festhalten .ok { font-size: .85rem; font-weight: 600; color: var(--pro-dunkel); }
+  .sammlung { margin: 4px 0 8px; }
   .sammlung .zaehler { font-weight: 500; color: var(--grau); font-size: .82rem; }
   .sammlung h4 { margin: 10px 0 4px; font-size: .78rem; text-transform: uppercase; letter-spacing: .06em; }
   .sammlung h4.pro { color: var(--pro-dunkel); } .sammlung h4.contra { color: var(--contra-dunkel); }
@@ -273,7 +293,7 @@
       <p><b>Aufgabe 3:</b> Nimm Stellung zu der in der Quelle zum Ausdruck kommenden Haltung des Königs zur Revolution und seinem Herrschaftsverständnis.</p>
       <ol class="auftrag-schritte">
         <li><b>Lies die Quelle.</b> Das Glossar erklärt schwierige Wörter, die Hilfe zum Kontext fasst die Ereignisse in Preußen 1848 zusammen.</li>
-        <li><b>Sammle Argumente aus beiden Richtungen:</b> Wo kannst du dem König zustimmen, wo nicht? Tippe dafür in der Quelle eine farbig unterstrichene Stelle an und entscheide, ob du eher oder teilweise zustimmst oder ein Problem siehst. Die Hilfen zeigen dir dann einen passenden Prüfaspekt mit Frage und Satzbaustein. Tippe auf „Als Argument notieren“ und halte dein Argument unter „Meine Argumente“ in Stichpunkten fest.</li>
+        <li><b>Sammle Argumente aus beiden Richtungen:</b> Wo kannst du dem König zustimmen, wo nicht? Tippe dafür in der Quelle eine farbig unterstrichene Stelle an und entscheide, ob du eher oder teilweise zustimmst oder ein Problem siehst. Die Hilfen zeigen dir dann einen passenden Prüfaspekt mit Frage und Satzbaustein. Schreibe dein Argument in Stichpunkten in das Feld darunter und tippe auf „Speichern“. Es erscheint dann unter „Meine Argumente“.</li>
         <li><b>Formuliere aus.</b> Schreibe Aufgabe 3 nach dem Blockprinzip (Kasten „So baust du Aufgabe 3 auf“), jedes Argument im Dreischritt.</li>
         <li><b>Lege deinen Text im OneNote-Kursnotizbuch ab.</b> Mit „Alles kopieren“ kannst du auch deine Stichpunkte dort einfügen.</li>
       </ol>
@@ -341,14 +361,15 @@
     </div>
   </section>
 
-  <aside class="pane hilfen" aria-label="Hilfen zu Aufgabe 3">
-    <h2>Hilfen</h2>
+  <aside class="pane hilfen" aria-label="Argumente sammeln und Hilfen zu Aufgabe 3">
+    <h2>Argumente sammeln</h2>
     <div id="stellenmodus"></div>
-    <details class="urteilen sammlung" id="sammlung" open>
-      <summary>Meine Argumente <span class="zaehler" id="zaehler"></span></summary>
+    <h2 class="bereich">Meine Argumente <span class="zaehler" id="zaehler"></span></h2>
+    <div class="urteilen sammlung" id="sammlung">
       <div id="sammelliste"></div>
-    </details>
-    <details class="urteilen">
+    </div>
+    <h2 class="bereich">Hilfen zum Schreiben <span class="zaehler">bei Bedarf aufklappen</span></h2>
+    <details class="urteilen hilfe">
       <summary>So formulierst du ein Argument (Dreischritt)</summary>
       <ol class="dreischritt">
         <li class="d1"><b>1 Aussage aufgreifen (mit Zeilenangabe) und erläutern</b><span>„Der König behauptet, am 18. März hätten nur sehr wenige Untertanen mitgemacht, und gibt einem ‚bezahlte[n] Haufe[n] von Missetätern aller Nationen‘ die Schuld (Z. 2 ff.). So erscheint die Revolution als Werk von Fremden und Verbrechern. Er spricht ihr damit die Berechtigung ab und muss auf die Forderungen seiner eigenen Untertanen nicht eingehen.“</span></li>
@@ -360,7 +381,7 @@
       <p><b>Urteilswörter contra:</b> widersprüchlich, einseitig, verzerrend, unverhältnismäßig, vermeidbar, nicht (mehr) angemessen, wenig glaubwürdig</p>
       <p><b>Wichtig:</b> Die Erläuterung sagt, was der König damit meint oder erreichen will. Dein „weil“ sagt, warum du das überzeugend findest oder nicht, und bringt dafür etwas Neues: Wissen aus dem Unterricht oder eine andere Textstelle. Pro heißt oft „aus seiner Lage verständlich“, nicht „richtig“.</p>
     </details>
-    <details class="urteilen">
+    <details class="urteilen hilfe">
       <summary>So baust du Aufgabe 3 auf</summary>
       <p><b>Empfohlen: Blockprinzip</b></p>
       <ol class="aufbau">
@@ -591,13 +612,11 @@ function waehleStelle(i) {
   zeichneStellenmodus();
   stellenBox.scrollIntoView({ behavior: reduziert ? "auto" : "smooth", block: "nearest" });
 }
-function karte(e) {
-  const key = schluessel(aktStelle, e);
-  const da = notizen.some(n => n.key === key);
+function karte(e, gegen) {
   return `<div class="impuls ${e.seite}"><b>${e.aspekt}</b><p>${nb(e.frage)}</p>
     <button class="knopf klein satz-zeigen" type="button">Satzbaustein zeigen</button>
     <div class="satz" hidden><p>${nb(e.satz)}</p></div>
-    <button class="knopf klein notieren${da ? " erledigt" : ""}" type="button" data-key="${esc(key)}"${da ? " disabled" : ""}>${da ? "Notiert ✓" : "Als Argument notieren"}</button></div>`;
+    ${gegen ? `<button class="knopf klein" type="button" data-e="${e.seite}">Doch diese Sicht nehmen</button>` : ""}</div>`;
 }
 
 /* Meine Argumente: bleibt nur auf diesem Gerät gespeichert */
@@ -605,7 +624,7 @@ const SPEICHER = "gk-manifest-fw4-argumente-v1";
 const schluessel = (i, e) => `${i}|${e.seite}|${e.aspekt}`;
 let notizen = [];
 try { notizen = JSON.parse(localStorage.getItem(SPEICHER) || "[]"); if (!Array.isArray(notizen)) notizen = []; } catch (e) { notizen = []; }
-notizen = notizen.filter(n => STELLEN[n.st]);
+notizen = notizen.filter(n => STELLEN[n.st] && (n.fertig || (n.text || "").trim()));
 function speichern() { try { localStorage.setItem(SPEICHER, JSON.stringify(notizen)); } catch (e) {} }
 const sammelBox = document.getElementById("sammelliste");
 const zaehler = document.getElementById("zaehler");
@@ -616,7 +635,7 @@ function zeichneSammlung() {
   const stellen = new Set(notizen.map(n => n.st)).size;
   zaehler.textContent = notizen.length ? `(${pro.length} Pro, ${contra.length} Contra)` : "";
   if (!notizen.length) {
-    sammelBox.innerHTML = `<p class="leer">Noch nichts notiert. Tippe bei einem Prüfaspekt auf „Als Argument notieren“.</p>`;
+    sammelBox.innerHTML = `<p class="leer">Noch nichts gespeichert. Was du in Schritt 4 speicherst, erscheint hier.</p>`;
     return;
   }
   const block = (liste, seite, titel) => liste.length ? `<h4 class="${seite}">${titel}</h4>` + liste.map(n =>
@@ -665,13 +684,13 @@ sammelBox.addEventListener("click", (ev) => {
     if (n && t) {
       n.text = t.value;
       if (!n.text.trim()) { t.focus(); t.placeholder = "Schreib zuerst einen Stichpunkt, dann speichern."; return; }
-      n.fertig = true; speichern(); zeichneSammlung();
+      n.fertig = true; speichern(); zeichneSammlung(); zeichneStellenmodus();
     }
     return;
   }
   if (b.dataset.bearbeiten) {
     const n = notizen.find(x => x.key === b.dataset.bearbeiten);
-    if (n) { n.fertig = false; speichern(); zeichneSammlung();
+    if (n) { n.fertig = false; speichern(); zeichneSammlung(); zeichneStellenmodus();
       const t = sammelBox.querySelector(`textarea[data-key="${CSS.escape(n.key)}"]`);
       if (t) { t.focus(); t.setSelectionRange(t.value.length, t.value.length); } }
     return;
@@ -682,49 +701,84 @@ sammelBox.addEventListener("click", (ev) => {
     leerenBestaetigen = false; notizen = []; speichern(); zeichneSammlung(); zeichneStellenmodus();
   }
 });
-function zeichneStellenmodus() {
-  if (aktStelle < 0) {
-    stellenBox.innerHTML = `<ol class="schritte">
-      <li><b>Lies die Quelle.</b> Die Schlüsselstellen sind farbig unterstrichen.</li>
-      <li><b>Tippe eine Stelle an,</b> die dir auffällt.</li>
-      <li><b>Halte deinen Eindruck fest</b> und begründe ihn mit einem Prüfaspekt.</li></ol>`;
-    return;
-  }
-  const st = STELLEN[aktStelle];
-  let html = `<div class="stelle-kopf"><span class="stelle-z">${zText(st)}</span>${st.kurz}</div>
-    <h3 class="schritt">Wie wirkt die Aussage auf dich?</h3>
-    <div class="eindruck">
-      <button class="knopf${eindruck === "pro" ? " aktiv-pro" : ""}" type="button" data-e="pro">Hier stimme ich eher oder teilweise zu</button>
-      <button class="knopf${eindruck === "contra" ? " aktiv-contra" : ""}" type="button" data-e="contra">Hier sehe ich ein Problem</button>
-    </div>`;
-  if (eindruck) {
-    const passend = st.eintraege.filter(e => e.seite === eindruck);
-    const gegen = st.eintraege.filter(e => e.seite !== eindruck);
-    html += `<h3 class="schritt">Begründe deinen Eindruck mit einem Prüfaspekt</h3>`;
-    html += passend.length ? passend.map(karte).join("")
-      : `<p class="leer">Für diesen Eindruck gibt die Stelle wenig her. Schau dir die Gegenprobe an: Vielleicht trägt die andere Sicht besser.</p>`;
-    html += `<details class="gegenprobe"${passend.length ? "" : " open"}><summary>Gegenprobe: Was könnte man dagegen sagen?</summary>` +
-      (gegen.length ? gegen.map(karte).join("") : `<p class="leer">Zu dieser Stelle findest du kaum Argumente für die Gegenseite.</p>`) +
-      `</details>`;
-  }
-  html += `<p><button class="knopf klein" type="button" data-neu>Andere Stelle wählen</button></p>`;
-  stellenBox.innerHTML = html;
+const entwuerfe = {};
+function schritt(n, zustand, titel, inhalt) {
+  return `<li class="${zustand}"><span class="kreis">${zustand === "erledigt" ? "✓" : n}</span><div><p class="s-titel">${titel}</p>${inhalt}</div></li>`;
 }
+function zeichneStellenmodus() {
+  const st = aktStelle >= 0 ? STELLEN[aktStelle] : null;
+  const passend = st && eindruck ? st.eintraege.filter(e => e.seite === eindruck) : [];
+  const gegen = st && eindruck ? st.eintraege.filter(e => e.seite !== eindruck) : [];
+  const ziel = passend[0];
+  const key = ziel ? schluessel(aktStelle, ziel) : null;
+  const notiz = key ? notizen.find(n => n.key === key) : null;
+  const gespeichert = !!(notiz && notiz.fertig);
+  let h = `<ol class="ablauf">`;
+  h += schritt(1, st ? "erledigt" : "aktiv", "Stelle wählen", st
+    ? `<div class="s-stelle"><span class="stelle-z">${zText(st)}</span><span>${st.kurz}</span><button class="link-knopf" type="button" data-neu>ändern</button></div>`
+    : `<p class="s-hinweis">Tippe in der Quelle eine farbig unterstrichene Stelle an.</p>`);
+  h += schritt(2, !st ? "offen" : eindruck ? "erledigt" : "aktiv", "Eindruck wählen", st
+    ? `<div class="eindruck">
+        <button class="knopf${eindruck === "pro" ? " aktiv-pro" : ""}" type="button" data-e="pro">Hier stimme ich eher oder teilweise zu</button>
+        <button class="knopf${eindruck === "contra" ? " aktiv-contra" : ""}" type="button" data-e="contra">Hier sehe ich ein Problem</button></div>`
+    : `<p class="s-hinweis">Stimmst du eher oder teilweise zu, oder siehst du ein Problem?</p>`);
+  let s3 = `<p class="s-hinweis">Du bekommst eine Frage und einen Satzbaustein zu deinem Eindruck.</p>`;
+  if (eindruck) {
+    s3 = ziel ? karte(ziel, false)
+      : `<p class="leer">Für diesen Eindruck gibt die Stelle wenig her. Schau dir die Gegenprobe an: Vielleicht trägt die andere Sicht besser.</p>`;
+    s3 += `<details class="gegenprobe"${ziel ? "" : " open"}><summary>Gegenprobe: Was könnte man dagegen sagen?</summary>` +
+      (gegen.length ? gegen.map(e => karte(e, true)).join("") : `<p class="leer">Zu dieser Stelle findest du kaum Argumente für die Gegenseite.</p>`) + `</details>`;
+  }
+  h += schritt(3, !eindruck ? "offen" : gespeichert ? "erledigt" : "aktiv", "Prüfaspekt nutzen", s3);
+  let s4 = `<p class="s-hinweis">Halte dein Argument in Stichpunkten fest und speichere es.</p>`;
+  if (ziel) {
+    s4 = gespeichert
+      ? `<div class="festhalten ${ziel.seite}"><p class="text">${esc(notiz.text)}</p>
+          <div class="aktionen"><span class="ok">Gespeichert ✓</span><button class="knopf klein" type="button" data-hier-bearbeiten>Bearbeiten</button>
+          <button class="knopf klein weiter" type="button" data-naechste>Nächste Stelle wählen</button></div></div>`
+      : `<div class="festhalten ${ziel.seite}"><textarea id="feld" rows="4" placeholder="Dein Stichpunkt: Was sagt er? Wie urteilst du? Warum?">${esc(entwuerfe[key] ?? (notiz ? notiz.text : ""))}</textarea>
+          <div class="aktionen"><button class="knopf klein weiter" type="button" data-hier-speichern>Speichern</button></div></div>`;
+  } else if (eindruck) {
+    s4 = `<p class="s-hinweis">Wähle zuerst in der Gegenprobe „Doch diese Sicht nehmen“.</p>`;
+  }
+  h += schritt(4, !ziel ? "offen" : gespeichert ? "erledigt" : "aktiv", "Argument festhalten", s4);
+  h += `</ol>`;
+  stellenBox.innerHTML = h;
+}
+stellenBox.addEventListener("input", (ev) => {
+  if (ev.target.id !== "feld") return;
+  const st = STELLEN[aktStelle], ziel = st.eintraege.find(e => e.seite === eindruck);
+  if (ziel) entwuerfe[schluessel(aktStelle, ziel)] = ev.target.value;
+});
 stellenBox.addEventListener("click", (ev) => {
   const b = ev.target.closest("button");
   if (!b) return;
   if (b.dataset.e) { eindruck = b.dataset.e; faerbeStelle(); zeichneStellenmodus(); return; }
   if (b.classList.contains("satz-zeigen")) { b.nextElementSibling.hidden = false; b.remove(); return; }
-  if (b.classList.contains("notieren") && !b.disabled) {
-    const [i, seite, ...rest] = b.dataset.key.split("|");
-    notizen.push({ key: b.dataset.key, st: Number(i), seite, aspekt: rest.join("|"), text: "" });
-    speichern(); zeichneSammlung();
-    b.textContent = "Notiert ✓"; b.disabled = true; b.classList.add("erledigt");
+  const st = STELLEN[aktStelle];
+  const ziel = st && st.eintraege.find(e => e.seite === eindruck);
+  if (b.hasAttribute("data-hier-speichern") && ziel) {
+    const feld = document.getElementById("feld");
+    const text = feld.value;
+    if (!text.trim()) { feld.focus(); feld.placeholder = "Schreib zuerst einen Stichpunkt, dann speichern."; return; }
+    const key = schluessel(aktStelle, ziel);
+    const n = notizen.find(x => x.key === key);
+    if (n) { n.text = text; n.fertig = true; }
+    else notizen.push({ key, st: aktStelle, seite: ziel.seite, aspekt: ziel.aspekt, text, fertig: true });
+    delete entwuerfe[key];
+    speichern(); zeichneSammlung(); zeichneStellenmodus();
     return;
   }
-  if (b.hasAttribute("data-neu")) {
+  if (b.hasAttribute("data-hier-bearbeiten") && ziel) {
+    const n = notizen.find(x => x.key === schluessel(aktStelle, ziel));
+    if (n) { n.fertig = false; speichern(); zeichneSammlung(); zeichneStellenmodus();
+      const f = document.getElementById("feld"); if (f) { f.focus(); f.setSelectionRange(f.value.length, f.value.length); } }
+    return;
+  }
+  if (b.hasAttribute("data-naechste") || b.hasAttribute("data-neu")) {
+    const naechste = b.hasAttribute("data-naechste") ? STELLEN[(aktStelle + 1) % STELLEN.length] : STELLEN[aktStelle];
     aktStelle = -1; eindruck = null; faerbeStelle(); zeichneStellenmodus();
-    springeZu(STELLEN[0].ber.z1);
+    springeZu(naechste.ber.z1);
   }
 });
 
